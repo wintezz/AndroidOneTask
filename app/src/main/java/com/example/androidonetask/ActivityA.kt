@@ -14,12 +14,12 @@ class ActivityA : AppCompatActivity() {
         binding = ActivityABinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
         binding.buttonB.setOnClickListener {
             startActivity(Intent(this, ActivityB::class.java))
         }
 
         binding.buttonE.setOnClickListener {
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(Intent(this, ActivityE::class.java))
         }
     }
