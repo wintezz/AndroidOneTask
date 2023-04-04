@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">AndroidOneTask</string>
+    <string name="buttonB">B</string>
+    <string name="buttonC">C</string>
+    <string name="buttonD">D</string>
+    <string name="buttonE">E</string>
+    <string name="buttonF">F</string>
+    <string name="activity_a">ActivityA</string>
+    <string name="activity_b">ActivityB</string>
+    <string name="activity_c">ActivityC</string>
+    <string name="activity_d">ActivityD</string>
+    <string name="activity_e">ActivityE</string>
+    <string name="activity_f">ActivityF</string>
+</resources>
