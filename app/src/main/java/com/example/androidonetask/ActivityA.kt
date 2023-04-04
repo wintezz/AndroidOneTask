@@ -19,8 +19,8 @@ class ActivityA : AppCompatActivity() {
         }
 
         binding.buttonE.setOnClickListener {
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(Intent(this, ActivityE::class.java))
+            intent.flags= Intent.FLAG_ACTIVITY_NEW_TASK
         }
     }
 }
