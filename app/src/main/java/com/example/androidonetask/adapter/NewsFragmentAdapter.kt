@@ -8,7 +8,8 @@ import com.example.androidonetask.R
 import com.example.androidonetask.databinding.ListElementBinding
 
 class NewsFragmentAdapter(
-    private val elements: List<String>
+    private val elements: List<String>,
+    /*private val listener: ClickListener*/
 ) : RecyclerView.Adapter<NewsFragmentAdapter.MyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -22,6 +23,10 @@ class NewsFragmentAdapter(
         holder.binding.textRank.text = elements[position]
         holder.binding.topText.text
         holder.binding.botText.text
+
+        /*holder.binding.textRank.setOnClickListener {
+            listener.onClickItem(elements, position)
+        }*/
     }
 
     override fun getItemCount(): Int = elements.size
