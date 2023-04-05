@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.androidonetask.adapter.ArtistFragmentAdapter
 import com.example.androidonetask.databinding.FragmentArtistBinding
 
 
@@ -18,8 +20,20 @@ class ArtistFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentArtistBinding
-            .inflate( inflater,container, false)
+            .inflate( inflater,container,
+                false)
+
+        activity?.title = "ArtistFragment"
+
+        binding.recViewArtist.layoutManager = LinearLayoutManager(activity)
+        binding.recViewArtist.adapter = ArtistFragmentAdapter(fillList())
 
         return binding.root
+    }
+
+    private fun fillList(): List<String> {
+        val data = mutableListOf<String>()
+        (0..1000).forEach { i -> data.add("$i") }
+        return data
     }
 }

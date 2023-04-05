@@ -1,12 +1,12 @@
 package com.example.androidonetask.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.androidonetask.R
-import com.example.androidonetask.databinding.FragmentArtistBinding
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.androidonetask.adapter.NewsFragmentAdapter
 import com.example.androidonetask.databinding.FragmentNewsBinding
 
 class NewsFragment : Fragment() {
@@ -19,8 +19,20 @@ class NewsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentNewsBinding
-            .inflate( inflater,container, false)
+            .inflate( inflater,container,
+                false)
+
+        activity?.title = "NewsFragment"
+
+        binding.recViewNews.layoutManager = LinearLayoutManager(activity)
+        binding.recViewNews.adapter = NewsFragmentAdapter(fillList())
 
         return binding.root
+    }
+
+    private fun fillList(): List<String> {
+        val data = mutableListOf<String>()
+        (0..1000).forEach { i -> data.add("$i") }
+        return data
     }
 }

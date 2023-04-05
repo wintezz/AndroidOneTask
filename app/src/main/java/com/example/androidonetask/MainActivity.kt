@@ -20,8 +20,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setCurrentFragment(newsFragment)
-
         binding.bottomNavView.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.news -> setCurrentFragment(newsFragment)
@@ -37,6 +35,7 @@ class MainActivity : AppCompatActivity() {
     private fun setCurrentFragment(fragment: Fragment) =
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.hostFragment, fragment)
+            addToBackStack(null)
             commit()
         }
 }
