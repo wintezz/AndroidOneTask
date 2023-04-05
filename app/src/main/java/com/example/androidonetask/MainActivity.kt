@@ -20,7 +20,18 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.bottomNavView.setOnItemSelectedListener {
+        binding.navigationDrawer?.setNavigationItemSelectedListener {
+            when (it.itemId) {
+                R.id.news -> setCurrentFragment(newsFragment)
+                R.id.artist -> setCurrentFragment(artistFragment)
+                R.id.expositions -> setCurrentFragment(expositionsFragment)
+                R.id.info -> setCurrentFragment(infoFragment)
+                R.id.works -> setCurrentFragment(worksFragment)
+            }
+            true
+        }
+
+        binding.bottomNavView?.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.news -> setCurrentFragment(newsFragment)
                 R.id.artist -> setCurrentFragment(artistFragment)
