@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.androidonetask.adapter.InfoFragmentAdapter
+import com.example.androidonetask.adapter.FragmentAdapter
 import com.example.androidonetask.databinding.FragmentInfoBinding
 import com.example.androidonetask.utils.RankElement
 
@@ -21,13 +21,14 @@ class InfoFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentInfoBinding
-            .inflate( inflater,container,
+            .inflate(
+                inflater,container,
                 false)
 
         activity?.title = "InfoFragment"
 
         binding.recViewInfo.layoutManager = LinearLayoutManager(activity)
-        binding.recViewInfo.adapter = InfoFragmentAdapter(RankElement.fillList())
+        binding.recViewInfo.adapter = FragmentAdapter(RankElement.fillList())
 
         return binding.root
     }

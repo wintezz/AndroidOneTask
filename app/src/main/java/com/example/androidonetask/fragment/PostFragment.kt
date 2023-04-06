@@ -18,7 +18,8 @@ class PostFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentPostBinding
-            .inflate( inflater,container,
+            .inflate(
+                inflater,container,
                 false)
 
         activity?.title = "PostFragment"

@@ -7,9 +7,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.androidonetask.R
 import com.example.androidonetask.databinding.ListElementBinding
 
-class ExpositionsFragmentAdapter(
-    private val elements: List<String>
-) : RecyclerView.Adapter<ExpositionsFragmentAdapter.MyViewHolder>() {
+class FragmentAdapter(
+    private val elements: List<String>,
+   /* private val listener: ClickListener*/
+) : RecyclerView.Adapter<FragmentAdapter.MyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         return MyViewHolder(
@@ -22,6 +23,10 @@ class ExpositionsFragmentAdapter(
         holder.binding.textRank.text = elements[position]
         holder.binding.topText.text
         holder.binding.botText.text
+
+        /*holder.binding.textRank.setOnClickListener {
+            listener.onClickItem(position)
+        }*/
     }
 
     override fun getItemCount(): Int = elements.size

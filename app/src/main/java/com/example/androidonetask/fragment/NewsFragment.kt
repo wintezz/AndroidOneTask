@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.androidonetask.adapter.NewsFragmentAdapter
+import com.example.androidonetask.adapter.FragmentAdapter
 import com.example.androidonetask.databinding.FragmentNewsBinding
 import com.example.androidonetask.utils.RankElement
 
@@ -28,7 +28,7 @@ class NewsFragment : Fragment() {
         activity?.title = "NewsFragment"
 
         binding.recViewNews.layoutManager = LinearLayoutManager(activity)
-        binding.recViewNews.adapter = NewsFragmentAdapter(RankElement.fillList())
+        binding.recViewNews.adapter = FragmentAdapter(RankElement.fillList())
 
         return binding.root
     }
