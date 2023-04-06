@@ -8,8 +8,9 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidonetask.adapter.NewsFragmentAdapter
 import com.example.androidonetask.databinding.FragmentNewsBinding
+import com.example.androidonetask.utils.RankElement
 
-class NewsFragment : Fragment(){
+class NewsFragment : Fragment() {
 
     private lateinit var binding: FragmentNewsBinding
 
@@ -27,34 +28,8 @@ class NewsFragment : Fragment(){
         activity?.title = "NewsFragment"
 
         binding.recViewNews.layoutManager = LinearLayoutManager(activity)
-        binding.recViewNews.adapter = NewsFragmentAdapter(fillList())
+        binding.recViewNews.adapter = NewsFragmentAdapter(RankElement.fillList())
 
         return binding.root
     }
-
-    private fun fillList(): List<String> {
-        val data = mutableListOf<String>()
-        (0..1000).forEach { i -> data.add("$i") }
-        return data
-    }
-
-    /*override fun Listener(elements: List<String>, position: Int) {
-        parentFragmentManager.beginTransaction()
-            .apply {
-                replace(R.id.hostFragment, PostFragment)
-                commit()
-            }
-
-    }*/
-
-  /*  companion object {
-        @JvmStatic
-        fun newInstance(someInt: Int) =
-            PostFragment().apply {
-                arguments = Bundle().apply {
-                    putInt("Int", someInt)
-                }
-            }
-    }*/
-
 }

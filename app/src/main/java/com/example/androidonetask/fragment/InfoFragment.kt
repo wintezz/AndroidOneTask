@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidonetask.adapter.InfoFragmentAdapter
 import com.example.androidonetask.databinding.FragmentInfoBinding
+import com.example.androidonetask.utils.RankElement
 
 
 class InfoFragment : Fragment() {
@@ -26,14 +27,8 @@ class InfoFragment : Fragment() {
         activity?.title = "InfoFragment"
 
         binding.recViewInfo.layoutManager = LinearLayoutManager(activity)
-        binding.recViewInfo.adapter = InfoFragmentAdapter(fillList())
+        binding.recViewInfo.adapter = InfoFragmentAdapter(RankElement.fillList())
 
         return binding.root
-    }
-
-    private fun fillList(): List<String> {
-        val data = mutableListOf<String>()
-        (0..1000).forEach { i -> data.add("$i") }
-        return data
     }
 }

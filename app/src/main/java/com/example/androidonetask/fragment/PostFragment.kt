@@ -11,7 +11,7 @@ class PostFragment : Fragment() {
 
     private lateinit var binding: FragmentPostBinding
 
-    /*private val int = arguments?.getInt("Int") as Int*/
+    /*private val first: Int = arguments?.getInt("elements") as Int*/
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -25,15 +25,5 @@ class PostFragment : Fragment() {
 
         return binding.root
     }
-
-    /*companion object {
-        @JvmStatic
-        fun newInstance(someInt: Int) =
-            PostFragment().apply {
-                arguments = Bundle().apply {
-                    putInt("Int", someInt)
-                }
-            }
-    }*/
 
 }

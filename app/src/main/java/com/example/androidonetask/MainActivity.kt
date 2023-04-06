@@ -1,6 +1,7 @@
 package com.example.androidonetask
 
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.androidonetask.databinding.ActivityMainBinding
@@ -21,32 +22,31 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.navigationDrawer?.setNavigationItemSelectedListener {
-            when (it.itemId) {
-                R.id.news -> setCurrentFragment(newsFragment)
-                R.id.artist -> setCurrentFragment(artistFragment)
-                R.id.expositions -> setCurrentFragment(expositionsFragment)
-                R.id.info -> setCurrentFragment(infoFragment)
-                R.id.works -> setCurrentFragment(worksFragment)
-            }
+            attributes(it)
             true
         }
 
         binding.bottomNavView?.setOnItemSelectedListener {
-            when (it.itemId) {
-                R.id.news -> setCurrentFragment(newsFragment)
-                R.id.artist -> setCurrentFragment(artistFragment)
-                R.id.expositions -> setCurrentFragment(expositionsFragment)
-                R.id.info -> setCurrentFragment(infoFragment)
-                R.id.works -> setCurrentFragment(worksFragment)
-            }
+            attributes(it)
             true
         }
     }
 
-    private fun setCurrentFragment(fragment: Fragment) =
+    private fun attributes(it: MenuItem) {
+        when (it.itemId) {
+            R.id.news -> setCurrentFragment(newsFragment)
+            R.id.artist -> setCurrentFragment(artistFragment)
+            R.id.expositions -> setCurrentFragment(expositionsFragment)
+            R.id.info -> setCurrentFragment(infoFragment)
+            R.id.works -> setCurrentFragment(worksFragment)
+        }
+    }
+
+    private fun setCurrentFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.hostFragment, fragment)
             addToBackStack(null)
             commit()
         }
+    }
 }

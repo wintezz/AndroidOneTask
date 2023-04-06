@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidonetask.adapter.ArtistFragmentAdapter
 import com.example.androidonetask.databinding.FragmentArtistBinding
-
+import com.example.androidonetask.utils.RankElement
 
 class ArtistFragment : Fragment() {
 
@@ -26,14 +26,8 @@ class ArtistFragment : Fragment() {
         activity?.title = "ArtistFragment"
 
         binding.recViewArtist.layoutManager = LinearLayoutManager(activity)
-        binding.recViewArtist.adapter = ArtistFragmentAdapter(fillList())
+        binding.recViewArtist.adapter = ArtistFragmentAdapter(RankElement.fillList())
 
         return binding.root
-    }
-
-    private fun fillList(): List<String> {
-        val data = mutableListOf<String>()
-        (0..1000).forEach { i -> data.add("$i") }
-        return data
     }
 }
