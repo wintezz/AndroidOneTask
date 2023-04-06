@@ -13,6 +13,7 @@ import com.example.androidonetask.adapter.NewsFragmentAdapter
 import com.example.androidonetask.databinding.FragmentNewsBinding
 import com.example.androidonetask.utils.ClickListener
 import com.example.androidonetask.utils.RankElement
+import com.example.androidonetask.utils.RankElement.Companion.KEY_FOR_ID
 
 class NewsFragment : Fragment(), ClickListener {
 
@@ -50,7 +51,7 @@ class NewsFragment : Fragment(), ClickListener {
     override fun onClickItem(position: Int) {
         val postFragment = PostFragment()
         val bundle = Bundle()
-        bundle.putString("key", position.toString())
+        bundle.putString(KEY_FOR_ID, position.toString())
         postFragment.arguments = bundle
         parentFragmentManager.beginTransaction().apply {
             replace(R.id.hostFragment, postFragment)
@@ -63,4 +64,10 @@ class NewsFragment : Fragment(), ClickListener {
         val intent = Intent(requireContext(), ImageViewActivity::class.java)
         startActivity(intent)
     }
+
+    /*companion object {
+        fun newInstance(id: String) = PostFragment().apply {
+            arguments = bundleOf(KEY_FOR_ID to id)
+        }
+    }*/
 }

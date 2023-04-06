@@ -6,15 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.androidonetask.databinding.FragmentPostBinding
+import com.example.androidonetask.utils.RankElement.Companion.KEY_FOR_ID
 
 class PostFragment : Fragment() {
+
 
     private lateinit var binding: FragmentPostBinding
     private lateinit var args: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        args = arguments?.getString("key").toString()
+        args = arguments?.getString(KEY_FOR_ID).toString()
+
     }
 
     override fun onCreateView(
@@ -38,4 +41,5 @@ class PostFragment : Fragment() {
 
         activity?.title = this.javaClass.simpleName
     }
+
 }
