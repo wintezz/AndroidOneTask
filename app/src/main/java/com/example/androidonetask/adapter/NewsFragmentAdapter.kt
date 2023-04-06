@@ -24,14 +24,14 @@ class NewsFragmentAdapter(
         holder.binding.textRank.text = elements[position]
         holder.binding.topText.text
         holder.binding.botText.text
-        holder.binding.imageView
+        holder.binding.artView
 
         holder.binding.textRank.setOnClickListener {
             listener.onClickItem(position)
         }
 
-        holder.binding.imageView.setOnClickListener {
-            listener.onClickView(holder.binding.imageView)
+        holder.binding.artView.setOnClickListener {
+            listener.onClickView(holder.binding.artView)
         }
     }
 
