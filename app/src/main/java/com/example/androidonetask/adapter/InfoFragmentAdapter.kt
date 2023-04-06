@@ -11,30 +11,30 @@ import com.example.androidonetask.utils.ClickListenerDetail
 class InfoFragmentAdapter(
     private val elements: List<String>,
     private val listener: ClickListenerDetail
-) : RecyclerView.Adapter<InfoFragmentAdapter.MyViewHolder>() {
+) : RecyclerView.Adapter<InfoFragmentAdapter.InfoViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        return MyViewHolder(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): InfoViewHolder {
+        return InfoViewHolder(
             LayoutInflater.from(parent.context)
                 .inflate(R.layout.list_element, parent, false)
         )
     }
 
-    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.binding.textRank.text = elements[position]
-        holder.binding.topText.text
-        holder.binding.botText.text
-        holder.binding.detailView
-
-        holder.binding.detailView.setOnClickListener {
-            listener.onClickView(holder.binding.detailView)
-        }
+    override fun onBindViewHolder(holder: InfoViewHolder, position: Int) {
+        holder.onBind(elements[position])
     }
 
     override fun getItemCount(): Int = elements.size
 
-    inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class InfoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val binding = ListElementBinding.bind(itemView)
 
+        fun onBind(elem: String) {
+            binding.textRank.text = elements[position]
+
+            binding.detailView.setOnClickListener {
+                listener.onClickView(binding.detailView)
+            }
+        }
     }
 }

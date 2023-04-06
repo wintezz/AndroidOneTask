@@ -27,15 +27,15 @@ class InfoFragment : Fragment(), ClickListenerDetail {
                 false
             )
 
-        activity?.title = "InfoFragment"
-
-        binding.recViewInfo.layoutManager = LinearLayoutManager(activity)
-        binding.recViewInfo.adapter = InfoFragmentAdapter(
-            RankElement.fillList(),
-            this@InfoFragment
-        )
+        initRecyclerView()
 
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        activity?.title = this.javaClass.simpleName
     }
 
     override fun onClickView(view: View) {
@@ -45,5 +45,12 @@ class InfoFragment : Fragment(), ClickListenerDetail {
             commit()
 
         }
+    }
+
+    private fun initRecyclerView() {
+        binding.recViewInfo.layoutManager = LinearLayoutManager(context)
+        binding.recViewInfo.adapter = InfoFragmentAdapter(
+            RankElement.fillList(), this@InfoFragment
+        )
     }
 }

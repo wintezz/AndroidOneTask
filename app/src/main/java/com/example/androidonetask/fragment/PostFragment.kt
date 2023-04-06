@@ -10,11 +10,11 @@ import com.example.androidonetask.databinding.FragmentPostBinding
 class PostFragment : Fragment() {
 
     private lateinit var binding: FragmentPostBinding
-    private lateinit var string: String
+    private lateinit var args: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        string = arguments?.getString("key").toString()
+        args = arguments?.getString("key").toString()
     }
 
     override fun onCreateView(
@@ -28,9 +28,14 @@ class PostFragment : Fragment() {
                 false
             )
 
-        activity?.title = "PostFragment"
-        binding.textRankPost.text = string
+        binding.textRankPost.text = args
 
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        activity?.title = this.javaClass.simpleName
     }
 }

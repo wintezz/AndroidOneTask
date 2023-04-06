@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.androidonetask.databinding.FragmentPostBinding
 
-class DetailFragment :  Fragment() {
+class DetailFragment : Fragment() {
 
     private lateinit var binding: FragmentPostBinding
 
@@ -22,8 +22,12 @@ class DetailFragment :  Fragment() {
                 false
             )
 
-        activity?.title = "DetailFragment"
-
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        activity?.title = this.javaClass.simpleName
     }
 }

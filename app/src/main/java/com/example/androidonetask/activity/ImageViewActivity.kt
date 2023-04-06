@@ -13,7 +13,7 @@ class ImageViewActivity : AppCompatActivity() {
         binding = ActivityImageViewBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        title = ("ImageViewActivity")
+        title = this.javaClass.simpleName
 
     }
 }

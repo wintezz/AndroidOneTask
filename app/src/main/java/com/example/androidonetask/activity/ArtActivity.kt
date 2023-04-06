@@ -12,5 +12,7 @@ class ArtActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityArtBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        title = this.javaClass.simpleName
     }
 }

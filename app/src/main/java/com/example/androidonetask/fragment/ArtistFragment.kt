@@ -25,11 +25,19 @@ class ArtistFragment : Fragment() {
                 false
             )
 
-        activity?.title = "ArtistFragment"
-
-        binding.recViewArtist.layoutManager = LinearLayoutManager(activity)
-        binding.recViewArtist.adapter = ArtistFragmentAdapter(RankElement.fillList())
+        initRecyclerView()
 
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        activity?.title = this.javaClass.simpleName
+    }
+
+    private fun initRecyclerView() {
+        binding.recViewArtist.layoutManager = LinearLayoutManager(context)
+        binding.recViewArtist.adapter = ArtistFragmentAdapter(RankElement.fillList())
     }
 }

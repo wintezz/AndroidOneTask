@@ -11,34 +11,34 @@ import com.example.androidonetask.utils.ClickListener
 class NewsFragmentAdapter(
     private val elements: List<String>,
     private val listener: ClickListener
-) : RecyclerView.Adapter<NewsFragmentAdapter.MyViewHolder>() {
+) : RecyclerView.Adapter<NewsFragmentAdapter.NewsViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        return MyViewHolder(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
+        return NewsViewHolder(
             LayoutInflater.from(parent.context)
                 .inflate(R.layout.list_element, parent, false)
         )
     }
 
-    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.binding.textRank.text = elements[position]
-        holder.binding.topText.text
-        holder.binding.botText.text
-        holder.binding.artView
-
-        holder.binding.textRank.setOnClickListener {
-            listener.onClickItem(position)
-        }
-
-        holder.binding.artView.setOnClickListener {
-            listener.onClickView(holder.binding.artView)
-        }
+    override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
+        holder.onBind(elements[position])
     }
 
     override fun getItemCount(): Int = elements.size
 
-    inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class NewsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val binding = ListElementBinding.bind(itemView)
 
+        fun onBind(elem: String) {
+            binding.textRank.text = elements[position]
+
+            binding.textRank.setOnClickListener {
+                listener.onClickItem(position)
+            }
+
+            binding.artView.setOnClickListener {
+                listener.onClickView(binding.artView)
+            }
+        }
     }
 }

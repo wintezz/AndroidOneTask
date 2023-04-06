@@ -29,15 +29,22 @@ class NewsFragment : Fragment(), ClickListener {
                 false
             )
 
-        activity?.title = "NewsFragment"
-
-        binding.recViewNews.layoutManager = LinearLayoutManager(activity)
-        binding.recViewNews.adapter = NewsFragmentAdapter(
-            RankElement.fillList(),
-            this@NewsFragment
-        )
+        initRecyclerView()
 
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        activity?.title = this.javaClass.simpleName
+    }
+
+    private fun initRecyclerView() {
+        binding.recViewNews.layoutManager = LinearLayoutManager(context)
+        binding.recViewNews.adapter = NewsFragmentAdapter(
+            RankElement.fillList(), this@NewsFragment
+        )
     }
 
     override fun onClickItem(position: Int) {

@@ -8,26 +8,34 @@ import com.example.androidonetask.R
 import com.example.androidonetask.databinding.ListElementBinding
 
 class ArtistFragmentAdapter(
-    private val elements: List<String>
-) : RecyclerView.Adapter<ArtistFragmentAdapter.MyViewHolder>() {
+    private var elements: List<String>
+) : RecyclerView.Adapter<ArtistFragmentAdapter.ArtistViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        return MyViewHolder(
+   /* private var elements = emptyList<String>()*/
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArtistViewHolder {
+        return ArtistViewHolder(
             LayoutInflater.from(parent.context)
                 .inflate(R.layout.list_element, parent, false)
         )
     }
 
-    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.binding.textRank.text = elements[position]
-        holder.binding.topText.text
-        holder.binding.botText.text
+    override fun onBindViewHolder(holder: ArtistViewHolder, position: Int) {
+        holder.onBind(elements[position])
     }
 
     override fun getItemCount(): Int = elements.size
 
-    inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val binding = ListElementBinding.bind(itemView)
+    inner class ArtistViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val binding = ListElementBinding.bind(view)
 
+        fun onBind(elem: String) {
+            binding.textRank.text = elements[position]
+        }
     }
+
+    /*fun submitList(newElements: List<String>) {
+        elements = newElements
+        notifyDataSetChanged()
+    }*/
 }
