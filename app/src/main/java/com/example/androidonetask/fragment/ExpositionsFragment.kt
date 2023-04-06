@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.androidonetask.adapter.FragmentAdapter
+import com.example.androidonetask.adapter.ExpositionsFragmentAdapter
 import com.example.androidonetask.databinding.FragmentExpositionsBinding
 import com.example.androidonetask.utils.RankElement
 
@@ -28,7 +28,7 @@ class ExpositionsFragment : Fragment() {
         activity?.title = "ExpositionsFragment"
 
         binding.recViewExpositions.layoutManager = LinearLayoutManager(activity)
-        binding.recViewExpositions.adapter = FragmentAdapter(RankElement.fillList())
+        binding.recViewExpositions.adapter = ExpositionsFragmentAdapter(RankElement.fillList())
 
         return binding.root
     }

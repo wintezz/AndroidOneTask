@@ -1,9 +1,10 @@
-package com.example.androidonetask
+package com.example.androidonetask.activity
 
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.example.androidonetask.R
 import com.example.androidonetask.databinding.ActivityMainBinding
 import com.example.androidonetask.fragment.*
 
@@ -20,6 +21,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        title = ("MainActivity")
 
         binding.navigationDrawer?.setNavigationItemSelectedListener {
             attributes(it)
