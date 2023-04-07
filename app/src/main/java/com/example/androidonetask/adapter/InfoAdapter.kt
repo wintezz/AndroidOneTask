@@ -13,8 +13,6 @@ class InfoAdapter(
     private val listener: ClickListenerDetail
 ) : RecyclerView.Adapter<InfoAdapter.InfoViewHolder>() {
 
-    /*private val elements = emptyList<String>()*/
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): InfoViewHolder {
         return InfoViewHolder(
             LayoutInflater.from(parent.context)

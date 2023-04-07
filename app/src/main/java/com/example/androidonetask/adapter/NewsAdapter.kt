@@ -13,8 +13,6 @@ class NewsAdapter(
     private val listener: ClickListener
 ) : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
 
-    /*private val elements = emptyList<String>()*/
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
         return NewsViewHolder(
             LayoutInflater.from(parent.context)
@@ -28,8 +26,11 @@ class NewsAdapter(
 
     override fun getItemCount(): Int = elements.size
 
-    inner class NewsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val binding = ListElementBinding.bind(itemView)
+    inner class NewsViewHolder(
+        view: View
+    ) : RecyclerView.ViewHolder(view) {
+
+        val binding = ListElementBinding.bind(view)
 
         fun onBind(elem: String) {
             binding.textRank.text = elements[adapterPosition]

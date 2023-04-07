@@ -11,8 +11,6 @@ class ArtistAdapter(
     private var elements: List<String>
 ) : RecyclerView.Adapter<ArtistAdapter.ArtistViewHolder>() {
 
-    /*private var elements = emptyList<String>()*/
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArtistViewHolder {
         return ArtistViewHolder(
             LayoutInflater.from(parent.context)
@@ -33,9 +31,4 @@ class ArtistAdapter(
             binding.textRank.text = elements[adapterPosition]
         }
     }
-
-    /*fun submitList(newElements: List<String>) {
-        elements = newElements
-        notifyDataSetChanged()
-    }*/
 }

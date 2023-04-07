@@ -16,6 +16,7 @@ class InfoFragment : Fragment(), ClickListenerDetail {
 
     private var _binding: FragmentArtistBinding? = null
     private val binding get() = _binding!!
+    private lateinit var adapter: InfoAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,9 +50,8 @@ class InfoFragment : Fragment(), ClickListenerDetail {
 
     private fun initRecyclerView() {
         binding.recView.layoutManager = LinearLayoutManager(context)
-        binding.recView.adapter = InfoAdapter(
-            RankElement.fillList(), this@InfoFragment
-        )
+        adapter = InfoAdapter(RankElement.fillList(), this@InfoFragment)
+        binding.recView.adapter = adapter
     }
 
     override fun onDestroyView() {

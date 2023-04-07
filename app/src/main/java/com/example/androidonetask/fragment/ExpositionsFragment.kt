@@ -14,6 +14,7 @@ class ExpositionsFragment : Fragment() {
 
     private var _binding: FragmentArtistBinding? = null
     private val binding get() = _binding!!
+    private lateinit var adapter: ArtistAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,7 +40,8 @@ class ExpositionsFragment : Fragment() {
 
     private fun initRecyclerView() {
         binding.recView.layoutManager = LinearLayoutManager(context)
-        binding.recView.adapter = ArtistAdapter(RankElement.fillList())
+        adapter = ArtistAdapter(RankElement.fillList())
+        binding.recView.adapter = adapter
     }
 
     override fun onDestroyView() {

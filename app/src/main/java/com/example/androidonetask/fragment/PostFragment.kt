@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import com.example.androidonetask.databinding.FragmentPostBinding
 
@@ -11,13 +12,6 @@ class PostFragment : Fragment() {
 
     private var _binding: FragmentPostBinding? = null
     private val binding get() = _binding!!
-    private lateinit var args: String
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        args = arguments?.getString(KEY_FOR_ID).toString()
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,7 +24,7 @@ class PostFragment : Fragment() {
                 false
             )
 
-        binding.textRankPost.text = args
+        binding.textRankPost.text = id.toString()
 
         return binding.root
     }
@@ -48,6 +42,10 @@ class PostFragment : Fragment() {
 
     companion object {
 
-        private const val KEY_FOR_ID = "KEY_FOR_ID"
+       private const val KEY_FOR_ID = "KEY_FOR_ID"
+
+        fun newInstance(id: String) = PostFragment().apply {
+            arguments = bundleOf(KEY_FOR_ID to id)
+        }
     }
 }
