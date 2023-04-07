@@ -24,7 +24,7 @@ class PostFragment : Fragment() {
                 false
             )
 
-        binding.textRankPost.text = id.toString()
+        binding.textRankPost.text = arguments?.getInt(KEY_FOR_ID).toString()
 
         return binding.root
     }
@@ -42,9 +42,9 @@ class PostFragment : Fragment() {
 
     companion object {
 
-       private const val KEY_FOR_ID = "KEY_FOR_ID"
+        private const val KEY_FOR_ID = "KEY_FOR_ID"
 
-        fun newInstance(id: String) = PostFragment().apply {
+        fun newInstance(id: Int) = PostFragment().apply {
             arguments = bundleOf(KEY_FOR_ID to id)
         }
     }

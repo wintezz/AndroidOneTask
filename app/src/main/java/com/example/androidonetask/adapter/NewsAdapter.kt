@@ -33,7 +33,7 @@ class NewsAdapter(
         val binding = ListElementBinding.bind(view)
 
         fun onBind(elem: String) {
-            binding.textRank.text = elements[adapterPosition]
+            binding.textRank.text = elem
 
             binding.textRank.setOnClickListener {
                 listener.onClickItem(adapterPosition)

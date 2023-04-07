@@ -18,7 +18,7 @@ class NewsFragment : Fragment(), ClickListener {
 
     private var _binding: FragmentArtistBinding? = null
     private val binding get() = _binding!!
-    private lateinit var adapter: NewsAdapter
+    private var adapter = NewsAdapter(RankElement.fillList(), this@NewsFragment)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,16 +44,12 @@ class NewsFragment : Fragment(), ClickListener {
 
     private fun initRecyclerView() {
         binding.recView.layoutManager = LinearLayoutManager(context)
-        adapter = NewsAdapter(
-            RankElement.fillList(),
-            this@NewsFragment
-        )
         binding.recView.adapter = adapter
     }
 
     override fun onClickItem(position: Int) {
         parentFragmentManager.beginTransaction().apply {
-            replace(R.id.hostFragment, PostFragment.newInstance(ID))
+            replace(R.id.hostFragment, PostFragment.newInstance(position))
             addToBackStack(null)
             commit()
         }
@@ -67,10 +63,5 @@ class NewsFragment : Fragment(), ClickListener {
     override fun onDestroyView() {
         _binding = null
         super.onDestroyView()
-    }
-
-    companion object {
-
-        private const val ID = "id_value"
     }
 }

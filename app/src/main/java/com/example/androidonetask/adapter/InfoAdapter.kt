@@ -30,7 +30,7 @@ class InfoAdapter(
         val binding = ListElementBinding.bind(itemView)
 
         fun onBind(elem: String) {
-            binding.textRank.text = elements[adapterPosition]
+            binding.textRank.text = elem
 
             binding.detailView.setOnClickListener {
                 listener.onClickView(binding.detailView)

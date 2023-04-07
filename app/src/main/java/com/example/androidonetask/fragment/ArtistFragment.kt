@@ -14,7 +14,7 @@ class ArtistFragment : Fragment() {
 
     private var _binding: FragmentArtistBinding? = null
     private val binding get() = _binding!!
-    private lateinit var adapter: ArtistAdapter
+    private var adapter = ArtistAdapter(RankElement.fillList())
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,7 +40,6 @@ class ArtistFragment : Fragment() {
 
     private fun initRecyclerView() {
         binding.recView.layoutManager = LinearLayoutManager(context)
-        adapter = ArtistAdapter(RankElement.fillList())
         binding.recView.adapter = adapter
     }
 

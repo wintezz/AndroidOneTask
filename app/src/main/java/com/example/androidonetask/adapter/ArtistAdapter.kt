@@ -11,6 +11,8 @@ class ArtistAdapter(
     private var elements: List<String>
 ) : RecyclerView.Adapter<ArtistAdapter.ArtistViewHolder>() {
 
+  /*  private lateinit var elements: List<String>*/
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArtistViewHolder {
         return ArtistViewHolder(
             LayoutInflater.from(parent.context)
@@ -22,13 +24,17 @@ class ArtistAdapter(
         holder.onBind(elements[position])
     }
 
+    /*fun apply(elements: List<String>) {
+        this.elements = elements
+    }*/
+
     override fun getItemCount(): Int = elements.size
 
     inner class ArtistViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val binding = ListElementBinding.bind(view)
 
         fun onBind(elem: String) {
-            binding.textRank.text = elements[adapterPosition]
+            binding.textRank.text = elem
         }
     }
 }
