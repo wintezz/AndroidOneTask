@@ -7,21 +7,22 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidonetask.R
-import com.example.androidonetask.adapter.InfoFragmentAdapter
-import com.example.androidonetask.databinding.FragmentInfoBinding
+import com.example.androidonetask.adapter.InfoAdapter
+import com.example.androidonetask.databinding.FragmentArtistBinding
 import com.example.androidonetask.utils.ClickListenerDetail
 import com.example.androidonetask.utils.RankElement
 
 class InfoFragment : Fragment(), ClickListenerDetail {
 
-    private lateinit var binding: FragmentInfoBinding
+    private var _binding: FragmentArtistBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentInfoBinding
+        _binding = FragmentArtistBinding
             .inflate(
                 inflater, container,
                 false
@@ -43,14 +44,18 @@ class InfoFragment : Fragment(), ClickListenerDetail {
             replace(R.id.hostFragment, DetailFragment())
             addToBackStack(null)
             commit()
-
         }
     }
 
     private fun initRecyclerView() {
-        binding.recViewInfo.layoutManager = LinearLayoutManager(context)
-        binding.recViewInfo.adapter = InfoFragmentAdapter(
+        binding.recView.layoutManager = LinearLayoutManager(context)
+        binding.recView.adapter = InfoAdapter(
             RankElement.fillList(), this@InfoFragment
         )
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 }

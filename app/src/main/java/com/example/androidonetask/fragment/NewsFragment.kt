@@ -9,22 +9,22 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidonetask.R
 import com.example.androidonetask.activity.ImageViewActivity
-import com.example.androidonetask.adapter.NewsFragmentAdapter
-import com.example.androidonetask.databinding.FragmentNewsBinding
+import com.example.androidonetask.adapter.NewsAdapter
+import com.example.androidonetask.databinding.FragmentArtistBinding
 import com.example.androidonetask.utils.ClickListener
 import com.example.androidonetask.utils.RankElement
-import com.example.androidonetask.utils.RankElement.Companion.KEY_FOR_ID
 
 class NewsFragment : Fragment(), ClickListener {
 
-    private lateinit var binding: FragmentNewsBinding
+    private var _binding: FragmentArtistBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentNewsBinding
+        _binding = FragmentArtistBinding
             .inflate(
                 inflater, container,
                 false
@@ -42,8 +42,8 @@ class NewsFragment : Fragment(), ClickListener {
     }
 
     private fun initRecyclerView() {
-        binding.recViewNews.layoutManager = LinearLayoutManager(context)
-        binding.recViewNews.adapter = NewsFragmentAdapter(
+        binding.recView.layoutManager = LinearLayoutManager(context)
+        binding.recView.adapter = NewsAdapter(
             RankElement.fillList(), this@NewsFragment
         )
     }
@@ -65,9 +65,13 @@ class NewsFragment : Fragment(), ClickListener {
         startActivity(intent)
     }
 
-    /*companion object {
-        fun newInstance(id: String) = PostFragment().apply {
-            arguments = bundleOf(KEY_FOR_ID to id)
-        }
-    }*/
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
+    }
+
+    companion object {
+
+        private const val KEY_FOR_ID = "KEY_FOR_ID"
+    }
 }

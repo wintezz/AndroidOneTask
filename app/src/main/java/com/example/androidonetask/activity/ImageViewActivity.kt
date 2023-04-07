@@ -14,6 +14,5 @@ class ImageViewActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         title = this.javaClass.simpleName
-
     }
 }

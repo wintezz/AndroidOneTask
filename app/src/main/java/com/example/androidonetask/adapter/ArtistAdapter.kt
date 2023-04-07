@@ -7,11 +7,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.androidonetask.R
 import com.example.androidonetask.databinding.ListElementBinding
 
-class ArtistFragmentAdapter(
+class ArtistAdapter(
     private var elements: List<String>
-) : RecyclerView.Adapter<ArtistFragmentAdapter.ArtistViewHolder>() {
+) : RecyclerView.Adapter<ArtistAdapter.ArtistViewHolder>() {
 
-   /* private var elements = emptyList<String>()*/
+    /*private var elements = emptyList<String>()*/
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArtistViewHolder {
         return ArtistViewHolder(
@@ -30,7 +30,7 @@ class ArtistFragmentAdapter(
         val binding = ListElementBinding.bind(view)
 
         fun onBind(elem: String) {
-            binding.textRank.text = elements[position]
+            binding.textRank.text = elements[adapterPosition]
         }
     }
 

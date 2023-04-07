@@ -5,18 +5,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.androidonetask.databinding.FragmentPostBinding
+import com.example.androidonetask.databinding.FragmentDetailBinding
 
 class DetailFragment : Fragment() {
 
-    private lateinit var binding: FragmentPostBinding
+    private var _binding: FragmentDetailBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentPostBinding
+        _binding = FragmentDetailBinding
             .inflate(
                 inflater, container,
                 false
@@ -29,5 +30,10 @@ class DetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         activity?.title = this.javaClass.simpleName
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 }

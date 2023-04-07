@@ -8,10 +8,12 @@ import com.example.androidonetask.R
 import com.example.androidonetask.databinding.ListElementBinding
 import com.example.androidonetask.utils.ClickListenerDetail
 
-class InfoFragmentAdapter(
-    private val elements: List<String>,
+class InfoAdapter(
+    private var elements: List<String>,
     private val listener: ClickListenerDetail
-) : RecyclerView.Adapter<InfoFragmentAdapter.InfoViewHolder>() {
+) : RecyclerView.Adapter<InfoAdapter.InfoViewHolder>() {
+
+    /*private val elements = emptyList<String>()*/
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): InfoViewHolder {
         return InfoViewHolder(
@@ -30,7 +32,7 @@ class InfoFragmentAdapter(
         val binding = ListElementBinding.bind(itemView)
 
         fun onBind(elem: String) {
-            binding.textRank.text = elements[position]
+            binding.textRank.text = elements[adapterPosition]
 
             binding.detailView.setOnClickListener {
                 listener.onClickView(binding.detailView)

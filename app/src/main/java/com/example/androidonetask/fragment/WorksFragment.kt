@@ -6,20 +6,21 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.androidonetask.adapter.ArtistFragmentAdapter
-import com.example.androidonetask.databinding.FragmentWorksBinding
+import com.example.androidonetask.adapter.ArtistAdapter
+import com.example.androidonetask.databinding.FragmentArtistBinding
 import com.example.androidonetask.utils.RankElement
 
 class WorksFragment : Fragment() {
 
-    private lateinit var binding: FragmentWorksBinding
+    private var _binding: FragmentArtistBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentWorksBinding
+        _binding = FragmentArtistBinding
             .inflate(
                 inflater, container,
                 false
@@ -37,7 +38,12 @@ class WorksFragment : Fragment() {
     }
 
     private fun initRecyclerView() {
-        binding.recViewWorks.layoutManager = LinearLayoutManager(context)
-        binding.recViewWorks.adapter = ArtistFragmentAdapter(RankElement.fillList())
+        binding.recView.layoutManager = LinearLayoutManager(context)
+        binding.recView.adapter = ArtistAdapter(RankElement.fillList())
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 }

@@ -25,17 +25,17 @@ class MainActivity : AppCompatActivity() {
         title = this.javaClass.simpleName
 
         binding.navigationDrawer?.setNavigationItemSelectedListener {
-            attributes(it)
+            navigateTo(it)
             true
         }
 
         binding.bottomNavView?.setOnItemSelectedListener {
-            attributes(it)
+            navigateTo(it)
             true
         }
     }
 
-    private fun attributes(it: MenuItem) {
+    private fun navigateTo(it: MenuItem) {
         when (it.itemId) {
             R.id.news -> setCurrentFragment(newsFragment)
             R.id.artist -> setCurrentFragment(artistFragment)
