@@ -6,13 +6,19 @@ import com.example.androidonetask.databinding.ActivityArtBinding
 
 class ArtActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityArtBinding
+    private var _binding: ActivityArtBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityArtBinding.inflate(layoutInflater)
+        _binding = ActivityArtBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         title = this.javaClass.simpleName
+    }
+
+    override fun onDestroy() {
+        _binding = null
+        super.onDestroy()
     }
 }

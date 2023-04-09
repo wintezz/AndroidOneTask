@@ -6,13 +6,19 @@ import com.example.androidonetask.databinding.ActivityImageViewBinding
 
 class ImageViewActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityImageViewBinding
+    private var _binding: ActivityImageViewBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityImageViewBinding.inflate(layoutInflater)
+        _binding = ActivityImageViewBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         title = this.javaClass.simpleName
+    }
+
+    override fun onDestroy() {
+        _binding = null
+        super.onDestroy()
     }
 }
