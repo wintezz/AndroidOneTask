@@ -8,9 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.androidonetask.R
 import com.example.androidonetask.databinding.ListElementBinding
 
-class ArtistAdapter(
+class WorkAdapter(
     private val listenerImage: (View) -> Unit
-) : RecyclerView.Adapter<ArtistAdapter.ArtistViewHolder>() {
+) : RecyclerView.Adapter<WorkAdapter.ArtistViewHolder>() {
 
     private lateinit var elements: List<String>
 
@@ -39,8 +39,8 @@ class ArtistAdapter(
         fun onBind(elem: String) {
             binding.textRank.text = elem
 
-            binding.artView.setOnClickListener {
-                listenerImage.invoke(binding.artView)
+            binding.detailView.setOnClickListener {
+                listenerImage.invoke(binding.detailView)
             }
         }
     }

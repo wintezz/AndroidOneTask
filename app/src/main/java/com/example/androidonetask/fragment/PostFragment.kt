@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import com.example.androidonetask.databinding.FragmentPostBinding
 
@@ -24,7 +23,7 @@ class PostFragment : Fragment() {
                 false
             )
 
-        binding.textRankPost.text = arguments?.getInt(KEY_FOR_ID).toString()
+        binding.textRankPost.text = arguments?.getInt(POSITION_KEY).toString()
 
         return binding.root
     }
@@ -42,10 +41,10 @@ class PostFragment : Fragment() {
 
     companion object {
 
-        private const val KEY_FOR_ID = "KEY_FOR_ID"
+         const val POSITION_KEY = "position"
 
-        fun newInstance(id: Int) = PostFragment().apply {
+        /*fun newInstance(id: Int) = PostFragment().apply {
             arguments = bundleOf(KEY_FOR_ID to id)
         }
-    }
+    }*/}
 }

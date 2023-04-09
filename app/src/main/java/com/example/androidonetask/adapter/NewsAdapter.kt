@@ -4,13 +4,15 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidonetask.R
 import com.example.androidonetask.databinding.ListElementBinding
 
 class NewsAdapter(
     private val listener: (Int) -> Unit,
-    private val listenerArtView: (View) -> Unit
+    private val listenerArtView: (View) -> Unit,
+    private val listenerArtist: (TextView) -> Unit
 ) : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
 
     private lateinit var elements: List<String>
@@ -49,6 +51,10 @@ class NewsAdapter(
 
             binding.artView.setOnClickListener {
                 listenerArtView.invoke(binding.artView)
+            }
+
+            binding.botText.setOnClickListener {
+                listenerArtist.invoke(binding.botText)
             }
         }
     }

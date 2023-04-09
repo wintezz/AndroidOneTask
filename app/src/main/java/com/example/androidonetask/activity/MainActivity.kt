@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setCurrentFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction().apply {
-            replace(R.id.hostFragment, fragment)
+            replace(R.id.nav_host_fragment, fragment)
             addToBackStack(null)
             commit()
         }

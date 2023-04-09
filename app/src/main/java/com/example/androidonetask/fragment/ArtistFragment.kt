@@ -5,7 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.androidonetask.R
 import com.example.androidonetask.adapter.ArtistAdapter
 import com.example.androidonetask.databinding.FragmentArtistBinding
 import com.example.androidonetask.utils.RankElement
@@ -14,7 +16,7 @@ class ArtistFragment : Fragment() {
 
     private var _binding: FragmentArtistBinding? = null
     private val binding get() = _binding!!
-    private var adapter = ArtistAdapter()
+    private var adapter = ArtistAdapter { onClickView() }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,6 +44,10 @@ class ArtistFragment : Fragment() {
         binding.recView.layoutManager = LinearLayoutManager(context)
         binding.recView.adapter = adapter
         adapter.updateList(RankElement.fillList())
+    }
+
+    private fun onClickView() {
+        findNavController().navigate(R.id.action_artistFragment_to_imageViewActivity)
     }
 
     override fun onDestroyView() {
