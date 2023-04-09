@@ -11,14 +11,13 @@ import com.example.androidonetask.R
 import com.example.androidonetask.activity.ImageViewActivity
 import com.example.androidonetask.adapter.NewsAdapter
 import com.example.androidonetask.databinding.FragmentArtistBinding
-import com.example.androidonetask.utils.ClickListener
 import com.example.androidonetask.utils.RankElement
 
-class NewsFragment : Fragment(), ClickListener {
+class NewsFragment : Fragment() {
 
     private var _binding: FragmentArtistBinding? = null
     private val binding get() = _binding!!
-    private var adapter = NewsAdapter(this@NewsFragment)
+    private var adapter = NewsAdapter({ onClickItem(it) }, { onClickView() })
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,7 +47,7 @@ class NewsFragment : Fragment(), ClickListener {
         adapter.updateList(RankElement.fillList())
     }
 
-    override fun onClickItem(position: Int) {
+    private fun onClickItem(position: Int) {
         parentFragmentManager.beginTransaction().apply {
             replace(R.id.hostFragment, PostFragment.newInstance(position))
             addToBackStack(null)
@@ -56,7 +55,7 @@ class NewsFragment : Fragment(), ClickListener {
         }
     }
 
-    override fun onClickView(view: View) {
+    private fun onClickView() {
         val intent = Intent(requireContext(), ImageViewActivity::class.java)
         startActivity(intent)
     }

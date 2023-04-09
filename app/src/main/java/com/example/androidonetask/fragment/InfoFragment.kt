@@ -9,14 +9,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidonetask.R
 import com.example.androidonetask.adapter.InfoAdapter
 import com.example.androidonetask.databinding.FragmentArtistBinding
-import com.example.androidonetask.utils.ClickListenerDetail
 import com.example.androidonetask.utils.RankElement
 
-class InfoFragment : Fragment(), ClickListenerDetail {
+class InfoFragment : Fragment() {
 
     private var _binding: FragmentArtistBinding? = null
     private val binding get() = _binding!!
-    private var adapter = InfoAdapter(this@InfoFragment)
+    private var adapter = InfoAdapter { onClickView() }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,7 +39,7 @@ class InfoFragment : Fragment(), ClickListenerDetail {
         activity?.title = this.javaClass.simpleName
     }
 
-    override fun onClickView(view: View) {
+    private fun onClickView() {
         parentFragmentManager.beginTransaction().apply {
             replace(R.id.hostFragment, DetailFragment())
             addToBackStack(null)

@@ -7,10 +7,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidonetask.R
 import com.example.androidonetask.databinding.ListElementBinding
-import com.example.androidonetask.utils.ClickListenerDetail
 
 class InfoAdapter(
-    private val listener: ClickListenerDetail
+    private val listener: (View) -> Unit
 ) : RecyclerView.Adapter<InfoAdapter.InfoViewHolder>() {
 
     private lateinit var elements: List<String>
@@ -41,7 +40,7 @@ class InfoAdapter(
             binding.textRank.text = elem
 
             binding.detailView.setOnClickListener {
-                listener.onClickView(binding.detailView)
+                listener.invoke(binding.detailView)
             }
         }
     }

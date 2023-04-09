@@ -7,10 +7,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidonetask.R
 import com.example.androidonetask.databinding.ListElementBinding
-import com.example.androidonetask.utils.ClickListener
 
 class NewsAdapter(
-    private val listener: ClickListener
+    private val listener: (Int) -> Unit,
+    private val listenerArtView: (View) -> Unit
 ) : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
 
     private lateinit var elements: List<String>
@@ -44,11 +44,11 @@ class NewsAdapter(
             binding.textRank.text = elem
 
             binding.textRank.setOnClickListener {
-                listener.onClickItem(adapterPosition)
+                listener.invoke(adapterPosition)
             }
 
             binding.artView.setOnClickListener {
-                listener.onClickView(binding.artView)
+                listenerArtView.invoke(binding.artView)
             }
         }
     }
