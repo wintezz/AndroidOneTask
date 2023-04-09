@@ -45,6 +45,7 @@ class NewsFragment : Fragment(), ClickListener {
     private fun initRecyclerView() {
         binding.recView.layoutManager = LinearLayoutManager(context)
         binding.recView.adapter = adapter
+        adapter.updateList(RankElement.fillList())
     }
 
     override fun onClickItem(position: Int) {

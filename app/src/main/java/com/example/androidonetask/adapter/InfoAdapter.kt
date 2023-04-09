@@ -1,5 +1,6 @@
 package com.example.androidonetask.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,6 +23,12 @@ class InfoAdapter(
 
     override fun onBindViewHolder(holder: InfoViewHolder, position: Int) {
         holder.onBind(elements[position])
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun updateList(newElements: List<String>) {
+        this.elements = newElements
+        notifyDataSetChanged()
     }
 
     override fun getItemCount(): Int = elements.size

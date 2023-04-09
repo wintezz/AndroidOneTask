@@ -40,8 +40,8 @@ class WorksFragment : Fragment() {
 
     private fun initRecyclerView() {
         binding.recView.layoutManager = LinearLayoutManager(context)
-        adapter = ArtistAdapter(RankElement.fillList())
         binding.recView.adapter = adapter
+        adapter.updateList(RankElement.fillList())
     }
 
     override fun onDestroyView() {

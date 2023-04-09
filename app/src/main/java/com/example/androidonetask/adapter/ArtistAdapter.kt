@@ -1,5 +1,6 @@
 package com.example.androidonetask.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +12,7 @@ class ArtistAdapter(
     private var elements: List<String>
 ) : RecyclerView.Adapter<ArtistAdapter.ArtistViewHolder>() {
 
-  /*  private lateinit var elements: List<String>*/
+    /* private lateinit var elements: List<String>*/
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArtistViewHolder {
         return ArtistViewHolder(
@@ -24,9 +25,11 @@ class ArtistAdapter(
         holder.onBind(elements[position])
     }
 
-    /*fun apply(elements: List<String>) {
-        this.elements = elements
-    }*/
+    @SuppressLint("NotifyDataSetChanged")
+    fun updateList(newElements: List<String>) {
+        this.elements = newElements
+        notifyDataSetChanged()
+    }
 
     override fun getItemCount(): Int = elements.size
 
