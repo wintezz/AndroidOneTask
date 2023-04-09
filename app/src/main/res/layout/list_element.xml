@@ -6,28 +6,22 @@
     android:layout_height="60dp"
     android:orientation="horizontal">
 
-    <FrameLayout
-        android:layout_width="118dp"
-        android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/textRank"
+        android:layout_width="@dimen/rank_element_width"
+        android:layout_height="@dimen/rank_element_height"
+        android:layout_margin="@dimen/main_margin"
+        android:gravity="center"
+        android:textColor="@color/black" />
 
-        <TextView
-            android:id="@+id/textRank"
-            android:layout_width="@dimen/rank_element_width"
-            android:layout_height="@dimen/rank_element_height"
-            android:layout_margin="@dimen/margin"
-            android:gravity="center"
-            android:textColor="@color/black" />
-
-        <ImageView
-            android:id="@+id/artView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/art_view_margin_start"
-            android:layout_marginTop="@dimen/margin"
-            app:srcCompat="@android:mipmap/sym_def_app_icon"
-            tools:ignore="ContentDescription" />
-
-    </FrameLayout>
+    <ImageView
+        android:id="@+id/artView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/main_margin"
+        android:layout_marginTop="@dimen/main_margin"
+        app:srcCompat="@android:mipmap/sym_def_app_icon"
+        tools:ignore="ContentDescription" />
 
     <FrameLayout
         android:layout_width="163dp"
@@ -37,7 +31,7 @@
             android:id="@+id/botText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin"
+            android:layout_marginStart="@dimen/bot_text_margin_start"
             android:layout_marginTop="@dimen/bot_text_margin_top"
             android:gravity="center"
             android:text="@string/down_text"
@@ -48,8 +42,8 @@
             android:id="@+id/topText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin"
-            android:layout_marginTop="@dimen/margin"
+            android:layout_marginStart="@dimen/bot_text_margin_start"
+            android:layout_marginTop="@dimen/main_margin"
             android:gravity="center"
             android:text="@string/top_text"
             android:textColor="@color/black"
@@ -57,18 +51,13 @@
 
     </FrameLayout>
 
-    <FrameLayout
-        android:layout_width="125dp"
-        android:layout_height="match_parent">
-
-        <ImageView
-            android:id="@+id/detailView"
-            android:layout_width="@dimen/detail_view_width"
-            android:layout_height="@dimen/detail_view_height"
-            android:layout_gravity="center"
-            app:srcCompat="@mipmap/ic_launcher"
-            tools:ignore="ContentDescription" />
-
-    </FrameLayout>
+    <ImageView
+        android:id="@+id/detailView"
+        android:layout_width="@dimen/detail_view_width"
+        android:layout_height="@dimen/detail_view_height"
+        android:layout_gravity="center"
+        android:layout_marginStart="@dimen/detail_view_margin_start"
+        app:srcCompat="@mipmap/ic_launcher"
+        tools:ignore="ContentDescription" />
 
 </LinearLayout>
