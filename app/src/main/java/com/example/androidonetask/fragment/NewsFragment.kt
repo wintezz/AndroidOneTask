@@ -18,7 +18,7 @@ class NewsFragment : Fragment(), ClickListener {
 
     private var _binding: FragmentArtistBinding? = null
     private val binding get() = _binding!!
-    private var adapter = NewsAdapter(RankElement.fillList(), this@NewsFragment)
+    private var adapter = NewsAdapter(this@NewsFragment)
 
     override fun onCreateView(
         inflater: LayoutInflater,

@@ -16,8 +16,7 @@ class InfoFragment : Fragment(), ClickListenerDetail {
 
     private var _binding: FragmentArtistBinding? = null
     private val binding get() = _binding!!
-    private var adapter = InfoAdapter(
-        RankElement.fillList(), this@InfoFragment)
+    private var adapter = InfoAdapter(this@InfoFragment)
 
     override fun onCreateView(
         inflater: LayoutInflater,

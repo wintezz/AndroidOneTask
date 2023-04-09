@@ -8,11 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.androidonetask.R
 import com.example.androidonetask.databinding.ListElementBinding
 
-class ArtistAdapter(
-    private var elements: List<String>
-) : RecyclerView.Adapter<ArtistAdapter.ArtistViewHolder>() {
+class ArtistAdapter : RecyclerView.Adapter<ArtistAdapter.ArtistViewHolder>() {
 
-    /* private lateinit var elements: List<String>*/
+    private lateinit var elements: List<String>
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArtistViewHolder {
         return ArtistViewHolder(

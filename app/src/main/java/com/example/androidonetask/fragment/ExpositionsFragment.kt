@@ -14,7 +14,7 @@ class ExpositionsFragment : Fragment() {
 
     private var _binding: FragmentArtistBinding? = null
     private val binding get() = _binding!!
-    private var adapter = ArtistAdapter(RankElement.fillList())
+    private var adapter = ArtistAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater,

@@ -10,9 +10,10 @@ import com.example.androidonetask.databinding.ListElementBinding
 import com.example.androidonetask.utils.ClickListener
 
 class NewsAdapter(
-    private var elements: List<String>,
     private val listener: ClickListener
 ) : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
+
+    private lateinit var elements: List<String>
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
         return NewsViewHolder(
