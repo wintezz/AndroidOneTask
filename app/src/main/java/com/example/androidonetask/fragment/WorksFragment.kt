@@ -10,16 +10,17 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidonetask.R
 import com.example.androidonetask.adapter.WorkAdapter
 import com.example.androidonetask.data.MusicApiService
-import com.example.androidonetask.data.Track
 import com.example.androidonetask.databinding.FragmentArtistBinding
-
-
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class WorksFragment : Fragment() {
 
     private var _binding: FragmentArtistBinding? = null
     private val binding get() = _binding!!
     private var adapter = WorkAdapter { onClickView() }
+    private lateinit var apiService: MusicApiService
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -51,14 +52,14 @@ class WorksFragment : Fragment() {
 
     private fun onClickView() {
         findNavController().navigate(R.id.action_worksFragment_to_artActivity)
+        CoroutineScope(Dispatchers.IO).launch {
+            val product = apiService.getTrackList()
+
+        }
     }
 
     override fun onDestroyView() {
         _binding = null
         super.onDestroyView()
-    }
-
-    companion object{
-        var trackInfo = listOf<Track>()
     }
 }

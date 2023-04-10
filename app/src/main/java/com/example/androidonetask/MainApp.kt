@@ -23,6 +23,5 @@ class MainApp : Application() {
             .build()
 
         apiService = retrofit.create(MusicApiService::class.java)
-
     }
 }

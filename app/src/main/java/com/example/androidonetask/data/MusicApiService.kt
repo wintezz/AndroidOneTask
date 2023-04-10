@@ -5,7 +5,7 @@ import retrofit2.http.GET
 import retrofit2.http.Headers
 
 interface MusicApiService {
-    @Headers("?client_id=: $CLIENT_ID")
+    @Headers("client_id= $CLIENT_ID")
     @GET("/v3.0/tracks")
     fun getTrackList(): Call<List<Track>>
 
