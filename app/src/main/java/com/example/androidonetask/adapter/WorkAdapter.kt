@@ -6,14 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidonetask.R
+import com.example.androidonetask.data.Track
 import com.example.androidonetask.databinding.ListElementBinding
 
 class WorkAdapter(
     private val listenerImage: (View) -> Unit
 ) : RecyclerView.Adapter<WorkAdapter.ArtistViewHolder>() {
 
-    /*private lateinit var tracks: MutableList<Track>*/
-    private lateinit var elements: List<String>
+    private lateinit var tracks: List<Track>
+   /* private lateinit var elements: List<String>*/
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArtistViewHolder {
         return ArtistViewHolder(
@@ -23,21 +24,21 @@ class WorkAdapter(
     }
 
     override fun onBindViewHolder(holder: ArtistViewHolder, position: Int) {
-        holder.onBind(elements[position])
+        holder.onBind(tracks[position])
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun updateList(newTracks: List<String>) {
-        this.elements = newTracks
+    fun updateList(newTracks: List<Track>) {
+        this.tracks = newTracks
         notifyDataSetChanged()
     }
 
-    override fun getItemCount(): Int = elements.size
+    override fun getItemCount(): Int = tracks.size
 
     inner class ArtistViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val binding = ListElementBinding.bind(view)
 
-        fun onBind(data: String) {
+        fun onBind(data: Track) {
             binding.textRank.text = data.toString()
 
             binding.artView.setOnClickListener {

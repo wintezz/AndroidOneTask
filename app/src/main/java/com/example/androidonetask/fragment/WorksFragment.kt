@@ -9,8 +9,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidonetask.R
 import com.example.androidonetask.adapter.WorkAdapter
+import com.example.androidonetask.data.MusicApiService
+import com.example.androidonetask.data.Track
 import com.example.androidonetask.databinding.FragmentArtistBinding
-import com.example.androidonetask.utils.RankElement
+
+
 
 class WorksFragment : Fragment() {
 
@@ -43,7 +46,7 @@ class WorksFragment : Fragment() {
     private fun initRecyclerView() {
         binding.recView.layoutManager = LinearLayoutManager(context)
         binding.recView.adapter = adapter
-        adapter.updateList(RankElement.fillList())
+       /* adapter.updateList(RankElement.fillList())*/
     }
 
     private fun onClickView() {
@@ -53,5 +56,9 @@ class WorksFragment : Fragment() {
     override fun onDestroyView() {
         _binding = null
         super.onDestroyView()
+    }
+
+    companion object{
+        var trackInfo = listOf<Track>()
     }
 }
