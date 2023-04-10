@@ -28,8 +28,6 @@ class InfoFragment : Fragment() {
                 false
             )
 
-        initRecyclerView()
-
         return binding.root
     }
 
@@ -37,6 +35,8 @@ class InfoFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         activity?.title = this.javaClass.simpleName
+
+        initRecyclerView()
     }
 
     private fun onClickView() {

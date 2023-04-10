@@ -30,8 +30,6 @@ class NewsFragment : Fragment() {
                 false
             )
 
-        initRecyclerView()
-
         return binding.root
     }
 
@@ -39,6 +37,8 @@ class NewsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         activity?.title = this.javaClass.simpleName
+
+        initRecyclerView()
     }
 
     private fun initRecyclerView() {
