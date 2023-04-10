@@ -6,7 +6,6 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.androidonetask.R
 import com.example.androidonetask.databinding.ActivityMainBinding
-import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
 
@@ -24,8 +23,9 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
 
-        val bottomNavigation: BottomNavigationView = findViewById(R.id.bottomNavView)
-        bottomNavigation.setupWithNavController(navController)
+        binding.bottomNavView?.setupWithNavController(navController)
+
+        binding.navigationDrawer?.setupWithNavController(navController)
     }
 
     override fun onDestroy() {
