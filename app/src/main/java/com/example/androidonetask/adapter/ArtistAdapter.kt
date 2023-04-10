@@ -39,8 +39,8 @@ class ArtistAdapter(
         fun onBind(elem: String) {
             binding.textRank.text = elem
 
-            binding.artView.setOnClickListener {
-                listenerImage.invoke(binding.artView)
+            binding.imageView.setOnClickListener {
+                listenerImage.invoke(binding.imageView)
             }
         }
     }

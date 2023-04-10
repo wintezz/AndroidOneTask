@@ -2,25 +2,25 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/news"
+        android:id="@+id/newsFragment"
         android:enabled="true"
         android:title="@string/news" />
     <item
-        android:id="@+id/artist"
+        android:id="@+id/artistFragment"
         android:enabled="true"
         android:title="@string/artist" />
     <item
-        android:id="@+id/expositions"
+        android:id="@+id/expositionsFragment"
         android:enabled="true"
         android:title="@string/expositions" />
 
     <item
-        android:id="@+id/works"
+        android:id="@+id/worksFragment"
         android:enabled="true"
         android:title="@string/works" />
 
     <item
-        android:id="@+id/info"
+        android:id="@+id/infoFragment"
         android:enabled="true"
         android:title="@string/info" />
 

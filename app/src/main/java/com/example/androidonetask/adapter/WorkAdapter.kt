@@ -39,8 +39,8 @@ class WorkAdapter(
         fun onBind(elem: String) {
             binding.textRank.text = elem
 
-            binding.detailView.setOnClickListener {
-                listenerImage.invoke(binding.detailView)
+            binding.artView.setOnClickListener {
+                listenerImage.invoke(binding.artView)
             }
         }
     }

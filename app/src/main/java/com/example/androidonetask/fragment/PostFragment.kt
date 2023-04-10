@@ -23,7 +23,7 @@ class PostFragment : Fragment() {
                 false
             )
 
-        binding.textRankPost.text = arguments?.getInt(POSITION_KEY).toString()
+        binding.textRankPost.text = arguments?.getInt(ADAPTER_POSITION).toString()
 
         return binding.root
     }
@@ -41,10 +41,6 @@ class PostFragment : Fragment() {
 
     companion object {
 
-         const val POSITION_KEY = "Int"
-
-        /*fun newInstance(id: Int) = PostFragment().apply {
-            arguments = bundleOf(KEY_FOR_ID to id)
-        }
-    }*/}
+        const val ADAPTER_POSITION = "adapterPosition"
+    }
 }

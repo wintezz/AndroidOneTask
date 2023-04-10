@@ -29,8 +29,6 @@ class WorksFragment : Fragment() {
                 false
             )
 
-        initRecyclerView()
-
         return binding.root
     }
 
@@ -38,6 +36,8 @@ class WorksFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         activity?.title = this.javaClass.simpleName
+
+        initRecyclerView()
     }
 
     private fun initRecyclerView() {

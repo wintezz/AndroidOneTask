@@ -49,8 +49,8 @@ class NewsAdapter(
                 listener.invoke(adapterPosition)
             }
 
-            binding.artView.setOnClickListener {
-                listenerArtView.invoke(binding.artView)
+            binding.imageView.setOnClickListener {
+                listenerArtView.invoke(binding.imageView)
             }
 
             binding.botText.setOnClickListener {

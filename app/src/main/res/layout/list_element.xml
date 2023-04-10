@@ -52,13 +52,13 @@
     </FrameLayout>
 
     <ImageView
-
         android:id="@+id/artView"
-        android:layout_width="wrap_content"
-        android:layout_height="46dp"
+        android:layout_width="@dimen/art_view_width"
+        android:layout_height="@dimen/art_view_height"
+        android:layout_marginStart="@dimen/art_view_margin_start"
         android:layout_marginTop="@dimen/main_margin"
-        android:layout_weight="1"
-        app:srcCompat="@android:drawable/btn_star_big_on" />
+        app:srcCompat="@android:drawable/btn_star_big_on"
+        tools:ignore="ContentDescription" />
 
     <ImageView
         android:id="@+id/detailView"
@@ -68,7 +68,5 @@
         android:layout_marginTop="@dimen/main_margin"
         app:srcCompat="@mipmap/ic_launcher"
         tools:ignore="ContentDescription" />
-
-
 
 </LinearLayout>

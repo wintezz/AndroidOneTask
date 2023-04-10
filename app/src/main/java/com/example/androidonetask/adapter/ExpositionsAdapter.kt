@@ -4,13 +4,12 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidonetask.R
 import com.example.androidonetask.databinding.ListElementBinding
 
 class ExpositionsAdapter(
-    private val listenerImage: (TextView) -> Unit
+    private val listenerImage: (View) -> Unit
 ) : RecyclerView.Adapter<ExpositionsAdapter.ArtistViewHolder>() {
 
     private lateinit var elements: List<String>
@@ -40,8 +39,8 @@ class ExpositionsAdapter(
         fun onBind(elem: String) {
             binding.textRank.text = elem
 
-            binding.topText.setOnClickListener {
-                listenerImage.invoke(binding.topText)
+            binding.artView.setOnClickListener {
+                listenerImage.invoke(binding.artView)
             }
         }
     }
