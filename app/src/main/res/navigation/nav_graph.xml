@@ -18,6 +18,7 @@
         <action
             android:id="@+id/action_newsFragment_to_imageViewActivity"
             app:destination="@id/imageViewActivity" />
+
     </fragment>
     <fragment
         android:id="@+id/artistFragment"

@@ -41,7 +41,7 @@ class PostFragment : Fragment() {
 
     companion object {
 
-         const val POSITION_KEY = "position"
+         const val POSITION_KEY = "Int"
 
         /*fun newInstance(id: Int) = PostFragment().apply {
             arguments = bundleOf(KEY_FOR_ID to id)
