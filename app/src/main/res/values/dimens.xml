@@ -5,9 +5,12 @@
     <dimen name="rank_element_width">50dp</dimen>
     <dimen name="detail_view_width">44dp</dimen>
     <dimen name="detail_view_height">46dp</dimen>
-    <dimen name="detail_view_margin_start">45dp</dimen>
-    <dimen name="art_view_margin_start">60dp</dimen>
+    <dimen name="detail_view_margin_start">20dp</dimen>
+    <dimen name="image_view_margin_start">60dp</dimen>
     <dimen name="main_margin">5dp</dimen>
     <dimen name="bot_text_margin_top">30dp</dimen>
     <dimen name="bot_text_margin_start">10dp</dimen>
+    <dimen name="art_view_height">46dp</dimen>
+    <dimen name="art_view_width">20dp</dimen>
+    <dimen name="art_view_margin_start">20dp</dimen>
 </resources>

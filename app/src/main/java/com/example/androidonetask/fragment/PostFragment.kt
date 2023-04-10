@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import com.example.androidonetask.databinding.FragmentPostBinding
 
@@ -24,8 +23,6 @@ class PostFragment : Fragment() {
                 false
             )
 
-        binding.textRankPost.text = arguments?.getInt(KEY_FOR_ID).toString()
-
         return binding.root
     }
 
@@ -33,6 +30,8 @@ class PostFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         activity?.title = this.javaClass.simpleName
+
+        binding.textRankPost.text = arguments?.getInt(ADAPTER_POSITION).toString()
     }
 
     override fun onDestroyView() {
@@ -42,10 +41,6 @@ class PostFragment : Fragment() {
 
     companion object {
 
-        private const val KEY_FOR_ID = "KEY_FOR_ID"
-
-        fun newInstance(id: Int) = PostFragment().apply {
-            arguments = bundleOf(KEY_FOR_ID to id)
-        }
+        const val ADAPTER_POSITION = "adapterPosition"
     }
 }

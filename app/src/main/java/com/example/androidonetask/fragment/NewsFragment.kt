@@ -1,23 +1,25 @@
 package com.example.androidonetask.fragment
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidonetask.R
-import com.example.androidonetask.activity.ImageViewActivity
 import com.example.androidonetask.adapter.NewsAdapter
 import com.example.androidonetask.databinding.FragmentArtistBinding
+import com.example.androidonetask.fragment.PostFragment.Companion.ADAPTER_POSITION
 import com.example.androidonetask.utils.RankElement
 
 class NewsFragment : Fragment() {
 
     private var _binding: FragmentArtistBinding? = null
     private val binding get() = _binding!!
-    private var adapter = NewsAdapter({ onClickItem(it) }, { onClickView() })
+    private var adapter =
+        NewsAdapter({ onClickItemPosition(it) }, { onClickImageView() }, { onClickArtist() })
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,17 +49,20 @@ class NewsFragment : Fragment() {
         adapter.updateList(RankElement.fillList())
     }
 
-    private fun onClickItem(position: Int) {
-        parentFragmentManager.beginTransaction().apply {
-            replace(R.id.hostFragment, PostFragment.newInstance(position))
-            addToBackStack(null)
-            commit()
-        }
+    private fun onClickItemPosition(position: Int) {
+        findNavController().navigate(
+            R.id.action_newsFragment_to_postFragment,
+            bundleOf(ADAPTER_POSITION to position)
+        )
+
     }
 
-    private fun onClickView() {
-        val intent = Intent(requireContext(), ImageViewActivity::class.java)
-        startActivity(intent)
+    private fun onClickImageView() {
+        findNavController().navigate(R.id.action_newsFragment_to_imageViewActivity)
+    }
+
+    private fun onClickArtist() {
+        findNavController().navigate(R.id.action_newsFragment_to_artistFragment)
     }
 
     override fun onDestroyView() {

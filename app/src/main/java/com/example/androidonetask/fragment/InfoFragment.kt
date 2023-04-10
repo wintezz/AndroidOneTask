@@ -41,7 +41,7 @@ class InfoFragment : Fragment() {
 
     private fun onClickView() {
         parentFragmentManager.beginTransaction().apply {
-            replace(R.id.hostFragment, DetailFragment())
+            replace(R.id.nav_host_fragment, DetailFragment())
             addToBackStack(null)
             commit()
         }

@@ -3,6 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
 }
 
+
 android {
     namespace 'com.example.androidonetask'
     compileSdk 33
@@ -37,6 +38,10 @@ android {
 }
 
 dependencies {
+
+    // Navigation
+    implementation"androidx.navigation:navigation-fragment-ktx:2.5.3"
+    implementation"androidx.navigation:navigation-ui-ktx:2.5.3"
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
