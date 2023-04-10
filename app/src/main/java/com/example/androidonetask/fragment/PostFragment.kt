@@ -23,8 +23,6 @@ class PostFragment : Fragment() {
                 false
             )
 
-        binding.textRankPost.text = arguments?.getInt(ADAPTER_POSITION).toString()
-
         return binding.root
     }
 
@@ -32,6 +30,8 @@ class PostFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         activity?.title = this.javaClass.simpleName
+
+        binding.textRankPost.text = arguments?.getInt(ADAPTER_POSITION).toString()
     }
 
     override fun onDestroyView() {
