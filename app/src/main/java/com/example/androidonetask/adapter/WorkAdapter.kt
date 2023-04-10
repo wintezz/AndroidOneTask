@@ -6,15 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidonetask.R
-import com.example.androidonetask.data.Track
 import com.example.androidonetask.databinding.ListElementBinding
-import com.squareup.picasso.Picasso
 
 class WorkAdapter(
     private val listenerImage: (View) -> Unit
 ) : RecyclerView.Adapter<WorkAdapter.ArtistViewHolder>() {
 
-    private lateinit var tracks: MutableList<Track>
+    /*private lateinit var tracks: MutableList<Track>*/
+    private lateinit var elements: List<String>
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArtistViewHolder {
         return ArtistViewHolder(
@@ -24,29 +23,29 @@ class WorkAdapter(
     }
 
     override fun onBindViewHolder(holder: ArtistViewHolder, position: Int) {
-        holder.onBind(tracks[position])
+        holder.onBind(elements[position])
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun updateList(newTracks: MutableList<Track>) {
-        this.tracks = newTracks
+    fun updateList(newTracks: List<String>) {
+        this.elements = newTracks
         notifyDataSetChanged()
     }
 
-    override fun getItemCount(): Int = tracks.size
+    override fun getItemCount(): Int = elements.size
 
     inner class ArtistViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val binding = ListElementBinding.bind(view)
 
-        fun onBind(data: Track) {
+        fun onBind(data: String) {
             binding.textRank.text = data.toString()
 
             binding.artView.setOnClickListener {
                 listenerImage.invoke(binding.artView)
             }
 
-            Picasso.get()
-                .load(data.albumImage)
+           /* Picasso.get()
+                .load(data.albumImage)*/
         }
     }
 }
