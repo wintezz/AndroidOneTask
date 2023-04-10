@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/news"
+        android:enabled="true"
+        android:title="@string/news" />
+    <item
+        android:id="@+id/artist"
+        android:enabled="true"
+        android:title="@string/artist" />
+    <item
+        android:id="@+id/expositions"
+        android:enabled="true"
+        android:title="@string/expositions" />
+
+    <item
+        android:id="@+id/works"
+        android:enabled="true"
+        android:title="@string/works" />
+
+    <item
+        android:id="@+id/info"
+        android:enabled="true"
+        android:title="@string/info" />
+
+</menu>
