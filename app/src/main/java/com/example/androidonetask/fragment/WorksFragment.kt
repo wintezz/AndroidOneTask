@@ -1,6 +1,7 @@
 package com.example.androidonetask.fragment
 
 import android.os.Bundle
+import android.os.HandlerThread
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,20 +12,16 @@ import com.example.androidonetask.R
 import com.example.androidonetask.adapter.WorkAdapter
 import com.example.androidonetask.data.ApiService
 import com.example.androidonetask.data.Repository
-import com.example.androidonetask.data.TrackList
 import com.example.androidonetask.databinding.FragmentArtistBinding
 import com.example.androidonetask.utils.RankElement
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class WorksFragment : Fragment() {
 
-    private lateinit var apiService: ApiService
     private var _binding: FragmentArtistBinding? = null
     private val binding get() = _binding!!
     private var adapter = WorkAdapter { onClickView() }
-    private var trackList: MutableList<TrackList> = mutableListOf()
+    private lateinit var apiService: ApiService
+    private var handler = HandlerThread(String())
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,7 +45,7 @@ class WorksFragment : Fragment() {
         apiService = Repository.retrofitService
 
         initRecyclerView()
-        fetch()
+        initHandlerThread()
     }
 
     private fun initRecyclerView() {
@@ -61,23 +58,20 @@ class WorksFragment : Fragment() {
         findNavController().navigate(R.id.action_worksFragment_to_artActivity)
     }
 
-    private fun fetch() {
-        apiService.getTrackList().enqueue(object : Callback<MutableList<TrackList>> {
-            override fun onFailure(call: Call<MutableList<TrackList>>, t: Throwable) {
-            }
-
-            override fun onResponse(
-                call: Call<MutableList<TrackList>>,
-                response: Response<MutableList<TrackList>>
-            ) {
-                  trackList.addAll(response.body())          }
-
-
-        })
-    }
-
     override fun onDestroyView() {
         _binding = null
         super.onDestroyView()
     }
+
+    private fun initHandlerThread() {
+        handler.start()
+        Thread(Runnable {
+            getData()
+        }).start()
+    }
+
+    private fun getData() {
+        apiService.getTrackList().execute()
+    }
 }
+

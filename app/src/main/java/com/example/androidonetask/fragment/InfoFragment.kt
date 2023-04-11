@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidonetask.R
 import com.example.androidonetask.adapter.InfoAdapter
@@ -40,11 +41,7 @@ class InfoFragment : Fragment() {
     }
 
     private fun onClickView() {
-        parentFragmentManager.beginTransaction().apply {
-            replace(R.id.nav_host_fragment, DetailFragment())
-            addToBackStack(null)
-            commit()
-        }
+        findNavController().navigate(R.id.action_infoFragment_to_detailFragment)
     }
 
     private fun initRecyclerView() {

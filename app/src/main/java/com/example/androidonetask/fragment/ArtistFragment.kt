@@ -9,7 +9,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidonetask.R
 import com.example.androidonetask.adapter.ArtistAdapter
-import com.example.androidonetask.data.TrackList
 import com.example.androidonetask.databinding.FragmentArtistBinding
 import com.example.androidonetask.utils.RankElement
 
@@ -55,5 +54,4 @@ class ArtistFragment : Fragment() {
         _binding = null
         super.onDestroyView()
     }
-
 }

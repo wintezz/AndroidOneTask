@@ -39,8 +39,7 @@ class WorkAdapter(
         val binding = ListElementBinding.bind(view)
 
         fun onBind(data: TrackList) {
-            binding.textRank.text = data.toString()
-
+            binding.textRank.text = data.id
             binding.topText.text = data.name
             binding.botText.text = data.artist_name
 
