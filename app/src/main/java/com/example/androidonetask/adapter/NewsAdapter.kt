@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidonetask.R
+import com.example.androidonetask.data.TrackList
 import com.example.androidonetask.databinding.ListElementBinding
 
 class NewsAdapter(
@@ -15,7 +16,7 @@ class NewsAdapter(
     private val listenerArtist: (TextView) -> Unit
 ) : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
 
-    private lateinit var elements: List<String>
+    private var elements: List<TrackList> = emptyList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
         return NewsViewHolder(
@@ -29,7 +30,7 @@ class NewsAdapter(
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun updateList(newElements: List<String>) {
+    fun updateList(newElements: List<TrackList>) {
         this.elements = newElements
         notifyDataSetChanged()
     }
@@ -42,8 +43,9 @@ class NewsAdapter(
 
         val binding = ListElementBinding.bind(view)
 
-        fun onBind(elem: String) {
-            binding.textRank.text = elem
+        fun onBind(elem: TrackList) {
+
+            binding.textRank.text = adapterPosition.toString()
 
             binding.textRank.setOnClickListener {
                 listener.invoke(adapterPosition)

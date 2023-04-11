@@ -9,18 +9,22 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidonetask.R
 import com.example.androidonetask.adapter.WorkAdapter
-import com.example.androidonetask.data.MusicApiService
+import com.example.androidonetask.data.ApiService
+import com.example.androidonetask.data.Repository
+import com.example.androidonetask.data.TrackList
 import com.example.androidonetask.databinding.FragmentArtistBinding
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import com.example.androidonetask.utils.RankElement
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class WorksFragment : Fragment() {
 
+    private lateinit var apiService: ApiService
     private var _binding: FragmentArtistBinding? = null
     private val binding get() = _binding!!
     private var adapter = WorkAdapter { onClickView() }
-    private lateinit var apiService: MusicApiService
+    private var trackList: MutableList<TrackList> = mutableListOf()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,21 +45,35 @@ class WorksFragment : Fragment() {
 
         activity?.title = this.javaClass.simpleName
 
+        apiService = Repository.retrofitService
+
         initRecyclerView()
+        fetch()
     }
 
     private fun initRecyclerView() {
         binding.recView.layoutManager = LinearLayoutManager(context)
         binding.recView.adapter = adapter
-       /* adapter.updateList(RankElement.fillList())*/
+        adapter.updateList(RankElement.fillList())
     }
 
     private fun onClickView() {
         findNavController().navigate(R.id.action_worksFragment_to_artActivity)
-        CoroutineScope(Dispatchers.IO).launch {
-            val product = apiService.getTrackList()
+    }
 
-        }
+    private fun fetch() {
+        apiService.getTrackList().enqueue(object : Callback<MutableList<TrackList>> {
+            override fun onFailure(call: Call<MutableList<TrackList>>, t: Throwable) {
+            }
+
+            override fun onResponse(
+                call: Call<MutableList<TrackList>>,
+                response: Response<MutableList<TrackList>>
+            ) {
+                  trackList.addAll(response.body())          }
+
+
+        })
     }
 
     override fun onDestroyView() {

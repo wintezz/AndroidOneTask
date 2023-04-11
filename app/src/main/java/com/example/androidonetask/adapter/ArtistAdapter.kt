@@ -6,13 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidonetask.R
+import com.example.androidonetask.data.TrackList
 import com.example.androidonetask.databinding.ListElementBinding
+import com.example.androidonetask.utils.RankElement
 
 class ArtistAdapter(
     private val listenerImage: (View) -> Unit
 ) : RecyclerView.Adapter<ArtistAdapter.ArtistViewHolder>() {
 
-    private lateinit var elements: List<String>
+    private var elements: List<TrackList> = emptyList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArtistViewHolder {
         return ArtistViewHolder(
@@ -26,8 +28,8 @@ class ArtistAdapter(
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun updateList(newElements: List<String>) {
-        this.elements = newElements
+    fun updateList(newElements: List<TrackList>) {
+        elements = newElements
         notifyDataSetChanged()
     }
 
@@ -36,8 +38,8 @@ class ArtistAdapter(
     inner class ArtistViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val binding = ListElementBinding.bind(view)
 
-        fun onBind(elem: String) {
-            binding.textRank.text = elem
+        fun onBind(elem: TrackList) {
+            binding.textRank.text = elem.id
 
             binding.imageView.setOnClickListener {
                 listenerImage.invoke(binding.imageView)

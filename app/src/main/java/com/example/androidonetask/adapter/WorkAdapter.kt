@@ -6,15 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidonetask.R
-import com.example.androidonetask.data.Track
+import com.example.androidonetask.data.TrackList
 import com.example.androidonetask.databinding.ListElementBinding
+import com.squareup.picasso.Picasso
 
 class WorkAdapter(
     private val listenerImage: (View) -> Unit
 ) : RecyclerView.Adapter<WorkAdapter.ArtistViewHolder>() {
 
-    private lateinit var tracks: List<Track>
-   /* private lateinit var elements: List<String>*/
+    private var trackLists: List<TrackList> = emptyList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArtistViewHolder {
         return ArtistViewHolder(
@@ -24,29 +24,33 @@ class WorkAdapter(
     }
 
     override fun onBindViewHolder(holder: ArtistViewHolder, position: Int) {
-        holder.onBind(tracks[position])
+        holder.onBind(trackLists[position])
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun updateList(newTracks: List<Track>) {
-        this.tracks = newTracks
+    fun updateList(newTrackLists: List<TrackList>) {
+        this.trackLists = newTrackLists
         notifyDataSetChanged()
     }
 
-    override fun getItemCount(): Int = tracks.size
+    override fun getItemCount(): Int = trackLists.size
 
     inner class ArtistViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val binding = ListElementBinding.bind(view)
 
-        fun onBind(data: Track) {
+        fun onBind(data: TrackList) {
             binding.textRank.text = data.toString()
+
+            binding.topText.text = data.name
+            binding.botText.text = data.artist_name
 
             binding.artView.setOnClickListener {
                 listenerImage.invoke(binding.artView)
             }
 
-           /* Picasso.get()
-                .load(data.albumImage)*/
+            Picasso.get()
+                .load(data.album_image)
+                .into(binding.imageView)
         }
     }
 }

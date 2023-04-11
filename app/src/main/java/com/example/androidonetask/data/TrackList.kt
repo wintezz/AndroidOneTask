@@ -1,9 +1,9 @@
 package com.example.androidonetask.data
 
-data class Track(
+data class TrackList(
     val id: String,
     val name: String,
-    val artistName: String,
-    val duration: Int,
+    val duration: String,
+    val artist_name: String,
     val album_image: String
 )
