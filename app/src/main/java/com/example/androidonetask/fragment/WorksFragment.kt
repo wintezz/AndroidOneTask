@@ -56,14 +56,14 @@ class WorksFragment : Fragment() {
         handlerThread.start()
         val looper = handlerThread.looper
         val handler = Handler(looper)
-        handler.post(Runnable {
+        handler.post {
             val list = apiService.getTrackList(CLIENT_ID).execute().body()?.results
             if (list != null) {
                 requireActivity().runOnUiThread {
                     adapter.updateList(list)
                 }
             }
-        })
+        }
     }
 
     private fun onClickView() {

@@ -1,20 +1,20 @@
 package com.example.androidonetask.utils
 
-import com.example.androidonetask.data.TrackList
+import com.example.androidonetask.data.Track
 
 class RankElement {
     companion object {
 
-        fun fillList(): List<TrackList> {
-            val data = mutableListOf<TrackList>()
+        fun fillList(): List<Track> {
+            val data = mutableListOf<Track>()
             (0..1000).forEach { i ->
                 data.add(
-                    TrackList(
+                    Track(
                         id = "$i",
                         name = "$i",
                         duration = "$i",
-                        artist_name = "$i",
-                        album_image = "$i"
+                        artistName = "$i",
+                        albumImage = "$i"
                     )
                 )
             }

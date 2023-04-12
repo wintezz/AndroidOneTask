@@ -2,7 +2,7 @@ package com.example.androidonetask.data
 
 import com.google.gson.annotations.SerializedName
 
-data class TrackList(
+data class Track(
     @SerializedName("id")
     val id: String,
     @SerializedName("name")
@@ -10,12 +10,12 @@ data class TrackList(
     @SerializedName("duration")
     val duration: String,
     @SerializedName("artist_name")
-    val artist_name: String,
+    val artistName: String,
     @SerializedName("album_image")
-    val album_image: String
+    val albumImage: String
 )
 
 data class TrackListResponse(
     @SerializedName("results")
-    val results: List<TrackList>?
+    val results: List<Track>?
 )

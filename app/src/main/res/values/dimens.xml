@@ -30,4 +30,7 @@
     <dimen name="artist_name_marginEnd">47dp</dimen>
     <dimen name="name_marginEnd">45dp</dimen>
     <dimen name="name_marginBottom">20dp</dimen>
+    <dimen name="card_view_height">100dp</dimen>
+    <dimen name="card_view_padding">20dp</dimen>
+    <dimen name="card_view_corner">30dp</dimen>
 </resources>
