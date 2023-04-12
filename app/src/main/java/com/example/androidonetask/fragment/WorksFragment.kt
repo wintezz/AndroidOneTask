@@ -22,6 +22,7 @@ class WorksFragment : Fragment() {
     private val binding get() = _binding!!
     private var adapter = WorkAdapter { onClickView() }
     private lateinit var apiService: ApiService
+    private var handlerThread = HandlerThread(HANDLER_NAME)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,7 +53,6 @@ class WorksFragment : Fragment() {
     }
 
     private fun initHandlerThread() {
-        val handlerThread = HandlerThread(HANDLER_NAME)
         handlerThread.start()
         val looper = handlerThread.looper
         val handler = Handler(looper)
@@ -72,6 +72,7 @@ class WorksFragment : Fragment() {
 
     override fun onDestroyView() {
         _binding = null
+        handlerThread.quit()
         super.onDestroyView()
     }
 

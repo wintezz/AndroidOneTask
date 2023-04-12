@@ -49,8 +49,8 @@ class WorkAdapter(
 
             binding.name.text = data.name
             binding.artistName.text = data.artistName
-            binding.duration.progress = data.duration.toInt()
-            binding.albumImage.load(data.albumImage)
+            binding.duration.progress = data.duration!!.toInt()
+            data.albumImage?.let { binding.albumImage.load(it) }
 
             binding.albumImage.setOnClickListener {
                 listenerImage.invoke(binding.albumImage)
