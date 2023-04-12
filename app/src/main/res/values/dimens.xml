@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="text_size_small">14sp</dimen>
+    <dimen name="text_size_mask_group">11sp</dimen>
     <dimen name="rank_element_height">47dp</dimen>
     <dimen name="rank_element_width">50dp</dimen>
     <dimen name="detail_view_width">44dp</dimen>
@@ -12,5 +13,21 @@
     <dimen name="bot_text_margin_start">10dp</dimen>
     <dimen name="art_view_height">46dp</dimen>
     <dimen name="art_view_width">20dp</dimen>
-    <dimen name="art_view_margin_start">20dp</dimen>
+    <dimen name="duration_width">217dp</dimen>
+    <dimen name="duration_marginTop">40dp</dimen>
+    <dimen name="duration_marginBottom">15dp</dimen>
+    <dimen name="album_image_width">70dp</dimen>
+    <dimen name="album_image_height">65dp</dimen>
+    <dimen name="album_image_marginTop">20dp</dimen>
+    <dimen name="album_image_marginStart">15dp</dimen>
+    <dimen name="image_button_width">30dp</dimen>
+    <dimen name="image_button_height">30dp</dimen>
+    <dimen name="image_button_marginStart">36dp</dimen>
+    <dimen name="image_button_marginTop">38dp</dimen>
+    <dimen name="mask_group_width">72dp</dimen>
+    <dimen name="mask_group_height">14dp</dimen>
+    <dimen name="mask_group_marginStart">14dp</dimen>
+    <dimen name="artist_name_marginEnd">47dp</dimen>
+    <dimen name="name_marginEnd">45dp</dimen>
+    <dimen name="name_marginBottom">20dp</dimen>
 </resources>

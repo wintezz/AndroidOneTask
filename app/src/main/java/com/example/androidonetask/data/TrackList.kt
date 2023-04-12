@@ -13,6 +13,9 @@ data class TrackList(
     val artist_name: String,
     @SerializedName("album_image")
     val album_image: String
+)
 
-
+data class TrackListResponse(
+    @SerializedName("results")
+    val results: List<TrackList>?
 )

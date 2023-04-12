@@ -10,7 +10,11 @@ class RankElement {
             (0..1000).forEach { i ->
                 data.add(
                     TrackList(
-                        "$i", "$i", "$i", "$i", "$i"
+                        id = "$i",
+                        name = "$i",
+                        duration = "$i",
+                        artist_name = "$i",
+                        album_image = "$i"
                     )
                 )
             }

@@ -4,6 +4,6 @@
     android:id="@+id/recView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:listitem="@layout/list_element">
+    tools:listitem="@layout/track_element_list">
 
 </androidx.recyclerview.widget.RecyclerView>

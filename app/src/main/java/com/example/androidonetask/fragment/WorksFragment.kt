@@ -1,6 +1,7 @@
 package com.example.androidonetask.fragment
 
 import android.os.Bundle
+import android.os.Handler
 import android.os.HandlerThread
 import android.view.LayoutInflater
 import android.view.View
@@ -13,7 +14,6 @@ import com.example.androidonetask.adapter.WorkAdapter
 import com.example.androidonetask.data.ApiService
 import com.example.androidonetask.data.Repository
 import com.example.androidonetask.databinding.FragmentArtistBinding
-import com.example.androidonetask.utils.RankElement
 
 class WorksFragment : Fragment() {
 
@@ -21,7 +21,6 @@ class WorksFragment : Fragment() {
     private val binding get() = _binding!!
     private var adapter = WorkAdapter { onClickView() }
     private lateinit var apiService: ApiService
-    private var handler = HandlerThread(String())
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -51,7 +50,6 @@ class WorksFragment : Fragment() {
     private fun initRecyclerView() {
         binding.recView.layoutManager = LinearLayoutManager(context)
         binding.recView.adapter = adapter
-        adapter.updateList(RankElement.fillList())
     }
 
     private fun onClickView() {
@@ -64,14 +62,28 @@ class WorksFragment : Fragment() {
     }
 
     private fun initHandlerThread() {
-        handler.start()
-        Thread(Runnable {
+        val handlerThread = HandlerThread(HANDLER_NAME)
+        handlerThread.start()
+        val looper = handlerThread.looper
+        val handler = Handler(looper)
+        handler.post(Runnable {
             getData()
-        }).start()
+        })
     }
 
     private fun getData() {
-        apiService.getTrackList().execute()
+        val list = apiService.getTrackList().execute().body()?.results
+        if (list != null) {
+            requireActivity().runOnUiThread(
+                Runnable {
+                    adapter.updateList(list)
+                }
+            )
+        }
+    }
+
+    companion object {
+        private const val HANDLER_NAME = "WorkHandler"
     }
 }
 

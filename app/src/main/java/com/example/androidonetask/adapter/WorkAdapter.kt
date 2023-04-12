@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidonetask.R
 import com.example.androidonetask.data.TrackList
-import com.example.androidonetask.databinding.ListElementBinding
+import com.example.androidonetask.databinding.TrackElementListBinding
 import com.squareup.picasso.Picasso
 
 class WorkAdapter(
@@ -19,7 +19,7 @@ class WorkAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArtistViewHolder {
         return ArtistViewHolder(
             LayoutInflater.from(parent.context)
-                .inflate(R.layout.list_element, parent, false)
+                .inflate(R.layout.track_element_list, parent, false)
         )
     }
 
@@ -36,20 +36,21 @@ class WorkAdapter(
     override fun getItemCount(): Int = trackLists.size
 
     inner class ArtistViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val binding = ListElementBinding.bind(view)
+        val binding = TrackElementListBinding.bind(view)
 
         fun onBind(data: TrackList) {
-            binding.textRank.text = data.id
-            binding.topText.text = data.name
-            binding.botText.text = data.artist_name
 
-            binding.artView.setOnClickListener {
-                listenerImage.invoke(binding.artView)
+            binding.name.text = data.name
+            binding.artistName.text = data.artist_name
+            binding.duration.progress = data.duration.toInt()
+
+            binding.albumImage.setOnClickListener {
+                listenerImage.invoke(binding.albumImage)
             }
 
             Picasso.get()
                 .load(data.album_image)
-                .into(binding.imageView)
+                .into(binding.albumImage)
         }
     }
 }

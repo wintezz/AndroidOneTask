@@ -10,4 +10,5 @@
     <string name="main_activity">MainActivity</string>
     <string name="get_message">Get message</string>
     <string name="send">Send</string>
+    <string name="mask_group">Mask Group</string>
 </resources>
