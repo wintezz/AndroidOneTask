@@ -22,7 +22,6 @@ class DetailFragment : Fragment() {
                 inflater, container,
                 false
             )
-
         return binding.root
     }
 

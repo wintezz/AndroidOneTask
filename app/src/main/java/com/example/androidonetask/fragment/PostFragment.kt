@@ -22,9 +22,6 @@ class PostFragment : Fragment() {
                 inflater, container,
                 false
             )
-
-        binding.textRankPost.text = arguments?.getInt(ADAPTER_POSITION).toString()
-
         return binding.root
     }
 
@@ -32,6 +29,8 @@ class PostFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         activity?.title = this.javaClass.simpleName
+
+        binding.textRankPost.text = arguments?.getInt(ADAPTER_POSITION).toString()
     }
 
     override fun onDestroyView() {
@@ -40,7 +39,6 @@ class PostFragment : Fragment() {
     }
 
     companion object {
-
         const val ADAPTER_POSITION = "adapterPosition"
     }
 }

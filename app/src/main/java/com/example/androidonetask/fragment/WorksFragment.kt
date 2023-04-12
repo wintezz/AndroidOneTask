@@ -33,7 +33,6 @@ class WorksFragment : Fragment() {
                 inflater, container,
                 false
             )
-
         return binding.root
     }
 
@@ -41,7 +40,6 @@ class WorksFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         activity?.title = this.javaClass.simpleName
-
         apiService = Repository.retrofitService
 
         initRecyclerView()
@@ -53,6 +51,21 @@ class WorksFragment : Fragment() {
         binding.recView.adapter = adapter
     }
 
+    private fun initHandlerThread() {
+        val handlerThread = HandlerThread(HANDLER_NAME)
+        handlerThread.start()
+        val looper = handlerThread.looper
+        val handler = Handler(looper)
+        handler.post(Runnable {
+            val list = apiService.getTrackList(CLIENT_ID).execute().body()?.results
+            if (list != null) {
+                requireActivity().runOnUiThread {
+                    adapter.updateList(list)
+                }
+            }
+        })
+    }
+
     private fun onClickView() {
         findNavController().navigate(R.id.action_worksFragment_to_artActivity)
     }
@@ -60,27 +73,6 @@ class WorksFragment : Fragment() {
     override fun onDestroyView() {
         _binding = null
         super.onDestroyView()
-    }
-
-    private fun initHandlerThread() {
-        val handlerThread = HandlerThread(HANDLER_NAME)
-        handlerThread.start()
-        val looper = handlerThread.looper
-        val handler = Handler(looper)
-        handler.post(Runnable {
-            getData()
-        })
-    }
-
-    private fun getData() {
-        val list = apiService.getTrackList(CLIENT_ID).execute().body()?.results
-        if (list != null) {
-            requireActivity().runOnUiThread(
-                Runnable {
-                    adapter.updateList(list)
-                }
-            )
-        }
     }
 
     companion object {

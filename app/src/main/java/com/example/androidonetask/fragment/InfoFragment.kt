@@ -28,7 +28,6 @@ class InfoFragment : Fragment() {
                 inflater, container,
                 false
             )
-
         return binding.root
     }
 

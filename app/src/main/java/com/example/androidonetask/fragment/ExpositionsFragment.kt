@@ -28,7 +28,6 @@ class ExpositionsFragment : Fragment() {
                 inflater, container,
                 false
             )
-
         return binding.root
     }
 

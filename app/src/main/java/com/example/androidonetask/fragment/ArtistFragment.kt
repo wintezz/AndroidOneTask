@@ -28,7 +28,6 @@ class ArtistFragment : Fragment() {
                 inflater, container,
                 false
             )
-
         return binding.root
     }
 
