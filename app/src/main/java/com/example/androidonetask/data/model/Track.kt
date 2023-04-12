@@ -12,7 +12,15 @@ data class Track(
     @SerializedName("artist_name")
     val artistName: String? = null,
     @SerializedName("album_image")
-    val albumImage: String? = null
+    val albumImage: String? = null,
+    @SerializedName("album_name")
+    val albumName: String? = null,
+    @SerializedName("releasedate")
+    val releaseDate: String? = null,
+    @SerializedName("audio")
+    val audio: String? = null,
+    @SerializedName("audiodownload")
+    val audioDownload: String? = null
 )
 
 data class TrackListResponse(

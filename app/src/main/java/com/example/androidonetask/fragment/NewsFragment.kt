@@ -12,7 +12,7 @@ import com.example.androidonetask.R
 import com.example.androidonetask.adapter.NewsAdapter
 import com.example.androidonetask.databinding.FragmentArtistBinding
 import com.example.androidonetask.fragment.PostFragment.Companion.ADAPTER_POSITION
-import com.example.androidonetask.utils.RankElement
+import com.example.androidonetask.utils.fillList
 
 class NewsFragment : Fragment() {
 
@@ -45,7 +45,7 @@ class NewsFragment : Fragment() {
     private fun initRecyclerView() {
         binding.recView.layoutManager = LinearLayoutManager(context)
         binding.recView.adapter = adapter
-        adapter.updateList(RankElement.fillList())
+        adapter.updateList(fillList())
     }
 
     private fun onClickItemPosition(position: Int) {

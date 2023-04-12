@@ -23,6 +23,7 @@ class WorksFragment : Fragment() {
     private var adapter = WorkAdapter { onClickView() }
     private lateinit var apiService: ApiService
     private var handlerThread = HandlerThread(HANDLER_NAME)
+    private lateinit var repository: Repository
 
     override fun onCreateView(
         inflater: LayoutInflater,

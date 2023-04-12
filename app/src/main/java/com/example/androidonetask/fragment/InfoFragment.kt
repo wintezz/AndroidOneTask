@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidonetask.R
 import com.example.androidonetask.adapter.InfoAdapter
 import com.example.androidonetask.databinding.FragmentArtistBinding
-import com.example.androidonetask.utils.RankElement
+import com.example.androidonetask.utils.fillList
 
 class InfoFragment : Fragment() {
 
@@ -46,7 +46,7 @@ class InfoFragment : Fragment() {
     private fun initRecyclerView() {
         binding.recView.layoutManager = LinearLayoutManager(context)
         binding.recView.adapter = adapter
-        adapter.updateList(RankElement.fillList())
+        adapter.updateList(fillList())
     }
 
     override fun onDestroyView() {

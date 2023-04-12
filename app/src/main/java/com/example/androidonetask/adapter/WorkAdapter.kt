@@ -4,12 +4,11 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidonetask.R
 import com.example.androidonetask.data.Track
 import com.example.androidonetask.databinding.TrackElementListBinding
-import com.squareup.picasso.Picasso
+import com.example.androidonetask.utils.load
 
 class WorkAdapter(
     private val listenerImage: (View) -> Unit
@@ -32,12 +31,6 @@ class WorkAdapter(
     fun updateList(newTracks: List<Track>) {
         this.tracks = newTracks
         notifyDataSetChanged()
-    }
-
-    private fun ImageView.load(url: String) {
-        Picasso.get()
-            .load(url)
-            .into(this)
     }
 
     override fun getItemCount(): Int = tracks.size
