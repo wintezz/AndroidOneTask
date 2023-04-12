@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidonetask.R
 import com.example.androidonetask.adapter.WorkAdapter
 import com.example.androidonetask.data.ApiService
+import com.example.androidonetask.data.ApiService.Companion.CLIENT_ID
 import com.example.androidonetask.data.Repository
 import com.example.androidonetask.databinding.FragmentArtistBinding
 
@@ -72,7 +73,7 @@ class WorksFragment : Fragment() {
     }
 
     private fun getData() {
-        val list = apiService.getTrackList().execute().body()?.results
+        val list = apiService.getTrackList(CLIENT_ID).execute().body()?.results
         if (list != null) {
             requireActivity().runOnUiThread(
                 Runnable {

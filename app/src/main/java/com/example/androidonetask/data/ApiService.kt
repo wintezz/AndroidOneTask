@@ -2,11 +2,12 @@ package com.example.androidonetask.data
 
 import retrofit2.Call
 import retrofit2.http.GET
+import retrofit2.http.Query
 
 interface ApiService {
 
-    @GET("/v3.0/tracks?client_id=f917c8e0")
-    fun getTrackList(): Call<TrackListResponse>
+    @GET("/v3.0/tracks")
+    fun getTrackList(@Query("client_id") clientId : String): Call<TrackListResponse>
 
     companion object {
         const val CLIENT_ID = "f917c8e0"
