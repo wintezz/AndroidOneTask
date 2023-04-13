@@ -34,4 +34,6 @@
     <dimen name="card_view_padding">20dp</dimen>
     <dimen name="card_view_corner">30dp</dimen>
     <dimen name="frame_layout_width">83dp</dimen>
+    <dimen name="text_view_error_margin_bottom">110dp</dimen>
+    <dimen name="image_repeat_request_margin_bottom">70dp</dimen>
 </resources>

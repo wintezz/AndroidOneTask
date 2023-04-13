@@ -44,6 +44,8 @@ class WorkFragment : Fragment() {
 
         activity?.title = this.javaClass.simpleName
 
+        binding.progressBar.visibility = View.VISIBLE
+
         initRecyclerView()
         initHandlerThread()
     }
@@ -61,6 +63,7 @@ class WorkFragment : Fragment() {
             val list = Repository.getTracks().map { TrackMapper.buildFrom(it) }
             requireActivity().runOnUiThread {
                 adapter.updateList(list)
+                binding.progressBar.visibility = View.GONE
             }
         }
     }

@@ -28,5 +28,20 @@ data class TrackListResponse(
     val results: List<Track>?
 )
 
+data class TrackSettings(
+    @SerializedName("status")
+    val status: String? = null,
+    @SerializedName("code")
+    val code: Int? = null,
+    @SerializedName("error_message")
+    val errorMessage: String? = null,
+    @SerializedName("warnings")
+    val warnings: String? = null,
+    @SerializedName("results_count")
+    val resultsCount: Int? = null,
+    @SerializedName("next")
+    val next: String? = null
+)
+
 
 
