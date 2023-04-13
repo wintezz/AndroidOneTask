@@ -1,4 +1,4 @@
-package com.example.androidonetask.fragment
+package com.example.androidonetask.presentation.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,11 +8,11 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidonetask.R
-import com.example.androidonetask.adapter.MusicAdapter
+import com.example.androidonetask.presentation.adapter.MusicAdapter
 import com.example.androidonetask.databinding.FragmentArtistBinding
-import com.example.androidonetask.utils.fillList
+import com.example.androidonetask.presentation.utils.fillList
 
-class ArtistFragment : Fragment() {
+class InfoFragment : Fragment() {
 
     private var _binding: FragmentArtistBinding? = null
     private val binding get() = _binding!!
@@ -44,14 +44,14 @@ class ArtistFragment : Fragment() {
         initRecyclerView()
     }
 
+    private fun onClickView() {
+        findNavController().navigate(R.id.action_infoFragment_to_detailFragment)
+    }
+
     private fun initRecyclerView() {
         binding.recView.layoutManager = LinearLayoutManager(context)
         binding.recView.adapter = adapter
         adapter.updateList(fillList())
-    }
-
-    private fun onClickView() {
-        findNavController().navigate(R.id.action_artistFragment_to_imageViewActivity)
     }
 
     override fun onDestroyView() {

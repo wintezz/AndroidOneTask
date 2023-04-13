@@ -12,6 +12,10 @@ object Repository {
             .create(ApiService::class.java)
 
     fun getTracks(): List<Track> {
-        return retrofitService.getTrackList(CLIENT_ID).execute().body()?.results ?: emptyList()
+        return try {
+            retrofitService.getTrackList(CLIENT_ID).execute().body()?.results ?: emptyList()
+        } catch (e: Throwable) {
+            emptyList()
+        }
     }
 }

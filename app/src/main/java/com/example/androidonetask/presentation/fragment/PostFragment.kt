@@ -1,4 +1,4 @@
-package com.example.androidonetask.fragment
+package com.example.androidonetask.presentation.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater

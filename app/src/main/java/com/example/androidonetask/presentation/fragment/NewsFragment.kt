@@ -1,29 +1,29 @@
-package com.example.androidonetask.fragment
+package com.example.androidonetask.presentation.fragment
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.HandlerThread
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidonetask.R
-import com.example.androidonetask.adapter.MusicAdapter
-import com.example.androidonetask.data.Repository
+import com.example.androidonetask.presentation.adapter.MusicAdapter
 import com.example.androidonetask.databinding.FragmentArtistBinding
+import com.example.androidonetask.presentation.fragment.PostFragment.Companion.ADAPTER_POSITION
+import com.example.androidonetask.presentation.utils.fillList
 
-class WorkFragment : Fragment() {
+class NewsFragment : Fragment() {
 
     private var _binding: FragmentArtistBinding? = null
     private val binding get() = _binding!!
-    private var handlerThread = HandlerThread(HANDLER_NAME)
-    private var adapter = MusicAdapter(
-        listenerAlbumImage = ::onClickView,
-        listenerArtistName = {},
-        listenerPosition = {}
-    )
+    private var adapter =
+        MusicAdapter(
+            listenerPosition = ::onClickItemPosition,
+            listenerAlbumImage = ::onClickImageView,
+            listenerArtistName = ::onClickArtist
+        )
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,38 +44,31 @@ class WorkFragment : Fragment() {
         activity?.title = this.javaClass.simpleName
 
         initRecyclerView()
-        initHandlerThread()
     }
 
     private fun initRecyclerView() {
         binding.recView.layoutManager = LinearLayoutManager(context)
         binding.recView.adapter = adapter
+        adapter.updateList(fillList())
     }
 
-    private fun initHandlerThread() {
-        handlerThread.start()
-        val looper = handlerThread.looper
-        val handler = Handler(looper)
-        handler.post {
-            val list = Repository.getTracks()
-            requireActivity().runOnUiThread {
-                adapter.updateList(list)
-            }
-        }
+    private fun onClickItemPosition(position: Int) {
+        findNavController().navigate(
+            R.id.action_newsFragment_to_postFragment,
+            bundleOf(ADAPTER_POSITION to position)
+        )
     }
 
-    private fun onClickView() {
-        findNavController().navigate(R.id.action_worksFragment_to_artActivity)
+    private fun onClickImageView() {
+        findNavController().navigate(R.id.action_newsFragment_to_imageViewActivity)
+    }
+
+    private fun onClickArtist() {
+        findNavController().navigate(R.id.action_newsFragment_to_artistFragment)
     }
 
     override fun onDestroyView() {
         _binding = null
-        handlerThread.quit()
         super.onDestroyView()
     }
-
-    companion object {
-        private const val HANDLER_NAME = "WorkHandler"
-    }
 }
-

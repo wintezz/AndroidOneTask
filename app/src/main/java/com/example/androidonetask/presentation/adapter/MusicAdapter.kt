@@ -1,4 +1,4 @@
-package com.example.androidonetask.adapter
+package com.example.androidonetask.presentation.adapter
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidonetask.R
-import com.example.androidonetask.data.model.Track
+import com.example.androidonetask.data.model.TrackUiModel
 import com.example.androidonetask.databinding.TrackElementListBinding
 import com.example.androidonetask.utils.load
 
@@ -16,7 +16,7 @@ class MusicAdapter(
     private val listenerArtistName: () -> Unit
 ) : RecyclerView.Adapter<MusicAdapter.WorkViewHolder>() {
 
-    private var tracks: List<Track> = emptyList()
+    private var tracks: List<TrackUiModel> = emptyList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WorkViewHolder {
         return WorkViewHolder(
@@ -30,7 +30,7 @@ class MusicAdapter(
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun updateList(newTracks: List<Track>) {
+    fun updateList(newTracks: List<TrackUiModel>) {
         this.tracks = newTracks
         notifyDataSetChanged()
     }
@@ -40,7 +40,7 @@ class MusicAdapter(
     inner class WorkViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val binding = TrackElementListBinding.bind(view)
 
-        fun onBind(data: Track) {
+        fun onBind(data: TrackUiModel) {
 
             binding.name.text = data.name
             binding.artistName.text = data.artistName
