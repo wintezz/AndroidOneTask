@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidonetask.R
-import com.example.androidonetask.adapter.ExpositionsAdapter
+import com.example.androidonetask.adapter.MusicAdapter
 import com.example.androidonetask.databinding.FragmentArtistBinding
 import com.example.androidonetask.utils.fillList
 
@@ -16,7 +16,12 @@ class ExpositionsFragment : Fragment() {
 
     private var _binding: FragmentArtistBinding? = null
     private val binding get() = _binding!!
-    private var adapter = ExpositionsAdapter { onClickItem() }
+    private var adapter =
+        MusicAdapter(
+            listenerAlbumImage = ::onClickItem,
+            listenerArtistName = {},
+            listenerPosition = {}
+        )
 
     override fun onCreateView(
         inflater: LayoutInflater,

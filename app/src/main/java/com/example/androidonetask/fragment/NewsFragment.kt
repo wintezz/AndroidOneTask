@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidonetask.R
-import com.example.androidonetask.adapter.NewsAdapter
+import com.example.androidonetask.adapter.MusicAdapter
 import com.example.androidonetask.databinding.FragmentArtistBinding
 import com.example.androidonetask.fragment.PostFragment.Companion.ADAPTER_POSITION
 import com.example.androidonetask.utils.fillList
@@ -19,7 +19,11 @@ class NewsFragment : Fragment() {
     private var _binding: FragmentArtistBinding? = null
     private val binding get() = _binding!!
     private var adapter =
-        NewsAdapter({ onClickItemPosition(it) }, { onClickImageView() }, { onClickArtist() })
+        MusicAdapter(
+            listenerPosition = ::onClickItemPosition,
+            listenerAlbumImage = ::onClickImageView,
+            listenerArtistName = ::onClickArtist
+        )
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -53,7 +57,6 @@ class NewsFragment : Fragment() {
             R.id.action_newsFragment_to_postFragment,
             bundleOf(ADAPTER_POSITION to position)
         )
-
     }
 
     private fun onClickImageView() {

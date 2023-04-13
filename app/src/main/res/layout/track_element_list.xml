@@ -19,7 +19,7 @@
         android:layout_marginBottom="@dimen/duration_marginBottom" />
 
     <FrameLayout
-        android:layout_width="83dp"
+        android:layout_width="@dimen/frame_layout_width"
         android:layout_height="match_parent">
 
         <ImageView

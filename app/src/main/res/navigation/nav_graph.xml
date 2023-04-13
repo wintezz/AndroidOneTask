@@ -30,7 +30,7 @@
     </fragment>
     <fragment
         android:id="@+id/worksFragment"
-        android:name="com.example.androidonetask.fragment.WorksFragment"
+        android:name="com.example.androidonetask.fragment.WorkFragment"
         android:label="WorksFragment">
         <action
             android:id="@+id/action_worksFragment_to_artActivity"

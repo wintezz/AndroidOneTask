@@ -1,4 +1,4 @@
-package com.example.androidonetask.data
+package com.example.androidonetask.data.model
 
 import com.google.gson.annotations.SerializedName
 
@@ -27,3 +27,6 @@ data class TrackListResponse(
     @SerializedName("results")
     val results: List<Track>?
 )
+
+
+

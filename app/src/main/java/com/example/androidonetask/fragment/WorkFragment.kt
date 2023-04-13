@@ -10,20 +10,20 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidonetask.R
-import com.example.androidonetask.adapter.WorkAdapter
-import com.example.androidonetask.data.ApiService
-import com.example.androidonetask.data.ApiService.Companion.CLIENT_ID
+import com.example.androidonetask.adapter.MusicAdapter
 import com.example.androidonetask.data.Repository
 import com.example.androidonetask.databinding.FragmentArtistBinding
 
-class WorksFragment : Fragment() {
+class WorkFragment : Fragment() {
 
     private var _binding: FragmentArtistBinding? = null
     private val binding get() = _binding!!
-    private var adapter = WorkAdapter { onClickView() }
-    private lateinit var apiService: ApiService
     private var handlerThread = HandlerThread(HANDLER_NAME)
-    private lateinit var repository: Repository
+    private var adapter = MusicAdapter(
+        listenerAlbumImage = ::onClickView,
+        listenerArtistName = {},
+        listenerPosition = {}
+    )
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,7 +42,6 @@ class WorksFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         activity?.title = this.javaClass.simpleName
-        apiService = Repository.retrofitService
 
         initRecyclerView()
         initHandlerThread()
@@ -58,11 +57,9 @@ class WorksFragment : Fragment() {
         val looper = handlerThread.looper
         val handler = Handler(looper)
         handler.post {
-            val list = apiService.getTrackList(CLIENT_ID).execute().body()?.results
-            if (list != null) {
-                requireActivity().runOnUiThread {
-                    adapter.updateList(list)
-                }
+            val list = Repository.getTracks()
+            requireActivity().runOnUiThread {
+                adapter.updateList(list)
             }
         }
     }

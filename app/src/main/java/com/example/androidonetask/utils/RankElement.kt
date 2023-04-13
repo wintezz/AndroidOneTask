@@ -1,6 +1,6 @@
 package com.example.androidonetask.utils
 
-import com.example.androidonetask.data.Track
+import com.example.androidonetask.data.model.Track
 
 fun fillList(): List<Track> {
     val data = mutableListOf<Track>()

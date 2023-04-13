@@ -33,4 +33,5 @@
     <dimen name="card_view_height">100dp</dimen>
     <dimen name="card_view_padding">20dp</dimen>
     <dimen name="card_view_corner">30dp</dimen>
+    <dimen name="frame_layout_width">83dp</dimen>
 </resources>

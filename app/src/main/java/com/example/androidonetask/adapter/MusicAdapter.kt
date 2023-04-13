@@ -6,24 +6,26 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidonetask.R
-import com.example.androidonetask.data.Track
+import com.example.androidonetask.data.model.Track
 import com.example.androidonetask.databinding.TrackElementListBinding
 import com.example.androidonetask.utils.load
 
-class WorkAdapter(
-    private val listenerImage: (View) -> Unit
-) : RecyclerView.Adapter<WorkAdapter.ArtistViewHolder>() {
+class MusicAdapter(
+    private val listenerPosition: (Int) -> Unit,
+    private val listenerAlbumImage: () -> Unit,
+    private val listenerArtistName: () -> Unit
+) : RecyclerView.Adapter<MusicAdapter.WorkViewHolder>() {
 
     private var tracks: List<Track> = emptyList()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArtistViewHolder {
-        return ArtistViewHolder(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WorkViewHolder {
+        return WorkViewHolder(
             LayoutInflater.from(parent.context)
                 .inflate(R.layout.track_element_list, parent, false)
         )
     }
 
-    override fun onBindViewHolder(holder: ArtistViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: WorkViewHolder, position: Int) {
         holder.onBind(tracks[position])
     }
 
@@ -35,7 +37,7 @@ class WorkAdapter(
 
     override fun getItemCount(): Int = tracks.size
 
-    inner class ArtistViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    inner class WorkViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val binding = TrackElementListBinding.bind(view)
 
         fun onBind(data: Track) {
@@ -46,7 +48,15 @@ class WorkAdapter(
             data.albumImage?.let { binding.albumImage.load(it) }
 
             binding.albumImage.setOnClickListener {
-                listenerImage.invoke(binding.albumImage)
+                listenerAlbumImage.invoke()
+            }
+
+            binding.maskGroup.setOnClickListener {
+                listenerPosition.invoke(adapterPosition)
+            }
+
+            binding.artistName.setOnClickListener {
+                listenerArtistName.invoke()
             }
         }
     }
