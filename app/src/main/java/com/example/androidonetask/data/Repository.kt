@@ -12,7 +12,10 @@ object Repository {
 
     fun getTracks(): List<Track> {
         return try {
-            retrofitService.getTrackList().execute().body()?.results ?: emptyList()
+            retrofitService
+                .getTrackList()
+                .execute()
+                .body()?.results ?: emptyList()
         } catch (e: Throwable) {
             emptyList()
         }

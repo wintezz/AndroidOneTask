@@ -8,19 +8,22 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitClient {
 
+    private fun apiKeyAsHeader(it: Interceptor.Chain) = it.proceed(
+        it.request()
+            .newBuilder().url(
+                it.request()
+                    .url
+                    .newBuilder()
+                    .addQueryParameter("client_id", CLIENT_ID)
+                    .build()
+            )
+            .build()
+    )
+
     fun getClient(baseUrl: String): Retrofit {
 
-        fun apiKeyAsHeader(it: Interceptor.Chain) = it.proceed(
-            it.request()
-                .newBuilder()
-                .url(
-                    it.request().url.newBuilder().addQueryParameter("client_id", CLIENT_ID).build()
-                )
-                .build()
-        )
-
         val okHttpClient = OkHttpClient.Builder()
-            .addInterceptor { apiKeyAsHeader(it) }
+            .addInterceptor(::apiKeyAsHeader)
             .build()
 
         return Retrofit.Builder()

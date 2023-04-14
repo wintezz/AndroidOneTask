@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.HandlerThread
 import android.view.LayoutInflater
+import android.view.TextureView
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -48,6 +50,7 @@ class WorkFragment : Fragment() {
 
         initRecyclerView()
         initHandlerThread()
+        onClickRequest()
     }
 
     private fun initRecyclerView() {
@@ -60,11 +63,29 @@ class WorkFragment : Fragment() {
         val looper = handlerThread.looper
         val handler = Handler(looper)
         handler.post {
-            val list = Repository.getTracks().map { TrackMapper.buildFrom(it) }
-            requireActivity().runOnUiThread {
-                adapter.updateList(list)
-                binding.progressBar.visibility = View.GONE
+            try {
+                val list = Repository.getTracks().map { TrackMapper.buildFrom(it) }
+                requireActivity().runOnUiThread {
+                    adapter.updateList(list)
+                    binding.progressBar.visibility = View.GONE
+                }
+            } catch (e: Throwable) {
+                requireActivity().runOnUiThread {
+                    binding.textViewError.visibility = TextureView.VISIBLE
+                    binding.imageRepeatRequest.visibility = ImageView.VISIBLE
+                }
+            } finally {
+                requireActivity().runOnUiThread {
+                    binding.textViewError.visibility = TextureView.GONE
+                    binding.imageRepeatRequest.visibility = ImageView.GONE
+                }
             }
+        }
+    }
+
+    private fun onClickRequest() {
+        binding.imageRepeatRequest.setOnClickListener {
+            initHandlerThread()
         }
     }
 
