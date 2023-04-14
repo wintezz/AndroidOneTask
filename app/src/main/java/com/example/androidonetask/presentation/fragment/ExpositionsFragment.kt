@@ -8,8 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidonetask.R
-import com.example.androidonetask.presentation.adapter.MusicAdapter
 import com.example.androidonetask.databinding.FragmentArtistBinding
+import com.example.androidonetask.presentation.adapter.MusicAdapter
 import com.example.androidonetask.presentation.utils.fillList
 
 class ExpositionsFragment : Fragment() {
@@ -19,7 +19,6 @@ class ExpositionsFragment : Fragment() {
     private var adapter =
         MusicAdapter(
             listenerAlbumImage = ::onClickItem,
-            listenerArtistName = {},
             listenerPosition = {}
         )
 

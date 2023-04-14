@@ -8,12 +8,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.androidonetask.R
 import com.example.androidonetask.data.model.TrackUiModel
 import com.example.androidonetask.databinding.TrackElementListBinding
-import com.example.androidonetask.utils.load
+import com.example.androidonetask.presentation.utils.load
 
 class MusicAdapter(
     private val listenerPosition: (Int) -> Unit,
-    private val listenerAlbumImage: () -> Unit,
-    private val listenerArtistName: () -> Unit
+    private val listenerAlbumImage: () -> Unit = {},
+    private val listenerArtistName: () -> Unit = {}
 ) : RecyclerView.Adapter<MusicAdapter.WorkViewHolder>() {
 
     private var tracks: List<TrackUiModel> = emptyList()

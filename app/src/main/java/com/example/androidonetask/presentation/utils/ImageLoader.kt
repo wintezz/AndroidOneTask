@@ -1,4 +1,4 @@
-package com.example.androidonetask.utils
+package com.example.androidonetask.presentation.utils
 
 import android.widget.ImageView
 import com.squareup.picasso.Picasso

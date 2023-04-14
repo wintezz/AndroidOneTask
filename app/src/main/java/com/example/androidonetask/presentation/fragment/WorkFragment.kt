@@ -4,18 +4,18 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.HandlerThread
 import android.view.LayoutInflater
-import android.view.TextureView
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidonetask.R
-import com.example.androidonetask.presentation.adapter.MusicAdapter
-import com.example.androidonetask.data.Repository
-import com.example.androidonetask.data.model.TrackMapper
+import com.example.androidonetask.data.repository.Repository
 import com.example.androidonetask.databinding.FragmentArtistBinding
+import com.example.androidonetask.presentation.adapter.MusicAdapter
+import com.example.androidonetask.presentation.utils.TrackMapper
 
 class WorkFragment : Fragment() {
 
@@ -24,7 +24,6 @@ class WorkFragment : Fragment() {
     private var handlerThread = HandlerThread(HANDLER_NAME)
     private var adapter = MusicAdapter(
         listenerAlbumImage = ::onClickView,
-        listenerArtistName = {},
         listenerPosition = {}
     )
 
@@ -46,11 +45,10 @@ class WorkFragment : Fragment() {
 
         activity?.title = this.javaClass.simpleName
 
-        binding.progressBar.visibility = View.VISIBLE
+        binding.progressBar.isVisible = true
 
         initRecyclerView()
         initHandlerThread()
-        onClickRequest()
     }
 
     private fun initRecyclerView() {
@@ -63,29 +61,11 @@ class WorkFragment : Fragment() {
         val looper = handlerThread.looper
         val handler = Handler(looper)
         handler.post {
-            try {
-                val list = Repository.getTracks().map { TrackMapper.buildFrom(it) }
-                requireActivity().runOnUiThread {
-                    adapter.updateList(list)
-                    binding.progressBar.visibility = View.GONE
-                }
-            } catch (e: Throwable) {
-                requireActivity().runOnUiThread {
-                    binding.textViewError.visibility = TextureView.VISIBLE
-                    binding.imageRepeatRequest.visibility = ImageView.VISIBLE
-                }
-            } finally {
-                requireActivity().runOnUiThread {
-                    binding.textViewError.visibility = TextureView.GONE
-                    binding.imageRepeatRequest.visibility = ImageView.GONE
-                }
+            val list = TrackMapper.buildFrom(Repository.getTracks())
+            requireActivity().runOnUiThread {
+                adapter.updateList(list)
+                binding.progressBar.isGone = true
             }
-        }
-    }
-
-    private fun onClickRequest() {
-        binding.imageRepeatRequest.setOnClickListener {
-            initHandlerThread()
         }
     }
 
