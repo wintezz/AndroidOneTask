@@ -1,4 +1,4 @@
-package com.example.androidonetask.fragment
+package com.example.androidonetask.presentation.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,15 +8,19 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidonetask.R
-import com.example.androidonetask.adapter.ExpositionsAdapter
 import com.example.androidonetask.databinding.FragmentArtistBinding
-import com.example.androidonetask.utils.RankElement
+import com.example.androidonetask.presentation.adapter.MusicAdapter
+import com.example.androidonetask.presentation.utils.fillList
 
-class ExpositionsFragment : Fragment() {
+class ArtistFragment : Fragment() {
 
     private var _binding: FragmentArtistBinding? = null
     private val binding get() = _binding!!
-    private var adapter = ExpositionsAdapter { onClickItem() }
+    private var adapter =
+        MusicAdapter(
+            listenerAlbumImage = ::onClickView,
+            listenerPosition = {}
+        )
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,7 +32,6 @@ class ExpositionsFragment : Fragment() {
                 inflater, container,
                 false
             )
-
         return binding.root
     }
 
@@ -43,11 +46,11 @@ class ExpositionsFragment : Fragment() {
     private fun initRecyclerView() {
         binding.recView.layoutManager = LinearLayoutManager(context)
         binding.recView.adapter = adapter
-        adapter.updateList(RankElement.fillList())
+        adapter.updateList(fillList())
     }
 
-    private fun onClickItem() {
-        findNavController().navigate(R.id.action_expositionsFragment_to_artActivity)
+    private fun onClickView() {
+        findNavController().navigate(R.id.action_artistFragment_to_imageViewActivity)
     }
 
     override fun onDestroyView() {

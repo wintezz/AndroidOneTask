@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/card_view_height"
+    android:layout_margin="@dimen/main_margin"
+    android:orientation="horizontal"
+    android:padding="@dimen/card_view_padding"
+    app:cardCornerRadius="@dimen/card_view_corner">
+
+    <SeekBar
+        android:id="@+id/duration"
+        android:layout_width="@dimen/duration_width"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="@dimen/main_margin"
+        android:layout_marginTop="@dimen/duration_marginTop"
+        android:layout_marginBottom="@dimen/duration_marginBottom" />
+
+    <FrameLayout
+        android:layout_width="@dimen/frame_layout_width"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/album_image"
+            android:layout_width="@dimen/album_image_width"
+            android:layout_height="@dimen/album_image_height"
+            android:layout_marginStart="@dimen/album_image_marginStart"
+            android:layout_marginTop="@dimen/album_image_marginTop"
+            tools:ignore="ContentDescription"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <ImageView
+            android:id="@+id/imagePlayButton"
+            android:layout_width="@dimen/image_button_width"
+            android:layout_height="@dimen/image_button_height"
+            android:layout_marginStart="@dimen/image_button_marginStart"
+            android:layout_marginTop="@dimen/image_button_marginTop"
+            android:src="@drawable/play_button"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/mask_group"
+            android:layout_width="@dimen/mask_group_width"
+            android:layout_height="@dimen/mask_group_height"
+            android:layout_marginStart="@dimen/mask_group_marginStart"
+            android:layout_marginTop="@dimen/main_margin"
+            android:gravity="center"
+            android:text="@string/mask_group"
+            android:textColor="@color/purple_700"
+            android:textSize="@dimen/text_size_mask_group" />
+
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/artist_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginEnd="@dimen/artist_name_marginEnd"
+        android:text="@string/down_text" />
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginEnd="@dimen/name_marginEnd"
+        android:layout_marginBottom="@dimen/name_marginBottom"
+        android:text="@string/top_text"
+        android:textColor="@color/black" />
+
+</androidx.cardview.widget.CardView>

@@ -8,4 +8,8 @@
     <string name="top_text">Заголовок</string>
     <string name="down_text">Описание</string>
     <string name="main_activity">MainActivity</string>
+    <string name="get_message">Get message</string>
+    <string name="send">Send</string>
+    <string name="mask_group">Mask Group</string>
+    <string name="error_text">Error…Repeat later again</string>
 </resources>
