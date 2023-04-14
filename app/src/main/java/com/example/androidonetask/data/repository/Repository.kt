@@ -16,12 +16,11 @@ object Repository {
     fun getTracks(): AppState<TrackListResponse>? {
         return try {
             val track = retrofitService.getTrackList().execute().body()
-            AppState.Success(response = track)
+            AppState.Success(data = track)
         } catch (e: HttpException) {
-            AppState.Error(error = e)
+            AppState.Error(exception = e)
         } catch (e: IOException) {
-            AppState.Error(error = e)
+            AppState.Error(exception = e)
         }
     }
 }
-

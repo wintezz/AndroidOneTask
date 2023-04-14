@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidonetask.R
+import com.example.androidonetask.data.AppState
 import com.example.androidonetask.data.repository.Repository
 import com.example.androidonetask.databinding.FragmentArtistBinding
 import com.example.androidonetask.presentation.adapter.MusicAdapter
@@ -61,10 +62,14 @@ class WorkFragment : Fragment() {
         val looper = handlerThread.looper
         val handler = Handler(looper)
         handler.post {
-            val list = TrackMapper.buildFrom(Repository.getTracks())
-            requireActivity().runOnUiThread {
-                adapter.updateList(list)
-                binding.progressBar.isGone = true
+            val response = Repository.getTracks()
+            if (response is AppState.Success) {
+                val data = response.data
+                val list = TrackMapper.buildFrom(data)
+                requireActivity().runOnUiThread {
+                    adapter.updateList(list)
+                    binding.progressBar.isGone = true
+                }
             }
         }
     }
