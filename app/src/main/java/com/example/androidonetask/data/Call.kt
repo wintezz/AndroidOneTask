@@ -8,8 +8,8 @@ fun <T> Call<T>.handleApi(): AppState<T> {
     return try {
         val response = this.execute()
         val body = response.body()
-        if (response.isSuccessful && body != null) {
-            AppState.Success(body)
+        if (response.isSuccessful) {
+            body?.let { AppState.Success(it) } ?: AppState.Error(Throwable("Body is null"))
         } else {
             AppState.ServerError(
                 code = response.code(),

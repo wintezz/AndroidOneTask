@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidonetask.R
 import com.example.androidonetask.data.AppState
+import com.example.androidonetask.data.model.TrackUiModel
 import com.example.androidonetask.data.repository.Repository
 import com.example.androidonetask.databinding.FragmentArtistBinding
 import com.example.androidonetask.presentation.adapter.MusicAdapter
@@ -85,8 +86,7 @@ class WorkFragment : Fragment() {
                     val data = response.data
                     val list = TrackMapper.buildFrom(data)
                     binding.root.post {
-                        adapter.updateList(list)
-                        showContent()
+                        showContent(list)
                     }
                 }
                 else -> {
@@ -98,8 +98,9 @@ class WorkFragment : Fragment() {
         }
     }
 
-    private fun showContent() {
+    private fun showContent(tracks: List<TrackUiModel>) {
         with(binding) {
+            adapter.updateList(tracks)
             progressBar.isGone = true
         }
     }
