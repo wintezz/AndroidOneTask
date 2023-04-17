@@ -46,6 +46,11 @@ class NewsFragment : Fragment() {
         initRecyclerView()
     }
 
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
+    }
+
     private fun initRecyclerView() {
         binding.recView.layoutManager = LinearLayoutManager(context)
         binding.recView.adapter = adapter
@@ -65,10 +70,5 @@ class NewsFragment : Fragment() {
 
     private fun onClickArtist() {
         findNavController().navigate(R.id.action_newsFragment_to_artistFragment)
-    }
-
-    override fun onDestroyView() {
-        _binding = null
-        super.onDestroyView()
     }
 }
