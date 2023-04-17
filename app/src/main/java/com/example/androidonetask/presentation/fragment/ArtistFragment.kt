@@ -43,6 +43,11 @@ class ArtistFragment : Fragment() {
         initRecyclerView()
     }
 
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
+    }
+
     private fun initRecyclerView() {
         binding.recView.layoutManager = LinearLayoutManager(context)
         binding.recView.adapter = adapter
@@ -51,10 +56,5 @@ class ArtistFragment : Fragment() {
 
     private fun onClickView() {
         findNavController().navigate(R.id.action_artistFragment_to_imageViewActivity)
-    }
-
-    override fun onDestroyView() {
-        _binding = null
-        super.onDestroyView()
     }
 }

@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isGone
-import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -23,7 +22,8 @@ class WorkFragment : Fragment() {
 
     private var _binding: FragmentArtistBinding? = null
     private val binding get() = _binding!!
-    private var handlerThread = HandlerThread(HANDLER_NAME)
+    private lateinit var handlerThread: HandlerThread
+    private lateinit var handler: Handler
     private var adapter = MusicAdapter(
         listenerAlbumImage = ::onClickView,
         listenerPosition = {}
@@ -47,17 +47,23 @@ class WorkFragment : Fragment() {
 
         activity?.title = this.javaClass.simpleName
 
-        binding.progressBar.isVisible = true
-
+        showLoading()
         initRecyclerView()
+        initHandlerThread()
+        handleApi()
         clickViewError()
+    }
 
+    override fun onDestroyView() {
+        _binding = null
+        handlerThread.quit()
+        super.onDestroyView()
+    }
+
+    private fun initHandlerThread() {
+        handlerThread = HandlerThread(HANDLER_NAME)
         handlerThread.start()
-        val looper = handlerThread.looper
-        val handler = Handler(looper)
-        handler.post {
-            handleApi()
-        }
+        handler = Handler(handlerThread.looper)
     }
 
     private fun initRecyclerView() {
@@ -67,41 +73,46 @@ class WorkFragment : Fragment() {
 
     private fun clickViewError() {
         binding.imageRepeatRequest.setOnClickListener {
-            val id = findNavController().currentDestination?.id
-            if (id != null) {
-                findNavController().popBackStack(id, true)
-            }
-            if (id != null) {
-                findNavController().navigate(id)
-            }
+            handleApi()
+            showLoading()
         }
     }
 
     private fun handleApi() {
-        when (val response = Repository.getTracks()) {
-            is AppState.Success -> {
-                val data = response.data
-                val list = TrackMapper.buildFrom(data)
-                binding.root.post {
-                    adapter.updateList(list)
-                    binding.progressBar.isGone = true
+        handler.post {
+            when (val response = Repository.getTracks()) {
+                is AppState.Success -> {
+                    val data = response.data
+                    val list = TrackMapper.buildFrom(data)
+                    binding.root.post {
+                        adapter.updateList(list)
+                        showContent()
+                    }
                 }
-            }
-            is AppState.ServerError -> {
-                binding.root.post {
-                    showDataFetchError()
-                }
-            }
-            else -> {
-                binding.root.post {
-                    binding.textViewError.isInvisible = true
-                    binding.imageRepeatRequest.isInvisible = true
+                else -> {
+                    binding.root.post {
+                        showError()
+                    }
                 }
             }
         }
     }
 
-    private fun showDataFetchError() {
+    private fun showContent() {
+        with(binding) {
+            progressBar.isGone = true
+        }
+    }
+
+    private fun showLoading() {
+        with(binding) {
+            textViewError.isGone = true
+            imageRepeatRequest.isGone = true
+            progressBar.isVisible = true
+        }
+    }
+
+    private fun showError() {
         with(binding) {
             progressBar.isGone = true
             recView.isGone = true
@@ -113,12 +124,6 @@ class WorkFragment : Fragment() {
 
     private fun onClickView() {
         findNavController().navigate(R.id.action_worksFragment_to_artActivity)
-    }
-
-    override fun onDestroyView() {
-        _binding = null
-        handlerThread.quit()
-        super.onDestroyView()
     }
 
     companion object {

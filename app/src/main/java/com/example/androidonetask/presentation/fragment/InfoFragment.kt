@@ -43,6 +43,11 @@ class InfoFragment : Fragment() {
         initRecyclerView()
     }
 
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
+    }
+
     private fun onClickView() {
         findNavController().navigate(R.id.action_infoFragment_to_detailFragment)
     }
@@ -51,10 +56,5 @@ class InfoFragment : Fragment() {
         binding.recView.layoutManager = LinearLayoutManager(context)
         binding.recView.adapter = adapter
         adapter.updateList(fillList())
-    }
-
-    override fun onDestroyView() {
-        _binding = null
-        super.onDestroyView()
     }
 }

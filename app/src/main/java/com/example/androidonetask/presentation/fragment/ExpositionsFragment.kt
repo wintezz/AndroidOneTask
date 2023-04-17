@@ -43,6 +43,11 @@ class ExpositionsFragment : Fragment() {
         initRecyclerView()
     }
 
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
+    }
+
     private fun initRecyclerView() {
         binding.recView.layoutManager = LinearLayoutManager(context)
         binding.recView.adapter = adapter
@@ -51,10 +56,5 @@ class ExpositionsFragment : Fragment() {
 
     private fun onClickItem() {
         findNavController().navigate(R.id.action_expositionsFragment_to_artActivity)
-    }
-
-    override fun onDestroyView() {
-        _binding = null
-        super.onDestroyView()
     }
 }
