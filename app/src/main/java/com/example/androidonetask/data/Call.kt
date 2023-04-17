@@ -11,7 +11,10 @@ fun <T> Call<T>.handleApi(): AppState<T> {
         if (response.isSuccessful && body != null) {
             AppState.Success(body)
         } else {
-            AppState.ServerError(code = response.code(), json = response.message())
+            AppState.ServerError(
+                code = response.code(),
+                json = response.errorBody()?.string().orEmpty()
+            )
         }
     } catch (e: HttpException) {
         AppState.Error(e)

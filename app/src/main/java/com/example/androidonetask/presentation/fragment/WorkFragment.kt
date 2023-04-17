@@ -50,16 +50,8 @@ class WorkFragment : Fragment() {
         binding.progressBar.isVisible = true
 
         initRecyclerView()
-        initHandlerThread()
         clickViewError()
-    }
 
-    private fun initRecyclerView() {
-        binding.recView.layoutManager = LinearLayoutManager(context)
-        binding.recView.adapter = adapter
-    }
-
-    private fun initHandlerThread() {
         handlerThread.start()
         val looper = handlerThread.looper
         val handler = Handler(looper)
@@ -68,11 +60,20 @@ class WorkFragment : Fragment() {
         }
     }
 
+    private fun initRecyclerView() {
+        binding.recView.layoutManager = LinearLayoutManager(context)
+        binding.recView.adapter = adapter
+    }
+
     private fun clickViewError() {
         binding.imageRepeatRequest.setOnClickListener {
             val id = findNavController().currentDestination?.id
-            findNavController().popBackStack(id!!, true)
-            findNavController().navigate(id)
+            if (id != null) {
+                findNavController().popBackStack(id, true)
+            }
+            if (id != null) {
+                findNavController().navigate(id)
+            }
         }
     }
 
@@ -81,26 +82,32 @@ class WorkFragment : Fragment() {
             is AppState.Success -> {
                 val data = response.data
                 val list = TrackMapper.buildFrom(data)
-                requireActivity().runOnUiThread {
+                binding.root.post {
                     adapter.updateList(list)
                     binding.progressBar.isGone = true
                 }
             }
             is AppState.ServerError -> {
-                requireActivity().runOnUiThread {
-                    binding.progressBar.isGone = true
-                    binding.recView.isGone = true
-                    binding.textViewError.isVisible = true
-                    binding.textViewError.isClickable = true
-                    binding.imageRepeatRequest.isVisible = true
+                binding.root.post {
+                    showDataFetchError()
                 }
             }
             else -> {
-                requireActivity().runOnUiThread {
+                binding.root.post {
                     binding.textViewError.isInvisible = true
                     binding.imageRepeatRequest.isInvisible = true
                 }
             }
+        }
+    }
+
+    private fun showDataFetchError() {
+        with(binding) {
+            progressBar.isGone = true
+            recView.isGone = true
+            textViewError.isVisible = true
+            textViewError.isClickable = true
+            imageRepeatRequest.isVisible = true
         }
     }
 
