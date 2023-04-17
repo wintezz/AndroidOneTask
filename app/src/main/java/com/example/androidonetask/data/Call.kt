@@ -1,13 +1,12 @@
 package com.example.androidonetask.data
 
+import retrofit2.Call
 import retrofit2.HttpException
-import retrofit2.Response
+import java.io.IOException
 
-fun <T : Any> handleApi(
-    execute: () -> Response<T>
-): AppState<T> {
+fun <T> Call<T>.handleApi(): AppState<T> {
     return try {
-        val response = execute()
+        val response = this.execute()
         val body = response.body()
         if (response.isSuccessful && body != null) {
             AppState.Success(body)
@@ -15,8 +14,8 @@ fun <T : Any> handleApi(
             AppState.ServerError(code = response.code(), json = response.message())
         }
     } catch (e: HttpException) {
-        AppState.ServerError(code = e.code(), "json = .message()")
-    } catch (e: Throwable) {
-        AppState.Error(Exception())
+        AppState.Error(e)
+    } catch (e: IOException) {
+        AppState.Error(e)
     }
 }

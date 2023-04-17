@@ -12,6 +12,5 @@ object Repository {
     private val retrofitService: ApiService =
         RetrofitClient.getClient(BASE_URL).create(ApiService::class.java)
 
-    fun getTracks(): AppState<TrackListResponse> =
-        handleApi { retrofitService.getTrackList().execute() }
+    fun getTracks(): AppState<TrackListResponse> = retrofitService.getTrackList().handleApi()
 }

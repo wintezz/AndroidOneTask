@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isGone
+import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -50,6 +51,7 @@ class WorkFragment : Fragment() {
 
         initRecyclerView()
         initHandlerThread()
+        clickViewError()
     }
 
     private fun initRecyclerView() {
@@ -62,13 +64,41 @@ class WorkFragment : Fragment() {
         val looper = handlerThread.looper
         val handler = Handler(looper)
         handler.post {
-            val response = Repository.getTracks()
-            if (response is AppState.Success) {
+            handleApi()
+        }
+    }
+
+    private fun clickViewError() {
+        binding.imageRepeatRequest.setOnClickListener {
+            val id = findNavController().currentDestination?.id
+            findNavController().popBackStack(id!!, true)
+            findNavController().navigate(id)
+        }
+    }
+
+    private fun handleApi() {
+        when (val response = Repository.getTracks()) {
+            is AppState.Success -> {
                 val data = response.data
                 val list = TrackMapper.buildFrom(data)
                 requireActivity().runOnUiThread {
                     adapter.updateList(list)
                     binding.progressBar.isGone = true
+                }
+            }
+            is AppState.ServerError -> {
+                requireActivity().runOnUiThread {
+                    binding.progressBar.isGone = true
+                    binding.recView.isGone = true
+                    binding.textViewError.isVisible = true
+                    binding.textViewError.isClickable = true
+                    binding.imageRepeatRequest.isVisible = true
+                }
+            }
+            else -> {
+                requireActivity().runOnUiThread {
+                    binding.textViewError.isInvisible = true
+                    binding.imageRepeatRequest.isInvisible = true
                 }
             }
         }
