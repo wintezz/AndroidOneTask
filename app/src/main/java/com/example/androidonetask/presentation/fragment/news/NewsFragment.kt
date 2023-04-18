@@ -1,27 +1,29 @@
-package com.example.androidonetask.presentation.fragment
+package com.example.androidonetask.presentation.fragment.news
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidonetask.R
 import com.example.androidonetask.databinding.FragmentArtistBinding
-import com.example.androidonetask.mvp.artist.ArtistContract
 import com.example.androidonetask.presentation.adapter.MusicAdapter
+import com.example.androidonetask.presentation.fragment.post.PostFragment.Companion.ADAPTER_POSITION
 import com.example.androidonetask.presentation.utils.fillList
 
-class ArtistFragment : Fragment(), ArtistContract.View {
+class NewsFragment : Fragment(), NewsContract.View {
 
     private var _binding: FragmentArtistBinding? = null
     private val binding get() = _binding!!
     private var adapter =
         MusicAdapter(
-            listenerAlbumImage = ::onClickView,
-            listenerPosition = {}
+            listenerPosition = ::onClickItemPosition,
+            listenerAlbumImage = ::onClickImageView,
+            listenerArtistName = ::onClickArtist
         )
 
     override fun onCreateView(
@@ -51,11 +53,6 @@ class ArtistFragment : Fragment(), ArtistContract.View {
         super.onDestroyView()
     }
 
-    private fun initRecyclerView() {
-        binding.recView.layoutManager = LinearLayoutManager(context)
-        binding.recView.adapter = adapter
-    }
-
     override fun showContent() {
         with(binding) {
             adapter.updateList(fillList())
@@ -63,7 +60,23 @@ class ArtistFragment : Fragment(), ArtistContract.View {
         }
     }
 
-    private fun onClickView() {
-        findNavController().navigate(R.id.action_artistFragment_to_imageViewActivity)
+    private fun initRecyclerView() {
+        binding.recView.layoutManager = LinearLayoutManager(context)
+        binding.recView.adapter = adapter
+    }
+
+    private fun onClickItemPosition(position: Int) {
+        findNavController().navigate(
+            R.id.action_newsFragment_to_postFragment,
+            bundleOf(ADAPTER_POSITION to position)
+        )
+    }
+
+    private fun onClickImageView() {
+        findNavController().navigate(R.id.action_newsFragment_to_imageViewActivity)
+    }
+
+    private fun onClickArtist() {
+        findNavController().navigate(R.id.action_newsFragment_to_artistFragment)
     }
 }

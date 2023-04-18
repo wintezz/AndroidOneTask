@@ -1,4 +1,4 @@
-package com.example.androidonetask.presentation.fragment
+package com.example.androidonetask.presentation.fragment.work
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,9 +11,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidonetask.R
 import com.example.androidonetask.data.model.TrackUiModel
+import com.example.androidonetask.data.repository.Repository
 import com.example.androidonetask.databinding.FragmentArtistBinding
-import com.example.androidonetask.mvp.work.WorkContract
-import com.example.androidonetask.mvp.work.WorkPresenter
 import com.example.androidonetask.presentation.adapter.MusicAdapter
 
 class WorkFragment : Fragment(), WorkContract.View {
@@ -22,8 +21,7 @@ class WorkFragment : Fragment(), WorkContract.View {
     private var _binding: FragmentArtistBinding? = null
     private val binding get() = _binding!!
     private var adapter = MusicAdapter(
-        listenerAlbumImage = ::onClickView,
-        listenerPosition = {}
+        listenerAlbumImage = ::onClickView
     )
 
     override fun onCreateView(
@@ -44,9 +42,9 @@ class WorkFragment : Fragment(), WorkContract.View {
 
         activity?.title = this.javaClass.simpleName
 
-        workPresenter = WorkPresenter(this)
+        workPresenter = WorkPresenter(this, repositoryImpl = Repository())
 
-        workPresenter?.handleApi()
+        workPresenter?.loadTracks()
         showLoading()
         initRecyclerView()
         clickViewError()
@@ -58,6 +56,23 @@ class WorkFragment : Fragment(), WorkContract.View {
         super.onDestroyView()
     }
 
+    override fun showContent(data: List<TrackUiModel>) {
+        with(binding) {
+            adapter.updateList(data)
+            progressBar.isGone = true
+            recView.isVisible = true
+        }
+    }
+
+    override fun showError() {
+        with(binding) {
+            progressBar.isGone = true
+            recView.isVisible = false
+            textViewError.isVisible = true
+            imageRepeatRequest.isVisible = true
+        }
+    }
+
     private fun initRecyclerView() {
         binding.recView.layoutManager = LinearLayoutManager(context)
         binding.recView.adapter = adapter
@@ -65,7 +80,7 @@ class WorkFragment : Fragment(), WorkContract.View {
 
     private fun clickViewError() {
         binding.imageRepeatRequest.setOnClickListener {
-            workPresenter?.handleApi()
+            workPresenter?.loadTracks()
             showLoading()
         }
     }
@@ -74,28 +89,11 @@ class WorkFragment : Fragment(), WorkContract.View {
         findNavController().navigate(R.id.action_worksFragment_to_artActivity)
     }
 
-    override fun showContent(data: List<TrackUiModel>) {
-        with(binding) {
-            adapter.updateList(data)
-            progressBar.isGone = true
-            recView.isGone = false
-        }
-    }
-
-    override fun showLoading() {
+    private fun showLoading() {
         with(binding) {
             textViewError.isGone = true
             imageRepeatRequest.isGone = true
             progressBar.isVisible = true
-        }
-    }
-
-    override fun showError() {
-        with(binding) {
-            progressBar.isGone = true
-            recView.isGone = true
-            textViewError.isVisible = true
-            imageRepeatRequest.isVisible = true
         }
     }
 }

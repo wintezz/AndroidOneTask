@@ -1,4 +1,4 @@
-package com.example.androidonetask.mvp.info
+package com.example.androidonetask.presentation.fragment.info
 
 class InfoPresenter(
     private var infoView: InfoContract.View?

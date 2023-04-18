@@ -1,4 +1,4 @@
-package com.example.androidonetask.presentation.fragment
+package com.example.androidonetask.presentation.fragment.info
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,7 +10,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidonetask.R
 import com.example.androidonetask.databinding.FragmentArtistBinding
-import com.example.androidonetask.mvp.info.InfoContract
 import com.example.androidonetask.presentation.adapter.MusicAdapter
 import com.example.androidonetask.presentation.utils.fillList
 
@@ -20,8 +19,7 @@ class InfoFragment : Fragment(), InfoContract.View {
     private val binding get() = _binding!!
     private var adapter =
         MusicAdapter(
-            listenerAlbumImage = ::onClickView,
-            listenerPosition = {}
+            listenerAlbumImage = ::onClickView
         )
 
     override fun onCreateView(
@@ -51,6 +49,13 @@ class InfoFragment : Fragment(), InfoContract.View {
         super.onDestroyView()
     }
 
+    override fun showContent() {
+        with(binding) {
+            adapter.updateList(fillList())
+            progressBar.isGone = true
+        }
+    }
+
     private fun onClickView() {
         findNavController().navigate(R.id.action_infoFragment_to_detailFragment)
     }
@@ -58,12 +63,5 @@ class InfoFragment : Fragment(), InfoContract.View {
     private fun initRecyclerView() {
         binding.recView.layoutManager = LinearLayoutManager(context)
         binding.recView.adapter = adapter
-    }
-
-    override fun showContent() {
-        with(binding) {
-            adapter.updateList(fillList())
-            progressBar.isGone = true
-        }
     }
 }

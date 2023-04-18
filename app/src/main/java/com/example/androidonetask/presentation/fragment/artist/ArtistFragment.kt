@@ -1,30 +1,25 @@
-package com.example.androidonetask.presentation.fragment
+package com.example.androidonetask.presentation.fragment.artist
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidonetask.R
-import com.example.androidonetask.presentation.adapter.MusicAdapter
 import com.example.androidonetask.databinding.FragmentArtistBinding
-import com.example.androidonetask.mvp.news.NewsContract
-import com.example.androidonetask.presentation.fragment.PostFragment.Companion.ADAPTER_POSITION
+import com.example.androidonetask.presentation.adapter.MusicAdapter
 import com.example.androidonetask.presentation.utils.fillList
 
-class NewsFragment : Fragment(), NewsContract.View {
+class ArtistFragment : Fragment(), ArtistContract.View {
 
     private var _binding: FragmentArtistBinding? = null
     private val binding get() = _binding!!
     private var adapter =
         MusicAdapter(
-            listenerPosition = ::onClickItemPosition,
-            listenerAlbumImage = ::onClickImageView,
-            listenerArtistName = ::onClickArtist
+            listenerAlbumImage = ::onClickView
         )
 
     override fun onCreateView(
@@ -45,17 +40,13 @@ class NewsFragment : Fragment(), NewsContract.View {
 
         activity?.title = this.javaClass.simpleName
 
+        showContent()
         initRecyclerView()
     }
 
     override fun onDestroyView() {
         _binding = null
         super.onDestroyView()
-    }
-
-    private fun initRecyclerView() {
-        binding.recView.layoutManager = LinearLayoutManager(context)
-        binding.recView.adapter = adapter
     }
 
     override fun showContent() {
@@ -65,18 +56,12 @@ class NewsFragment : Fragment(), NewsContract.View {
         }
     }
 
-    private fun onClickItemPosition(position: Int) {
-        findNavController().navigate(
-            R.id.action_newsFragment_to_postFragment,
-            bundleOf(ADAPTER_POSITION to position)
-        )
+    private fun initRecyclerView() {
+        binding.recView.layoutManager = LinearLayoutManager(context)
+        binding.recView.adapter = adapter
     }
 
-    private fun onClickImageView() {
-        findNavController().navigate(R.id.action_newsFragment_to_imageViewActivity)
-    }
-
-    private fun onClickArtist() {
-        findNavController().navigate(R.id.action_newsFragment_to_artistFragment)
+    private fun onClickView() {
+        findNavController().navigate(R.id.action_artistFragment_to_imageViewActivity)
     }
 }

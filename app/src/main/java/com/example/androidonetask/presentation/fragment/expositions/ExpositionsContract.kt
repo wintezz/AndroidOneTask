@@ -1,4 +1,4 @@
-package com.example.androidonetask.mvp.expositions
+package com.example.androidonetask.presentation.fragment.expositions
 
 interface ExpositionsContract {
 

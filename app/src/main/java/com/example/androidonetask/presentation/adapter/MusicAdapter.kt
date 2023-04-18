@@ -11,7 +11,7 @@ import com.example.androidonetask.databinding.TrackElementListBinding
 import com.example.androidonetask.presentation.utils.load
 
 class MusicAdapter(
-    private val listenerPosition: (Int) -> Unit,
+    private val listenerPosition: (Int) -> Unit = {},
     private val listenerAlbumImage: () -> Unit = {},
     private val listenerArtistName: () -> Unit = {}
 ) : RecyclerView.Adapter<MusicAdapter.WorkViewHolder>() {

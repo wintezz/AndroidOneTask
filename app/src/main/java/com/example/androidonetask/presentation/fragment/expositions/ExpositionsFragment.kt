@@ -1,4 +1,4 @@
-package com.example.androidonetask.presentation.fragment
+package com.example.androidonetask.presentation.fragment.expositions
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,7 +10,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidonetask.R
 import com.example.androidonetask.databinding.FragmentArtistBinding
-import com.example.androidonetask.mvp.expositions.ExpositionsContract
 import com.example.androidonetask.presentation.adapter.MusicAdapter
 import com.example.androidonetask.presentation.utils.fillList
 
@@ -20,8 +19,7 @@ class ExpositionsFragment : Fragment(), ExpositionsContract.View {
     private val binding get() = _binding!!
     private var adapter =
         MusicAdapter(
-            listenerAlbumImage = ::onClickItem,
-            listenerPosition = {}
+            listenerAlbumImage = ::onClickItem
         )
 
     override fun onCreateView(
@@ -51,16 +49,16 @@ class ExpositionsFragment : Fragment(), ExpositionsContract.View {
         super.onDestroyView()
     }
 
-    private fun initRecyclerView() {
-        binding.recView.layoutManager = LinearLayoutManager(context)
-        binding.recView.adapter = adapter
-    }
-
     override fun showContent() {
         with(binding) {
             adapter.updateList(fillList())
             progressBar.isGone = true
         }
+    }
+
+    private fun initRecyclerView() {
+        binding.recView.layoutManager = LinearLayoutManager(context)
+        binding.recView.adapter = adapter
     }
 
     private fun onClickItem() {

@@ -1,4 +1,4 @@
-package com.example.androidonetask.mvp.news
+package com.example.androidonetask.presentation.fragment.news
 
 interface NewsContract {
 

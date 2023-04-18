@@ -1,6 +1,6 @@
-package com.example.androidonetask.mvp.post
+package com.example.androidonetask.presentation.fragment.info
 
-interface PostContract {
+interface InfoContract {
 
     interface View {
         fun showContent()

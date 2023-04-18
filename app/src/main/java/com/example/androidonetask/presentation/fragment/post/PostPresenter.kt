@@ -1,4 +1,4 @@
-package com.example.androidonetask.mvp.post
+package com.example.androidonetask.presentation.fragment.post
 
 class PostPresenter(
     private var postView: PostContract.View?

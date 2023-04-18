@@ -1,6 +1,6 @@
-package com.example.androidonetask.mvp.artist
+package com.example.androidonetask.presentation.fragment.post
 
-interface ArtistContract {
+interface PostContract {
 
     interface View {
         fun showContent()
