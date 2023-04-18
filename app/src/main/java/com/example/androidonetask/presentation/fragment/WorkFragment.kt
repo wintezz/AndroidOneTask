@@ -10,17 +10,14 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidonetask.R
-import com.example.androidonetask.data.repository.Repository
+import com.example.androidonetask.data.model.TrackUiModel
 import com.example.androidonetask.databinding.FragmentArtistBinding
 import com.example.androidonetask.mvp.Contract
 import com.example.androidonetask.mvp.Presenter
 import com.example.androidonetask.presentation.adapter.MusicAdapter
-import com.example.androidonetask.presentation.utils.TrackMapper
-import io.reactivex.disposables.Disposable
 
 class WorkFragment : Fragment(), Contract.View {
 
-    private var disposable: Disposable? = null
     private var presenter: Presenter? = null
     private var _binding: FragmentArtistBinding? = null
     private val binding get() = _binding!!
@@ -47,9 +44,9 @@ class WorkFragment : Fragment(), Contract.View {
 
         activity?.title = this.javaClass.simpleName
 
-        presenter = Presenter(this, Repository)
+        presenter = Presenter(this)
 
-        handleApi()
+        presenter?.handleApi()
         showLoading()
         initRecyclerView()
         clickViewError()
@@ -68,27 +65,18 @@ class WorkFragment : Fragment(), Contract.View {
 
     private fun clickViewError() {
         binding.imageRepeatRequest.setOnClickListener {
-            handleApi()
+            presenter?.handleApi()
             showLoading()
         }
-    }
-
-    private fun handleApi() {
-        disposable = Repository.getTracks().subscribe({ data ->
-            val list = TrackMapper.buildFrom(data)
-            adapter.updateList(list)
-            showContent()
-        }, { throwable ->
-            throwable.printStackTrace()
-        })
     }
 
     private fun onClickView() {
         findNavController().navigate(R.id.action_worksFragment_to_artActivity)
     }
 
-    override fun showContent() {
+    override fun showContent(data: List<TrackUiModel>) {
         with(binding) {
+            adapter.updateList(data)
             progressBar.isGone = true
         }
     }
