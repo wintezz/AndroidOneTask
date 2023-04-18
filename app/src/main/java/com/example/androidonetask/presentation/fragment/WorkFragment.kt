@@ -95,7 +95,6 @@ class WorkFragment : Fragment(), WorkContract.View {
             progressBar.isGone = true
             recView.isGone = true
             textViewError.isVisible = true
-            textViewError.isClickable = true
             imageRepeatRequest.isVisible = true
         }
     }
