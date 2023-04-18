@@ -11,7 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidonetask.R
 import com.example.androidonetask.data.model.TrackUiModel
-import com.example.androidonetask.data.repository.Repository
+import com.example.androidonetask.data.repository.RepositoryImpl
 import com.example.androidonetask.databinding.FragmentArtistBinding
 import com.example.androidonetask.presentation.adapter.MusicAdapter
 
@@ -42,7 +42,7 @@ class WorkFragment : Fragment(), WorkContract.View {
 
         activity?.title = this.javaClass.simpleName
 
-        workPresenter = WorkPresenter(this, repositoryImpl = Repository())
+        workPresenter = WorkPresenter(this, repository = RepositoryImpl())
 
         workPresenter?.loadTracks()
         showLoading()

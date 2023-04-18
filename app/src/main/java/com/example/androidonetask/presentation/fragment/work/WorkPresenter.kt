@@ -1,7 +1,7 @@
 package com.example.androidonetask.presentation.fragment.work
 
 import androidx.lifecycle.MutableLiveData
-import com.example.androidonetask.data.repository.RepositoryImpl
+import com.example.androidonetask.data.repository.Repository
 import com.example.androidonetask.data.retrofit.NetworkState
 import com.example.androidonetask.presentation.utils.TrackMapper
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -9,7 +9,7 @@ import io.reactivex.disposables.Disposable
 
 class WorkPresenter(
     private var mainView: WorkContract.View?,
-    private val repositoryImpl: RepositoryImpl
+    private val repository: Repository
 ) : WorkContract.Presenter {
 
     private val networkState = MutableLiveData<NetworkState>()
@@ -17,7 +17,7 @@ class WorkPresenter(
 
     override fun loadTracks() {
         disposable =
-            repositoryImpl
+            repository
                 .getTracks()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ data ->
