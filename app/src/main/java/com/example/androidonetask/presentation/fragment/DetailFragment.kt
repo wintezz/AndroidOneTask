@@ -6,8 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.androidonetask.databinding.FragmentDetailBinding
+import com.example.androidonetask.mvp.detail.DetailContract
 
-class DetailFragment : Fragment() {
+class DetailFragment : Fragment(), DetailContract.View {
 
     private var _binding: FragmentDetailBinding? = null
     private val binding get() = _binding!!

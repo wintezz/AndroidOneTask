@@ -1,16 +1,13 @@
-package com.example.androidonetask.mvp
+package com.example.androidonetask.mvp.work
 
 import com.example.androidonetask.data.model.TrackUiModel
 
-interface Contract {
+interface WorkContract {
 
     interface View {
         fun showContent(data: List<TrackUiModel>)
         fun showLoading()
         fun showError()
-    }
-
-    interface Model {
     }
 
     interface Presenter {

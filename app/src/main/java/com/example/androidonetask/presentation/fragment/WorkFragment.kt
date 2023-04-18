@@ -12,13 +12,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidonetask.R
 import com.example.androidonetask.data.model.TrackUiModel
 import com.example.androidonetask.databinding.FragmentArtistBinding
-import com.example.androidonetask.mvp.Contract
-import com.example.androidonetask.mvp.Presenter
+import com.example.androidonetask.mvp.work.WorkContract
+import com.example.androidonetask.mvp.work.WorkPresenter
 import com.example.androidonetask.presentation.adapter.MusicAdapter
 
-class WorkFragment : Fragment(), Contract.View {
+class WorkFragment : Fragment(), WorkContract.View {
 
-    private var presenter: Presenter? = null
+    private var workPresenter: WorkPresenter? = null
     private var _binding: FragmentArtistBinding? = null
     private val binding get() = _binding!!
     private var adapter = MusicAdapter(
@@ -44,9 +44,9 @@ class WorkFragment : Fragment(), Contract.View {
 
         activity?.title = this.javaClass.simpleName
 
-        presenter = Presenter(this)
+        workPresenter = WorkPresenter(this)
 
-        presenter?.handleApi()
+        workPresenter?.handleApi()
         showLoading()
         initRecyclerView()
         clickViewError()
@@ -54,7 +54,7 @@ class WorkFragment : Fragment(), Contract.View {
 
     override fun onDestroyView() {
         _binding = null
-        presenter?.onDestroyView()
+        workPresenter?.onDestroyView()
         super.onDestroyView()
     }
 
@@ -65,7 +65,7 @@ class WorkFragment : Fragment(), Contract.View {
 
     private fun clickViewError() {
         binding.imageRepeatRequest.setOnClickListener {
-            presenter?.handleApi()
+            workPresenter?.handleApi()
             showLoading()
         }
     }
@@ -78,6 +78,7 @@ class WorkFragment : Fragment(), Contract.View {
         with(binding) {
             adapter.updateList(data)
             progressBar.isGone = true
+            recView.isGone = false
         }
     }
 

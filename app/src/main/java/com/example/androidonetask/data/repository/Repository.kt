@@ -4,12 +4,11 @@ import com.example.androidonetask.data.model.TrackListResponse
 import com.example.androidonetask.data.retrofit.ApiService
 import com.example.androidonetask.data.retrofit.ApiService.Companion.BASE_URL
 import com.example.androidonetask.data.retrofit.RetrofitClient
-import com.example.androidonetask.mvp.Contract
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-object Repository : Contract.Model {
+object Repository {
 
     private val apiService: ApiService =
         RetrofitClient.getClient(BASE_URL).create(ApiService::class.java)

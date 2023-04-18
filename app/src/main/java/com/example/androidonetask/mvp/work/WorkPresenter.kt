@@ -1,4 +1,4 @@
-package com.example.androidonetask.mvp
+package com.example.androidonetask.mvp.work
 
 import androidx.lifecycle.MutableLiveData
 import com.example.androidonetask.data.repository.Repository
@@ -6,9 +6,9 @@ import com.example.androidonetask.data.retrofit.NetworkState
 import com.example.androidonetask.presentation.utils.TrackMapper
 import io.reactivex.disposables.Disposable
 
-class Presenter(
-    private var mainView: Contract.View
-) : Contract.Presenter, Contract.Model {
+class WorkPresenter(
+    private var workView: WorkContract.View?
+) : WorkContract.Presenter {
 
     private val networkState = MutableLiveData<NetworkState>()
     private var disposable: Disposable? = null
@@ -17,14 +17,16 @@ class Presenter(
         disposable = Repository.getTracks().subscribe({ data ->
             val list = TrackMapper.buildFrom(data)
             networkState.postValue(NetworkState.LOADED)
-            mainView.showContent(list)
+            workView?.showContent(list)
         }, {
             networkState.postValue(NetworkState.ERROR)
-            mainView.showError()
+            workView?.showError()
         })
     }
 
     override fun onDestroyView() {
         disposable?.dispose()
+        disposable = null
+        workView = null
     }
 }
