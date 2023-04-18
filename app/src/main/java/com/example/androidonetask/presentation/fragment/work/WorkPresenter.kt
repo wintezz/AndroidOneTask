@@ -4,8 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import com.example.androidonetask.data.repository.Repository
 import com.example.androidonetask.data.retrofit.NetworkState
 import com.example.androidonetask.presentation.utils.TrackMapper
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
+import io.reactivex.disposables.CompositeDisposable
 
 class WorkPresenter(
     private var mainView: WorkContract.View?,
@@ -13,13 +12,11 @@ class WorkPresenter(
 ) : WorkContract.Presenter {
 
     private val networkState = MutableLiveData<NetworkState>()
-    private var disposable: Disposable? = null
+    private val disposable = CompositeDisposable()
 
     override fun loadTracks() {
-        disposable =
-            repository
-                .getTracks()
-                .observeOn(AndroidSchedulers.mainThread())
+        disposable.add(
+            repository.getTracks()
                 .subscribe({ data ->
                     val list = TrackMapper.buildFrom(data)
                     networkState.postValue(NetworkState.LOADED)
@@ -28,11 +25,11 @@ class WorkPresenter(
                     networkState.postValue(NetworkState.ERROR)
                     mainView?.showError()
                 })
+        )
     }
 
     override fun onDestroyView() {
-        disposable?.dispose()
-        disposable = null
         mainView = null
+        disposable.dispose()
     }
 }
