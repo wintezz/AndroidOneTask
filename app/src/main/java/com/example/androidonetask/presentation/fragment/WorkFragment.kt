@@ -1,8 +1,6 @@
 package com.example.androidonetask.presentation.fragment
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.HandlerThread
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,19 +10,20 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidonetask.R
-import com.example.androidonetask.data.AppState
-import com.example.androidonetask.data.model.TrackUiModel
 import com.example.androidonetask.data.repository.Repository
 import com.example.androidonetask.databinding.FragmentArtistBinding
+import com.example.androidonetask.mvp.Contract
+import com.example.androidonetask.mvp.Presenter
 import com.example.androidonetask.presentation.adapter.MusicAdapter
 import com.example.androidonetask.presentation.utils.TrackMapper
+import io.reactivex.disposables.Disposable
 
-class WorkFragment : Fragment() {
+class WorkFragment : Fragment(), Contract.View {
 
+    private var disposable: Disposable? = null
+    private var presenter: Presenter? = null
     private var _binding: FragmentArtistBinding? = null
     private val binding get() = _binding!!
-    private lateinit var handlerThread: HandlerThread
-    private lateinit var handler: Handler
     private var adapter = MusicAdapter(
         listenerAlbumImage = ::onClickView,
         listenerPosition = {}
@@ -48,23 +47,18 @@ class WorkFragment : Fragment() {
 
         activity?.title = this.javaClass.simpleName
 
+        presenter = Presenter(this, Repository)
+
+        handleApi()
         showLoading()
         initRecyclerView()
-        initHandlerThread()
-        handleApi()
         clickViewError()
     }
 
     override fun onDestroyView() {
         _binding = null
-        handlerThread.quit()
+        presenter?.onDestroyView()
         super.onDestroyView()
-    }
-
-    private fun initHandlerThread() {
-        handlerThread = HandlerThread(HANDLER_NAME)
-        handlerThread.start()
-        handler = Handler(handlerThread.looper)
     }
 
     private fun initRecyclerView() {
@@ -80,32 +74,26 @@ class WorkFragment : Fragment() {
     }
 
     private fun handleApi() {
-        handler.post {
-            when (val response = Repository.getTracks()) {
-                is AppState.Success -> {
-                    val data = response.data
-                    val list = TrackMapper.buildFrom(data)
-                    binding.root.post {
-                        showContent(list)
-                    }
-                }
-                else -> {
-                    binding.root.post {
-                        showError()
-                    }
-                }
-            }
-        }
+        disposable = Repository.getTracks().subscribe({ data ->
+            val list = TrackMapper.buildFrom(data)
+            adapter.updateList(list)
+            showContent()
+        }, { throwable ->
+            throwable.printStackTrace()
+        })
     }
 
-    private fun showContent(tracks: List<TrackUiModel>) {
+    private fun onClickView() {
+        findNavController().navigate(R.id.action_worksFragment_to_artActivity)
+    }
+
+    override fun showContent() {
         with(binding) {
-            adapter.updateList(tracks)
             progressBar.isGone = true
         }
     }
 
-    private fun showLoading() {
+    override fun showLoading() {
         with(binding) {
             textViewError.isGone = true
             imageRepeatRequest.isGone = true
@@ -113,7 +101,7 @@ class WorkFragment : Fragment() {
         }
     }
 
-    private fun showError() {
+    override fun showError() {
         with(binding) {
             progressBar.isGone = true
             recView.isGone = true
@@ -121,14 +109,6 @@ class WorkFragment : Fragment() {
             textViewError.isClickable = true
             imageRepeatRequest.isVisible = true
         }
-    }
-
-    private fun onClickView() {
-        findNavController().navigate(R.id.action_worksFragment_to_artActivity)
-    }
-
-    companion object {
-        private const val HANDLER_NAME = "WorkHandler"
     }
 }
 

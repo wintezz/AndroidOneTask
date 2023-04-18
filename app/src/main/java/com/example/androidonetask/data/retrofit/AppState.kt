@@ -1,4 +1,4 @@
-package com.example.androidonetask.data
+package com.example.androidonetask.data.retrofit
 
 sealed class AppState<T> {
     data class Success<T>(val data: T?) : AppState<T>()

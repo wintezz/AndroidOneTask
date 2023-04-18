@@ -1,16 +1,21 @@
 package com.example.androidonetask.data.repository
 
-import com.example.androidonetask.data.ApiService
-import com.example.androidonetask.data.ApiService.Companion.BASE_URL
-import com.example.androidonetask.data.AppState
-import com.example.androidonetask.data.RetrofitClient
-import com.example.androidonetask.data.handleApi
 import com.example.androidonetask.data.model.TrackListResponse
+import com.example.androidonetask.data.retrofit.ApiService
+import com.example.androidonetask.data.retrofit.ApiService.Companion.BASE_URL
+import com.example.androidonetask.data.retrofit.RetrofitClient
+import com.example.androidonetask.mvp.Contract
+import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 
-object Repository {
+object Repository : Contract.Model {
 
-    private val retrofitService: ApiService =
+    private val apiService: ApiService =
         RetrofitClient.getClient(BASE_URL).create(ApiService::class.java)
 
-    fun getTracks(): AppState<TrackListResponse> = retrofitService.getTrackList().handleApi()
+    fun getTracks(): Single<TrackListResponse> =
+        apiService.getTrackList()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
 }

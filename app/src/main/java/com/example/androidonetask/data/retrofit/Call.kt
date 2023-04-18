@@ -1,9 +1,6 @@
-package com.example.androidonetask.data
+package com.example.androidonetask.data.retrofit
 
-import retrofit2.Call
-import retrofit2.HttpException
-import java.io.IOException
-
+/*
 fun <T> Call<T>.handleApi(): AppState<T> {
     return try {
         val response = this.execute()
@@ -21,4 +18,4 @@ fun <T> Call<T>.handleApi(): AppState<T> {
     } catch (e: IOException) {
         AppState.Error(e)
     }
-}
+}*/
