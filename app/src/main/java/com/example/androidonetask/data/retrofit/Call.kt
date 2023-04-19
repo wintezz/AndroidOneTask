@@ -23,4 +23,3 @@ fun <T : Any> Observable<Response<T>>.request(): Observable<AppState<T>> {
 }
 
 
-

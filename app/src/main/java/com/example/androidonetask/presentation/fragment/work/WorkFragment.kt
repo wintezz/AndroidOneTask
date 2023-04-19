@@ -23,6 +23,11 @@ class WorkFragment : Fragment(), WorkContract.View {
         listenerAlbumImage = ::onClickView
     )
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        retainInstance = true
+        super.onCreate(savedInstanceState)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -74,6 +79,14 @@ class WorkFragment : Fragment(), WorkContract.View {
         }
     }
 
+    override fun showLoading() {
+        with(binding) {
+            textViewError.isVisible = false
+            imageRepeatRequest.isVisible = false
+            progressBar.isVisible = true
+        }
+    }
+
     private fun initRecyclerView() {
         binding.recView.layoutManager = LinearLayoutManager(context)
         binding.recView.adapter = adapter
@@ -88,14 +101,6 @@ class WorkFragment : Fragment(), WorkContract.View {
 
     private fun onClickView() {
         findNavController().navigate(R.id.action_worksFragment_to_artActivity)
-    }
-
-    override fun showLoading() {
-        with(binding) {
-            textViewError.isVisible = false
-            imageRepeatRequest.isVisible = false
-            progressBar.isVisible = true
-        }
     }
 }
 
