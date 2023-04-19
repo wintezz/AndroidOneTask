@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
-import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -56,7 +56,7 @@ class NewsFragment : Fragment(), NewsContract.View {
     override fun showContent() {
         with(binding) {
             adapter.updateList(fillList())
-            progressBar.isGone = true
+            progressBar.isVisible = false
         }
     }
 
