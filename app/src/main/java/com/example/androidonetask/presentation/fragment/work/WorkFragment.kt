@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -42,10 +41,12 @@ class WorkFragment : Fragment(), WorkContract.View {
 
         activity?.title = this.javaClass.simpleName
 
-        workPresenter = WorkPresenter(this, repository = RepositoryImpl())
+        workPresenter = WorkPresenter(
+            mainView = this,
+            repository = RepositoryImpl()
+        )
 
         workPresenter?.loadTracks()
-        showLoading()
         initRecyclerView()
         clickViewError()
     }
@@ -59,14 +60,14 @@ class WorkFragment : Fragment(), WorkContract.View {
     override fun showContent(data: List<TrackUiModel>) {
         with(binding) {
             adapter.updateList(data)
-            progressBar.isGone = true
+            progressBar.isVisible = false
             recView.isVisible = true
         }
     }
 
     override fun showError() {
         with(binding) {
-            progressBar.isGone = true
+            progressBar.isVisible = false
             recView.isVisible = false
             textViewError.isVisible = true
             imageRepeatRequest.isVisible = true
@@ -89,10 +90,10 @@ class WorkFragment : Fragment(), WorkContract.View {
         findNavController().navigate(R.id.action_worksFragment_to_artActivity)
     }
 
-    private fun showLoading() {
+    override fun showLoading() {
         with(binding) {
-            textViewError.isGone = true
-            imageRepeatRequest.isGone = true
+            textViewError.isVisible = false
+            imageRepeatRequest.isVisible = false
             progressBar.isVisible = true
         }
     }

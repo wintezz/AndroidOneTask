@@ -13,22 +13,23 @@ class WorkPresenter(
     private val disposable = CompositeDisposable()
 
     override fun loadTracks() {
+        mainView?.showLoading()
         disposable.add(
             repository.getTracks()
-                .subscribe({ response ->
-                    if (response is AppState.Success) {
-                        val data = response.data
-                        val list = TrackMapper.buildFrom(data)
-                        mainView?.showContent(list)
+                .subscribe { response ->
+                    when (response) {
+                        is AppState.Success -> {
+                            val data = response.data
+                            val list = TrackMapper.buildFrom(data)
+                            mainView?.showContent(list)
+                        }
+                        else -> mainView?.showError()
                     }
-                }, {
-                    mainView?.showError()
                 })
-        )
     }
 
     override fun onDestroyView() {
         mainView = null
-        disposable.dispose()
+        disposable.clear()
     }
 }
