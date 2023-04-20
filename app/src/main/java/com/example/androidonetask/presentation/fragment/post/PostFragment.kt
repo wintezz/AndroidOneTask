@@ -15,6 +15,11 @@ class PostFragment : Fragment() {
     private var _binding: FragmentPostBinding? = null
     private val binding get() = _binding!!
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        setupViewModel()
+        super.onCreate(savedInstanceState)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -34,8 +39,6 @@ class PostFragment : Fragment() {
         activity?.title = this.javaClass.simpleName
 
         binding.textRankPost.text = arguments?.getInt(ADAPTER_POSITION).toString()
-
-        setupViewModel()
     }
 
     override fun onDestroyView() {

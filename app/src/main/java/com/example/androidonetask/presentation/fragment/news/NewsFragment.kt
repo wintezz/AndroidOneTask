@@ -29,6 +29,11 @@ class NewsFragment : Fragment() {
             listenerArtistName = ::onClickArtist
         )
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        setupViewModel()
+        super.onCreate(savedInstanceState)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -49,7 +54,6 @@ class NewsFragment : Fragment() {
 
         showContent()
         initRecyclerView()
-        setupViewModel()
     }
 
     override fun onDestroyView() {

@@ -25,6 +25,11 @@ class ExpositionsFragment : Fragment() {
             listenerAlbumImage = ::onClickItem
         )
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        setupViewModel()
+        super.onCreate(savedInstanceState)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -45,7 +50,6 @@ class ExpositionsFragment : Fragment() {
 
         showContent()
         initRecyclerView()
-        setupViewModel()
     }
 
     override fun onDestroyView() {

@@ -10,12 +10,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidonetask.R
-import com.example.androidonetask.data.model.TrackUiModel
 import com.example.androidonetask.data.repository.RepositoryImpl
-import com.example.androidonetask.data.retrofit.Status
 import com.example.androidonetask.databinding.FragmentArtistBinding
 import com.example.androidonetask.presentation.adapter.MusicAdapter
-import com.example.androidonetask.presentation.utils.TrackMapper
 
 class WorkFragment : Fragment() {
 
@@ -25,6 +22,11 @@ class WorkFragment : Fragment() {
     private var adapter = MusicAdapter(
         listenerAlbumImage = ::onClickView
     )
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        setupViewModel()
+        super.onCreate(savedInstanceState)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,8 +48,8 @@ class WorkFragment : Fragment() {
 
         initRecyclerView()
         clickViewError()
-        setupViewModel()
         setupObservers()
+        viewModel.loadData()
     }
 
     override fun onDestroyView() {
@@ -55,9 +57,8 @@ class WorkFragment : Fragment() {
         super.onDestroyView()
     }
 
-    private fun showContent(data: List<TrackUiModel>) {
+    private fun showContent() {
         with(binding) {
-            adapter.updateList(data)
             progressBar.isVisible = false
             recView.isVisible = true
         }
@@ -104,18 +105,14 @@ class WorkFragment : Fragment() {
     }
 
     private fun setupObservers() {
-        showLoading()
-        viewModel.loadData().observe(viewLifecycleOwner) {
-            it?.let { resource ->
-                when (resource.status) {
-                    Status.SUCCESS -> {
-                        val data = resource.data
-                        val list = TrackMapper.buildFrom(data)
-                        resource.data?.let { showContent(list) }
-                    }
-                    else -> showError()
-                }
+        try {
+            showLoading()
+            viewModel.trackList.observe(viewLifecycleOwner) {
+                adapter.updateList(it)
+                showContent()
             }
+        } catch (e: Throwable) {
+            showError()
         }
     }
 }
