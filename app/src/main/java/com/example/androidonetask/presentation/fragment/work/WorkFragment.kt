@@ -7,12 +7,14 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidonetask.R
 import com.example.androidonetask.data.repository.RepositoryImpl
 import com.example.androidonetask.databinding.FragmentArtistBinding
 import com.example.androidonetask.presentation.adapter.MusicAdapter
+import kotlinx.coroutines.launch
 
 class WorkFragment : Fragment() {
 
@@ -49,7 +51,6 @@ class WorkFragment : Fragment() {
         initRecyclerView()
         clickViewError()
         setupObservers()
-        viewModel.loadData()
     }
 
     override fun onDestroyView() {
@@ -105,15 +106,17 @@ class WorkFragment : Fragment() {
     }
 
     private fun setupObservers() {
-        try {
-            showLoading()
-            viewModel.trackList.observe(viewLifecycleOwner) {
-                adapter.updateList(it)
-                showContent()
+        showLoading()
+        lifecycleScope.launch {
+            viewModel.staticState.collect { uiState ->
+                when (uiState) {
+                    is TracksUiState.Success -> adapter.updateList(uiState.tracks)
+                    is TracksUiState.Error -> (uiState.exception)
+                    is TracksUiState.Loading -> (uiState.state)
+                }
             }
-        } catch (e: Throwable) {
-            showError()
         }
     }
 }
+
 
