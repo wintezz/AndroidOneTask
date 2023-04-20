@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/newsFragment"
-        android:name="com.example.androidonetask.presentation.fragment.NewsFragment"
+        android:name="com.example.androidonetask.presentation.fragment.news.NewsFragment"
         android:label="NewsFragment">
         <action
             android:id="@+id/action_newsFragment_to_artistFragment"
@@ -22,7 +22,7 @@
     </fragment>
     <fragment
         android:id="@+id/artistFragment"
-        android:name="com.example.androidonetask.presentation.fragment.ArtistFragment"
+        android:name="com.example.androidonetask.presentation.fragment.artist.ArtistFragment"
         android:label="ArtistFragment">
         <action
             android:id="@+id/action_artistFragment_to_imageViewActivity"
@@ -30,7 +30,7 @@
     </fragment>
     <fragment
         android:id="@+id/worksFragment"
-        android:name="com.example.androidonetask.presentation.fragment.WorkFragment"
+        android:name="com.example.androidonetask.presentation.fragment.work.WorkFragment"
         android:label="WorksFragment">
         <action
             android:id="@+id/action_worksFragment_to_artActivity"
@@ -38,7 +38,7 @@
     </fragment>
     <fragment
         android:id="@+id/expositionsFragment"
-        android:name="com.example.androidonetask.presentation.fragment.ExpositionsFragment"
+        android:name="com.example.androidonetask.presentation.fragment.expositions.ExpositionsFragment"
         android:label="ExpositionsFragment">
         <action
             android:id="@+id/action_expositionsFragment_to_artActivity"
@@ -46,7 +46,7 @@
     </fragment>
     <fragment
         android:id="@+id/infoFragment"
-        android:name="com.example.androidonetask.presentation.fragment.InfoFragment"
+        android:name="com.example.androidonetask.presentation.fragment.info.InfoFragment"
         android:label="InfoFragment">
         <action
             android:id="@+id/action_infoFragment_to_detailFragment"
@@ -54,7 +54,7 @@
     </fragment>
     <fragment
         android:id="@+id/postFragment"
-        android:name="com.example.androidonetask.presentation.fragment.PostFragment"
+        android:name="com.example.androidonetask.presentation.fragment.post.PostFragment"
         android:label="PostFragment" />
     <activity
         android:id="@+id/imageViewActivity"
@@ -68,6 +68,6 @@
         tools:layout="@layout/activity_art" />
     <fragment
         android:id="@+id/detailFragment"
-        android:name="com.example.androidonetask.presentation.fragment.DetailFragment"
+        android:name="com.example.androidonetask.presentation.fragment.detail.DetailFragment"
         android:label="DetailFragment" />
 </navigation>
