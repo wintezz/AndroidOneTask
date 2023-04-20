@@ -6,15 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidonetask.R
+import com.example.androidonetask.data.repository.RepositoryImpl
 import com.example.androidonetask.databinding.FragmentArtistBinding
 import com.example.androidonetask.presentation.adapter.MusicAdapter
 import com.example.androidonetask.presentation.utils.fillList
 
-class ExpositionsFragment : Fragment(), ExpositionsContract.View {
+class ExpositionsFragment : Fragment() {
 
+    private lateinit var viewModel: ExpositionsViewModel
     private var _binding: FragmentArtistBinding? = null
     private val binding get() = _binding!!
     private var adapter =
@@ -42,6 +45,7 @@ class ExpositionsFragment : Fragment(), ExpositionsContract.View {
 
         showContent()
         initRecyclerView()
+        setupViewModel()
     }
 
     override fun onDestroyView() {
@@ -49,7 +53,7 @@ class ExpositionsFragment : Fragment(), ExpositionsContract.View {
         super.onDestroyView()
     }
 
-    override fun showContent() {
+    private fun showContent() {
         with(binding) {
             adapter.updateList(fillList())
             progressBar.isVisible = false
@@ -63,5 +67,12 @@ class ExpositionsFragment : Fragment(), ExpositionsContract.View {
 
     private fun onClickItem() {
         findNavController().navigate(R.id.action_expositionsFragment_to_artActivity)
+    }
+
+    private fun setupViewModel() {
+        viewModel = ViewModelProvider(
+            this,
+            ExpositionsViewModelFactory(repository = RepositoryImpl())
+        )[ExpositionsViewModel::class.java]
     }
 }
