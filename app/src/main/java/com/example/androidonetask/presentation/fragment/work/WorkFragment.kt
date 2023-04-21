@@ -51,6 +51,7 @@ class WorkFragment : Fragment() {
         initRecyclerView()
         clickViewError()
         setupObservers()
+        showLoading()
     }
 
     override fun onDestroyView() {
@@ -106,17 +107,22 @@ class WorkFragment : Fragment() {
     }
 
     private fun setupObservers() {
-        showLoading()
         lifecycleScope.launch {
-            viewModel.staticState.collect { uiState ->
-                when (uiState) {
-                    is TracksUiState.Success -> adapter.updateList(uiState.tracks)
-                    is TracksUiState.Error -> (uiState.exception)
-                    is TracksUiState.Loading -> (uiState.state)
+            viewModel.staticState.collect { staticState ->
+                when (staticState) {
+                    is TracksUiState.Success -> {
+                        adapter.updateList(staticState.tracks)
+                        showContent()
+                    }
+                    is TracksUiState.Error -> {
+                        showError()
+                    }
                 }
             }
         }
     }
 }
+
+
 
 

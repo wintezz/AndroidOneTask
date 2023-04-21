@@ -32,7 +32,6 @@ class WorkViewModel(private val repository: Repository) : ViewModel() {
 
 sealed class TracksUiState {
     data class Success(val tracks: List<TrackUiModel>) : TracksUiState()
-    data class Loading(val state: Boolean = true) : TracksUiState()
     data class Error(val exception: Throwable) : TracksUiState()
 }
 
