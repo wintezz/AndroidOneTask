@@ -19,18 +19,17 @@ import kotlinx.coroutines.launch
 
 class WorkFragment : Fragment() {
 
-    private lateinit var viewModel: WorkViewModel
+    private val viewModel: WorkViewModel by lazy {
+        ViewModelProvider(
+            this,
+            WorkViewModelFactory(repository = RepositoryImpl())
+        )[WorkViewModel::class.java]
+    }
     private var _binding: FragmentArtistBinding? = null
     private val binding get() = _binding!!
     private var adapter = MusicAdapter(
         listenerAlbumImage = ::onClickView
     )
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        setupViewModel()
-        viewModel.init()
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -53,7 +52,6 @@ class WorkFragment : Fragment() {
         initRecyclerView()
         clickViewError()
         setupObservers()
-        showLoading()
     }
 
     override fun onDestroyView() {
@@ -93,8 +91,7 @@ class WorkFragment : Fragment() {
 
     private fun clickViewError() {
         binding.imageRepeatRequest.setOnClickListener {
-            showLoading()
-            viewModel.init()
+            viewModel.loadTracks()
         }
     }
 
@@ -102,17 +99,11 @@ class WorkFragment : Fragment() {
         findNavController().navigate(R.id.action_worksFragment_to_artActivity)
     }
 
-    private fun setupViewModel() {
-        viewModel = ViewModelProvider(
-            this,
-            WorkViewModelFactory(repository = RepositoryImpl())
-        )[WorkViewModel::class.java]
-    }
-
     private fun setupObservers() {
-        lifecycleScope.launch {
+        viewLifecycleOwner.lifecycleScope.launch {
             viewModel.staticState.collect { uiState ->
                 when (uiState) {
+                    is TracksUiState.Loading -> showLoading()
                     is TracksUiState.Success -> showContent(uiState.tracks)
                     is TracksUiState.Error -> showError(uiState.exception)
                 }

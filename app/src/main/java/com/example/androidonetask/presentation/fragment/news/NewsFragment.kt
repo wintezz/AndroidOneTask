@@ -19,7 +19,12 @@ import com.example.androidonetask.presentation.utils.fillList
 
 class NewsFragment : Fragment() {
 
-    private lateinit var viewModel: NewsViewModel
+    private val viewModel: NewsViewModel by lazy {
+        ViewModelProvider(
+            this,
+            NewsViewModelFactory(repository = RepositoryImpl())
+        )[NewsViewModel::class.java]
+    }
     private var _binding: FragmentArtistBinding? = null
     private val binding get() = _binding!!
     private var adapter =
@@ -28,11 +33,6 @@ class NewsFragment : Fragment() {
             listenerAlbumImage = ::onClickImageView,
             listenerArtistName = ::onClickArtist
         )
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        setupViewModel()
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -86,12 +86,5 @@ class NewsFragment : Fragment() {
 
     private fun onClickArtist() {
         findNavController().navigate(R.id.action_newsFragment_to_artistFragment)
-    }
-
-    private fun setupViewModel() {
-        viewModel = ViewModelProvider(
-            this,
-            NewsViewModelFactory(repository = RepositoryImpl())
-        )[NewsViewModel::class.java]
     }
 }

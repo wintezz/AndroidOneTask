@@ -11,14 +11,14 @@ import com.example.androidonetask.databinding.FragmentPostBinding
 
 class PostFragment : Fragment() {
 
-    private lateinit var viewModel: PostViewModel
+    private val viewModel: PostViewModel by lazy {
+        ViewModelProvider(
+            this,
+            PostViewModelFactory(repository = RepositoryImpl())
+        )[PostViewModel::class.java]
+    }
     private var _binding: FragmentPostBinding? = null
     private val binding get() = _binding!!
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        setupViewModel()
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,13 +44,6 @@ class PostFragment : Fragment() {
     override fun onDestroyView() {
         _binding = null
         super.onDestroyView()
-    }
-
-    private fun setupViewModel() {
-        viewModel = ViewModelProvider(
-            this,
-            PostViewModelFactory(repository = RepositoryImpl())
-        )[PostViewModel::class.java]
     }
 
     companion object {

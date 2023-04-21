@@ -7,7 +7,7 @@ import retrofit2.http.GET
 interface ApiService {
 
     @GET("/v3.0/tracks")
-     fun getTrackList(): Call<TrackListResponse>
+    fun getTrackList(): Call<TrackListResponse>
 
     companion object {
         const val CLIENT_ID = "f917c8e0"

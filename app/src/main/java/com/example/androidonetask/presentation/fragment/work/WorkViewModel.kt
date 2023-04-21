@@ -6,40 +6,40 @@ import com.example.androidonetask.data.model.TrackUiModel
 import com.example.androidonetask.data.repository.Repository
 import com.example.androidonetask.data.retrofit.AppState
 import com.example.androidonetask.presentation.utils.TrackMapper
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class WorkViewModel(private val repository: Repository) : ViewModel() {
 
-    private val mutableStateSuccess =
-        MutableStateFlow<TracksUiState>(TracksUiState.Success(emptyList()))
+    private val mutableState =
+        MutableStateFlow<TracksUiState>(TracksUiState.Loading)
 
-    val staticState: StateFlow<TracksUiState> = mutableStateSuccess
+    val staticState: StateFlow<TracksUiState> = mutableState
 
-    fun init() {
-        viewModelScope.launch(Dispatchers.IO) {
+    init {
+        loadTracks()
+    }
+
+    fun loadTracks() {
+        viewModelScope.launch {
+            mutableState.value = TracksUiState.Loading
             when (val response = repository.getTracks()) {
                 is AppState.Success -> {
                     val list = TrackMapper.buildFrom(response.data)
-                    mutableStateSuccess.value = TracksUiState.Success(list)
+                    mutableState.value = TracksUiState.Success(list)
                 }
                 is AppState.Error -> {
-                    mutableStateSuccess.value = TracksUiState.Error(response.exception)
+                    mutableState.value = TracksUiState.Error(response.exception)
                 }
                 else -> {}
             }
         }
     }
-
-    override fun onCleared() {
-        init()
-        super.onCleared()
-    }
 }
 
 sealed class TracksUiState {
+    object Loading : TracksUiState()
     data class Success(val tracks: List<TrackUiModel>) : TracksUiState()
     data class Error(val exception: Throwable? = null) : TracksUiState()
 }

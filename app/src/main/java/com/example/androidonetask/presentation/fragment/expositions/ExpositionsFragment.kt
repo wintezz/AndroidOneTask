@@ -17,18 +17,18 @@ import com.example.androidonetask.presentation.utils.fillList
 
 class ExpositionsFragment : Fragment() {
 
-    private lateinit var viewModel: ExpositionsViewModel
+    private val viewModel: ExpositionsViewModel by lazy {
+        ViewModelProvider(
+            this,
+            ExpositionsViewModelFactory(repository = RepositoryImpl())
+        )[ExpositionsViewModel::class.java]
+    }
     private var _binding: FragmentArtistBinding? = null
     private val binding get() = _binding!!
     private var adapter =
         MusicAdapter(
             listenerAlbumImage = ::onClickItem
         )
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        setupViewModel()
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -71,12 +71,5 @@ class ExpositionsFragment : Fragment() {
 
     private fun onClickItem() {
         findNavController().navigate(R.id.action_expositionsFragment_to_artActivity)
-    }
-
-    private fun setupViewModel() {
-        viewModel = ViewModelProvider(
-            this,
-            ExpositionsViewModelFactory(repository = RepositoryImpl())
-        )[ExpositionsViewModel::class.java]
     }
 }

@@ -17,18 +17,18 @@ import com.example.androidonetask.presentation.utils.fillList
 
 class InfoFragment : Fragment() {
 
-    private lateinit var viewModel: InfoViewModel
+    private val viewModel: InfoViewModel by lazy {
+        ViewModelProvider(
+            this,
+            InfoViewModelFactory(repository = RepositoryImpl())
+        )[InfoViewModel::class.java]
+    }
     private var _binding: FragmentArtistBinding? = null
     private val binding get() = _binding!!
     private var adapter =
         MusicAdapter(
             listenerAlbumImage = ::onClickView
         )
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        setupViewModel()
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -71,12 +71,5 @@ class InfoFragment : Fragment() {
     private fun initRecyclerView() {
         binding.recView.layoutManager = LinearLayoutManager(context)
         binding.recView.adapter = adapter
-    }
-
-    private fun setupViewModel() {
-        viewModel = ViewModelProvider(
-            this,
-            InfoViewModelFactory(repository = RepositoryImpl())
-        )[InfoViewModel::class.java]
     }
 }

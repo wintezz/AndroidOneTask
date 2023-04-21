@@ -11,14 +11,14 @@ import com.example.androidonetask.databinding.FragmentDetailBinding
 
 class DetailFragment : Fragment() {
 
-    private lateinit var viewModel: DetailViewModel
+    private val viewModel: DetailViewModel by lazy {
+        ViewModelProvider(
+            this,
+            DetailViewModelFactory(repository = RepositoryImpl())
+        )[DetailViewModel::class.java]
+    }
     private var _binding: FragmentDetailBinding? = null
     private val binding get() = _binding!!
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        setupViewModel()
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,12 +42,5 @@ class DetailFragment : Fragment() {
     override fun onDestroyView() {
         _binding = null
         super.onDestroyView()
-    }
-
-    private fun setupViewModel() {
-        viewModel = ViewModelProvider(
-            this,
-            DetailViewModelFactory(repository = RepositoryImpl())
-        )[DetailViewModel::class.java]
     }
 }
