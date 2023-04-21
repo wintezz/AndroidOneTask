@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -15,9 +14,10 @@ import com.example.androidonetask.data.model.TrackUiModel
 import com.example.androidonetask.data.repository.RepositoryImpl
 import com.example.androidonetask.databinding.FragmentArtistBinding
 import com.example.androidonetask.presentation.adapter.MusicAdapter
+import com.example.androidonetask.presentation.fragment.base.BaseFragment
 import kotlinx.coroutines.launch
 
-class WorkFragment : Fragment() {
+class WorkFragment : BaseFragment() {
 
     private val viewModel: WorkViewModel by lazy {
         ViewModelProvider(
@@ -67,23 +67,6 @@ class WorkFragment : Fragment() {
         }
     }
 
-    private fun showError(exception: Throwable?) {
-        with(binding) {
-            progressBar.isVisible = false
-            recView.isVisible = false
-            textViewError.isVisible = true
-            imageRepeatRequest.isVisible = true
-        }
-    }
-
-    private fun showLoading() {
-        with(binding) {
-            textViewError.isVisible = false
-            imageRepeatRequest.isVisible = false
-            progressBar.isVisible = true
-        }
-    }
-
     private fun initRecyclerView() {
         binding.recView.layoutManager = LinearLayoutManager(context)
         binding.recView.adapter = adapter
@@ -105,7 +88,7 @@ class WorkFragment : Fragment() {
                 when (uiState) {
                     is TracksUiState.Loading -> showLoading()
                     is TracksUiState.Success -> showContent(uiState.tracks)
-                    is TracksUiState.Error -> showError(uiState.exception)
+                    is TracksUiState.Error -> showError()
                 }
             }
         }
