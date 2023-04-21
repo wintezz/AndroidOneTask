@@ -11,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidonetask.R
+import com.example.androidonetask.data.model.TrackUiModel
 import com.example.androidonetask.data.repository.RepositoryImpl
 import com.example.androidonetask.databinding.FragmentArtistBinding
 import com.example.androidonetask.presentation.adapter.MusicAdapter
@@ -59,8 +60,9 @@ class WorkFragment : Fragment() {
         super.onDestroyView()
     }
 
-    private fun showContent() {
+    private fun showContent(tracks: List<TrackUiModel>) {
         with(binding) {
+            adapter.updateList(tracks)
             progressBar.isVisible = false
             recView.isVisible = true
         }
@@ -108,21 +110,18 @@ class WorkFragment : Fragment() {
 
     private fun setupObservers() {
         lifecycleScope.launch {
-            viewModel.staticState.collect { staticState ->
-                when (staticState) {
+            viewModel.staticState.collect { uiState ->
+                when (uiState) {
                     is TracksUiState.Success -> {
-                        adapter.updateList(staticState.tracks)
-                        showContent()
+                        showContent(uiState.tracks)
                     }
                     is TracksUiState.Error -> {
-                        showError()
+                        (uiState.exception)
                     }
                 }
             }
         }
     }
 }
-
-
 
 
