@@ -13,25 +13,33 @@ import kotlinx.coroutines.launch
 
 class WorkViewModel(private val repository: Repository) : ViewModel() {
 
-    private val mutableState = MutableStateFlow(TracksUiState.Success(emptyList()))
-    val staticState: StateFlow<TracksUiState> = mutableState
+    private val mutableStateSuccess =
+        MutableStateFlow<TracksUiState>(TracksUiState.Success(emptyList()))
 
-    init {
+    val staticState: StateFlow<TracksUiState> = mutableStateSuccess
+
+    fun init() {
         viewModelScope.launch(Dispatchers.IO) {
             when (val response = repository.getTracks()) {
                 is AppState.Success -> {
-                    val data = response.data
-                    val list = TrackMapper.buildFrom(data)
-                    mutableState.value = TracksUiState.Success(list)
+                    val list = TrackMapper.buildFrom(response.data)
+                    mutableStateSuccess.value = TracksUiState.Success(list)
                 }
-                else -> TracksUiState.Error(exception = Throwable())
+                is AppState.Error -> {
+                    mutableStateSuccess.value = TracksUiState.Error(response.exception)
+                }
+                else -> {}
             }
         }
+    }
+
+    override fun onCleared() {
+        init()
+        super.onCleared()
     }
 }
 
 sealed class TracksUiState {
     data class Success(val tracks: List<TrackUiModel>) : TracksUiState()
-    data class Error(val exception: Throwable) : TracksUiState()
+    data class Error(val exception: Throwable? = null) : TracksUiState()
 }
-

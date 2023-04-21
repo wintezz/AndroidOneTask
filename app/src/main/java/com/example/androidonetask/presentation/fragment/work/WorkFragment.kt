@@ -28,6 +28,7 @@ class WorkFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setupViewModel()
+        viewModel.init()
         super.onCreate(savedInstanceState)
     }
 
@@ -68,7 +69,7 @@ class WorkFragment : Fragment() {
         }
     }
 
-    private fun showError() {
+    private fun showError(exception: Throwable?) {
         with(binding) {
             progressBar.isVisible = false
             recView.isVisible = false
@@ -93,7 +94,7 @@ class WorkFragment : Fragment() {
     private fun clickViewError() {
         binding.imageRepeatRequest.setOnClickListener {
             showLoading()
-            setupObservers()
+            viewModel.init()
         }
     }
 
@@ -112,16 +113,11 @@ class WorkFragment : Fragment() {
         lifecycleScope.launch {
             viewModel.staticState.collect { uiState ->
                 when (uiState) {
-                    is TracksUiState.Success -> {
-                        showContent(uiState.tracks)
-                    }
-                    is TracksUiState.Error -> {
-                        (uiState.exception)
-                    }
+                    is TracksUiState.Success -> showContent(uiState.tracks)
+                    is TracksUiState.Error -> showError(uiState.exception)
                 }
             }
         }
     }
 }
-
 
