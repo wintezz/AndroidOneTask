@@ -82,6 +82,24 @@ class WorkFragment : BaseFragment() {
         findNavController().navigate(R.id.action_worksFragment_to_artActivity)
     }
 
+    private fun showLoading() {
+        with(binding) {
+            textViewError.isVisible = false
+            imageRepeatRequest.isVisible = false
+            progressBar.isVisible = true
+        }
+    }
+
+    private fun showError() {
+        with(binding) {
+            progressBar.isVisible = false
+            recView.isVisible = false
+            textViewError.isVisible = true
+            imageRepeatRequest.isVisible = true
+        }
+    }
+
+
     private fun setupObservers() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.staticState.collect { uiState ->

@@ -3,6 +3,7 @@ package com.example.androidonetask.presentation.fragment.base
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 open class BaseViewModel : ViewModel() {
@@ -13,7 +14,8 @@ open class BaseViewModel : ViewModel() {
         }
 
     open fun doWork(work: () -> Unit) {
-        viewModelScope.launch(exceptionHandler) {
+        viewModelScope.launch(Dispatchers.IO + exceptionHandler) {
+            work()
         }
     }
 }

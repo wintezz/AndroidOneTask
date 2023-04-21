@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.example.androidonetask.databinding.BaseFragmentBinding
 
@@ -26,7 +25,7 @@ open class BaseFragment : Fragment() {
         return binding.root
     }
 
-    open fun showLoading() {
+/*    open fun showLoading() {
         with(binding) {
             textViewError.isVisible = false
             imageRepeatRequest.isVisible = false
@@ -41,7 +40,7 @@ open class BaseFragment : Fragment() {
             textViewError.isVisible = true
             imageRepeatRequest.isVisible = true
         }
-    }
+    }*/
 
     override fun onDestroyView() {
         _binding = null
