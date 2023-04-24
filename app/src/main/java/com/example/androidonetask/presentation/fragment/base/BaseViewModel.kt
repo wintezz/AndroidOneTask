@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -13,12 +14,12 @@ abstract class BaseViewModel : ViewModel() {
     private val _progress: MutableLiveData<Boolean> = MutableLiveData()
     val progress: LiveData<Boolean> = _progress
 
-     val exceptionHandler: CoroutineExceptionHandler =
+    private val exceptionHandler: CoroutineExceptionHandler =
         CoroutineExceptionHandler { _, throwable ->
             println("Handle $throwable in CoroutineExceptionHandler")
         }
 
-    fun doWork(work: () -> Unit) {
+    fun doWork(work: suspend CoroutineScope.() -> Unit) {
         viewModelScope.launch(Dispatchers.IO + exceptionHandler) {
             _progress.postValue(true)
             work()
