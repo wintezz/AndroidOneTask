@@ -1,6 +1,7 @@
 package com.example.androidonetask.data.repository
 
-import com.example.androidonetask.data.model.TrackListResponse
+import com.example.androidonetask.data.model.album.AlbumListResponse
+import com.example.androidonetask.data.model.track.TrackListResponse
 import com.example.androidonetask.data.retrofit.ApiService
 import com.example.androidonetask.data.retrofit.ApiService.Companion.BASE_URL
 import com.example.androidonetask.data.retrofit.AppState
@@ -14,6 +15,10 @@ class RepositoryImpl : Repository {
 
     override suspend fun getTracks(): AppState<TrackListResponse> {
         return apiService.getTrackList().handleApi()
+    }
+
+    override suspend fun getAlbums(): AppState<AlbumListResponse> {
+        return apiService.getAlbumList().handleApi()
     }
 }
 

@@ -1,23 +1,22 @@
 package com.example.androidonetask.presentation.fragment.work
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidonetask.R
-import com.example.androidonetask.data.model.TrackUiModel
+import com.example.androidonetask.data.model.track.TrackUiModel
 import com.example.androidonetask.data.repository.RepositoryImpl
-import com.example.androidonetask.databinding.FragmentArtistBinding
+import com.example.androidonetask.databinding.FragmentBaseBinding
 import com.example.androidonetask.presentation.adapter.MusicAdapter
 import com.example.androidonetask.presentation.fragment.base.BaseFragment
 import kotlinx.coroutines.launch
 
-class WorkFragment : BaseFragment() {
+class WorkFragment :
+    BaseFragment<WorkViewModel, FragmentBaseBinding>(FragmentBaseBinding::inflate) {
 
     private val viewModel: WorkViewModel by lazy {
         ViewModelProvider(
@@ -25,24 +24,14 @@ class WorkFragment : BaseFragment() {
             WorkViewModelFactory(repository = RepositoryImpl())
         )[WorkViewModel::class.java]
     }
-    private var _binding: FragmentArtistBinding? = null
-    private val binding get() = _binding!!
+
     private var adapter = MusicAdapter(
         listenerAlbumImage = ::onClickView
     )
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentArtistBinding
-            .inflate(
-                inflater, container,
-                false
-            )
-        return binding.root
-    }
+    override fun getFragmentView() = R.layout.fragment_base
+
+    override fun getViewModel() = WorkViewModel::class.java
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -52,13 +41,6 @@ class WorkFragment : BaseFragment() {
         initRecyclerView()
         clickViewError()
         setupObservers()
-    }
-
-    override fun getContentView() = R.layout.fragment_artist
-
-    override fun onDestroyView() {
-        _binding = null
-        super.onDestroyView()
     }
 
     private fun showContent(tracks: List<TrackUiModel>) {
@@ -84,28 +66,11 @@ class WorkFragment : BaseFragment() {
         findNavController().navigate(R.id.action_worksFragment_to_artActivity)
     }
 
-    override fun showLoading() {
-        with(binding) {
-            textViewError.isVisible = false
-            imageRepeatRequest.isVisible = false
-            progressBar.isVisible = true
-        }
-    }
-
-    override fun showError() {
-        with(binding) {
-            progressBar.isVisible = false
-            recView.isVisible = false
-            textViewError.isVisible = true
-            imageRepeatRequest.isVisible = true
-        }
-    }
-
     private fun setupObservers() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.staticState.collect { uiState ->
                 when (uiState) {
-                    is TracksUiState.Loading -> showLoading()
+                    /*      is TracksUiState.Loading -> showLoading()*/
                     is TracksUiState.Success -> showContent(uiState.tracks)
                     is TracksUiState.Error -> showError()
                 }
