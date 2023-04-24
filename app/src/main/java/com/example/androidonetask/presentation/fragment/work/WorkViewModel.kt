@@ -23,17 +23,19 @@ class WorkViewModel(private val repository: Repository) : BaseViewModel() {
     }
 
     fun loadTracks() {
-        viewModelScope.launch(Dispatchers.IO ) {
-            mutableState.value = TracksUiState.Loading
-            when (val response = repository.getTracks()) {
-                is AppState.Success -> {
-                    val list = TrackMapper.buildFrom(response.data)
-                    mutableState.value = TracksUiState.Success(list)
+        doWork {
+            viewModelScope.launch(Dispatchers.IO + exceptionHandler) {
+                mutableState.value = TracksUiState.Loading
+                when (val response = repository.getTracks()) {
+                    is AppState.Success -> {
+                        val list = TrackMapper.buildFrom(response.data)
+                        mutableState.value = TracksUiState.Success(list)
+                    }
+                    is AppState.Error -> {
+                        mutableState.value = TracksUiState.Error(response.exception)
+                    }
+                    else -> {}
                 }
-                is AppState.Error -> {
-                    mutableState.value = TracksUiState.Error(response.exception)
-                }
-                else -> {}
             }
         }
     }

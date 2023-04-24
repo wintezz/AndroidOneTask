@@ -1,25 +1,28 @@
 package com.example.androidonetask.presentation.fragment.base
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-open class BaseViewModel : ViewModel() {
+abstract class BaseViewModel : ViewModel() {
 
-    open val exceptionHandler: CoroutineExceptionHandler =
+    private val _progress: MutableLiveData<Boolean> = MutableLiveData()
+    val progress: LiveData<Boolean> = _progress
+
+     val exceptionHandler: CoroutineExceptionHandler =
         CoroutineExceptionHandler { _, throwable ->
             println("Handle $throwable in CoroutineExceptionHandler")
         }
 
-    open fun doWork(work: () -> Unit) {
+    fun doWork(work: () -> Unit) {
         viewModelScope.launch(Dispatchers.IO + exceptionHandler) {
+            _progress.postValue(true)
             work()
+            _progress.postValue(false)
         }
     }
-}
-
-sealed class BaseStateView {
-    object Loading : BaseStateView()
 }

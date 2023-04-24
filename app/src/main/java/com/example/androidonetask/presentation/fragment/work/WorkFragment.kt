@@ -54,6 +54,8 @@ class WorkFragment : BaseFragment() {
         setupObservers()
     }
 
+    override fun getContentView() = R.layout.fragment_artist
+
     override fun onDestroyView() {
         _binding = null
         super.onDestroyView()
@@ -82,7 +84,7 @@ class WorkFragment : BaseFragment() {
         findNavController().navigate(R.id.action_worksFragment_to_artActivity)
     }
 
-    private fun showLoading() {
+    override fun showLoading() {
         with(binding) {
             textViewError.isVisible = false
             imageRepeatRequest.isVisible = false
@@ -90,7 +92,7 @@ class WorkFragment : BaseFragment() {
         }
     }
 
-    private fun showError() {
+    override fun showError() {
         with(binding) {
             progressBar.isVisible = false
             recView.isVisible = false
@@ -98,7 +100,6 @@ class WorkFragment : BaseFragment() {
             imageRepeatRequest.isVisible = true
         }
     }
-
 
     private fun setupObservers() {
         viewLifecycleOwner.lifecycleScope.launch {
