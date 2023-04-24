@@ -10,13 +10,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidonetask.R
 import com.example.androidonetask.data.model.track.TrackUiModel
 import com.example.androidonetask.data.repository.RepositoryImpl
+import com.example.androidonetask.databinding.FragmentArtistBinding
 import com.example.androidonetask.databinding.FragmentBaseBinding
 import com.example.androidonetask.presentation.adapter.MusicAdapter
 import com.example.androidonetask.presentation.fragment.base.BaseFragment
+import com.example.androidonetask.presentation.fragment.base.BaseViewModel
 import kotlinx.coroutines.launch
 
 class WorkFragment :
-    BaseFragment<WorkViewModel, FragmentBaseBinding>(FragmentBaseBinding::inflate) {
+    BaseFragment<BaseViewModel, FragmentBaseBinding>(FragmentBaseBinding::inflate) {
 
     private val viewModel: WorkViewModel by lazy {
         ViewModelProvider(
@@ -31,7 +33,7 @@ class WorkFragment :
 
     override fun getFragmentView() = R.layout.fragment_base
 
-    override fun getViewModel() = WorkViewModel::class.java
+    override fun getViewModel() = BaseViewModel::class.java
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

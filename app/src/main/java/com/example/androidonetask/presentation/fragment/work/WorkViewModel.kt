@@ -21,7 +21,6 @@ class WorkViewModel(private val repository: Repository) : BaseViewModel() {
 
     fun loadTracks() {
         doWork {
-        /*    mutableState.value =TracksUiState.Loading*/
             when (val response = repository.getTracks()) {
                 is AppState.Success -> {
                     val list = TrackMapper.buildFromTrack(response.data)
@@ -37,7 +36,6 @@ class WorkViewModel(private val repository: Repository) : BaseViewModel() {
 }
 
 sealed class TracksUiState {
-   /* object Loading: TracksUiState()*/
     data class Success(val tracks: List<TrackUiModel>) : TracksUiState()
     data class Error(val exception: Throwable? = null) : TracksUiState()
 }
