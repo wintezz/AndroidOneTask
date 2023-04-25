@@ -4,17 +4,24 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidonetask.R
+import com.example.androidonetask.data.repository.RepositoryImpl
 import com.example.androidonetask.databinding.FragmentArtistBinding
 import com.example.androidonetask.presentation.adapter.MusicAdapter
 import com.example.androidonetask.presentation.utils.fillList
 
-class InfoFragment : Fragment(), InfoContract.View {
+class InfoFragment : Fragment() {
 
+    private val viewModel: InfoViewModel by lazy {
+        ViewModelProvider(
+            this,
+            InfoViewModelFactory(repository = RepositoryImpl())
+        )[InfoViewModel::class.java]
+    }
     private var _binding: FragmentArtistBinding? = null
     private val binding get() = _binding!!
     private var adapter =
@@ -49,11 +56,8 @@ class InfoFragment : Fragment(), InfoContract.View {
         super.onDestroyView()
     }
 
-    override fun showContent() {
-        with(binding) {
-            adapter.updateList(fillList())
-            progressBar.isVisible = false
-        }
+    private fun showContent() {
+        adapter.updateList(fillList())
     }
 
     private fun onClickView() {

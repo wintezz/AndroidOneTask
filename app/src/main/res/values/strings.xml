@@ -12,4 +12,5 @@
     <string name="send">Send</string>
     <string name="mask_group">Mask Group</string>
     <string name="error_text">Error…Repeat later again</string>
+    <string name="reboot">Reboot</string>
 </resources>

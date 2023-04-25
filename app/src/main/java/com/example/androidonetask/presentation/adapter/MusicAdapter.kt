@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidonetask.R
-import com.example.androidonetask.data.model.TrackUiModel
+import com.example.androidonetask.data.model.track.TrackUiModel
 import com.example.androidonetask.databinding.TrackElementListBinding
 import com.example.androidonetask.presentation.utils.load
 

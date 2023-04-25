@@ -1,4 +1,4 @@
-package com.example.androidonetask.data.model
+package com.example.androidonetask.data.model.track
 
 data class TrackUiModel(
     val name: String?,

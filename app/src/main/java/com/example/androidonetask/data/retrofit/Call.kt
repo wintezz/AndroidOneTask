@@ -1,25 +1,24 @@
 package com.example.androidonetask.data.retrofit
 
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
-import retrofit2.Response
+import retrofit2.Call
+import retrofit2.HttpException
+import java.io.IOException
 
-fun <T : Any> Observable<Response<T>>.request(): Observable<AppState<T>> {
-    return subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .map { response ->
-            if (response.isSuccessful) {
-                response.body()?.let {
-                    AppState.Success(it)
-                } ?: AppState.Error(Throwable("Body is null"))
-            } else {
-                AppState.ServerError(
-                    code = response.code(),
-                    json = response.errorBody()?.string().orEmpty()
-                )
-            }
-        }.onErrorReturn { AppState.Error(it) }
+ fun <T> Call<T >.handleApi(): AppState<T>{
+    return try {
+        val response = this.execute()
+        val body = response.body()
+        if (response.isSuccessful) {
+            body?.let { AppState.Success(it) } ?: AppState.Error(Throwable("Body is null"))
+        } else {
+            AppState.ServerError(
+                code = response.code(),
+                json = response.errorBody()?.string().orEmpty()
+            )
+        }
+    } catch (e: HttpException) {
+        AppState.Error(e)
+    } catch (e: IOException) {
+        AppState.Error(e)
+    }
 }
-
-

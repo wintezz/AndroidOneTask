@@ -1,44 +1,31 @@
 package com.example.androidonetask.presentation.fragment.work
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidonetask.R
-import com.example.androidonetask.data.model.TrackUiModel
+import com.example.androidonetask.data.model.track.TrackUiModel
 import com.example.androidonetask.data.repository.RepositoryImpl
 import com.example.androidonetask.databinding.FragmentArtistBinding
 import com.example.androidonetask.presentation.adapter.MusicAdapter
+import com.example.androidonetask.presentation.fragment.base.BaseFragment
+import kotlinx.coroutines.launch
 
-class WorkFragment : Fragment(), WorkContract.View {
+class WorkFragment :
+    BaseFragment<WorkViewModel, FragmentArtistBinding>(FragmentArtistBinding::inflate) {
 
-    private var workPresenter: WorkPresenter? = null
-    private var _binding: FragmentArtistBinding? = null
-    private val binding get() = _binding!!
     private var adapter = MusicAdapter(
         listenerAlbumImage = ::onClickView
     )
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        retainInstance = true
-        super.onCreate(savedInstanceState)
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentArtistBinding
-            .inflate(
-                inflater, container,
-                false
-            )
-        return binding.root
+    override fun getFragmentView() = R.layout.fragment_artist
+    override fun getViewModelClass() = WorkViewModel::class.java
+    override fun getViewModelFactory(): ViewModelProvider.Factory {
+        return WorkViewModelFactory(repository = RepositoryImpl())
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -46,44 +33,14 @@ class WorkFragment : Fragment(), WorkContract.View {
 
         activity?.title = this.javaClass.simpleName
 
-        workPresenter = WorkPresenter(
-            mainView = this,
-            repository = RepositoryImpl()
-        )
-
-        workPresenter?.loadTracks()
         initRecyclerView()
-        clickViewError()
+        setupObservers()
     }
 
-    override fun onDestroyView() {
-        _binding = null
-        workPresenter?.onDestroyView()
-        super.onDestroyView()
-    }
-
-    override fun showContent(data: List<TrackUiModel>) {
+    private fun showContent(tracks: List<TrackUiModel>) {
         with(binding) {
-            adapter.updateList(data)
-            progressBar.isVisible = false
+            adapter.updateList(tracks)
             recView.isVisible = true
-        }
-    }
-
-    override fun showError() {
-        with(binding) {
-            progressBar.isVisible = false
-            recView.isVisible = false
-            textViewError.isVisible = true
-            imageRepeatRequest.isVisible = true
-        }
-    }
-
-    override fun showLoading() {
-        with(binding) {
-            textViewError.isVisible = false
-            imageRepeatRequest.isVisible = false
-            progressBar.isVisible = true
         }
     }
 
@@ -92,15 +49,18 @@ class WorkFragment : Fragment(), WorkContract.View {
         binding.recView.adapter = adapter
     }
 
-    private fun clickViewError() {
-        binding.imageRepeatRequest.setOnClickListener {
-            workPresenter?.loadTracks()
-            showLoading()
-        }
-    }
-
     private fun onClickView() {
         findNavController().navigate(R.id.action_worksFragment_to_artActivity)
+    }
+
+    private fun setupObservers() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.staticState.collect { uiState ->
+                when (uiState) {
+                    is TracksUiState.Success -> showContent(uiState.tracks)
+                }
+            }
+        }
     }
 }
 

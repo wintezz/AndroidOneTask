@@ -1,4 +1,4 @@
-package com.example.androidonetask.data.model
+package com.example.androidonetask.data.model.track
 
 import com.google.gson.annotations.SerializedName
 

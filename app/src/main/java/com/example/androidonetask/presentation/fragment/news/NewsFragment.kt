@@ -5,18 +5,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidonetask.R
+import com.example.androidonetask.data.repository.RepositoryImpl
 import com.example.androidonetask.databinding.FragmentArtistBinding
 import com.example.androidonetask.presentation.adapter.MusicAdapter
 import com.example.androidonetask.presentation.fragment.post.PostFragment.Companion.ADAPTER_POSITION
 import com.example.androidonetask.presentation.utils.fillList
 
-class NewsFragment : Fragment(), NewsContract.View {
+class NewsFragment : Fragment() {
 
+    private val viewModel: NewsViewModel by lazy {
+        ViewModelProvider(
+            this,
+            NewsViewModelFactory(repository = RepositoryImpl())
+        )[NewsViewModel::class.java]
+    }
     private var _binding: FragmentArtistBinding? = null
     private val binding get() = _binding!!
     private var adapter =
@@ -53,11 +60,8 @@ class NewsFragment : Fragment(), NewsContract.View {
         super.onDestroyView()
     }
 
-    override fun showContent() {
-        with(binding) {
-            adapter.updateList(fillList())
-            progressBar.isVisible = false
-        }
+    private fun showContent() {
+        adapter.updateList(fillList())
     }
 
     private fun initRecyclerView() {

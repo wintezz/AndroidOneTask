@@ -4,16 +4,24 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidonetask.R
+import com.example.androidonetask.data.repository.RepositoryImpl
 import com.example.androidonetask.databinding.FragmentArtistBinding
 import com.example.androidonetask.presentation.adapter.MusicAdapter
 import com.example.androidonetask.presentation.utils.fillList
 
-class ArtistFragment : Fragment(), ArtistContract.View {
+class ArtistFragment : Fragment() {
+
+    private val viewModel: ArtistViewModel by lazy {
+        ViewModelProvider(
+            this,
+            ArtistViewModelFactory(repository = RepositoryImpl())
+        )[ArtistViewModel::class.java]
+    }
 
     private var _binding: FragmentArtistBinding? = null
     private val binding get() = _binding!!
@@ -49,10 +57,10 @@ class ArtistFragment : Fragment(), ArtistContract.View {
         super.onDestroyView()
     }
 
-    override fun showContent() {
+    private fun showContent() {
         with(binding) {
             adapter.updateList(fillList())
-            progressBar.isVisible = false
+            /*progressBar.isVisible = false*/
         }
     }
 

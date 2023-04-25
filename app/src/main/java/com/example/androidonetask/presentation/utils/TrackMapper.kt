@@ -1,11 +1,11 @@
 package com.example.androidonetask.presentation.utils
 
-import com.example.androidonetask.data.model.TrackListResponse
-import com.example.androidonetask.data.model.TrackUiModel
+import com.example.androidonetask.data.model.track.TrackListResponse
+import com.example.androidonetask.data.model.track.TrackUiModel
 
 object TrackMapper {
 
-    fun buildFrom(response: TrackListResponse?): List<TrackUiModel> {
+    fun buildFromTrack(response: TrackListResponse?): List<TrackUiModel> {
         return response?.results?.map {
             TrackUiModel(
                 name = it.name,
