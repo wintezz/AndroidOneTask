@@ -26,10 +26,7 @@ class WorkViewModel(private val repository: Repository) : BaseViewModel() {
                     val list = TrackMapper.buildFromTrack(response.data)
                     mutableState.value = TracksUiState.Success(list)
                 }
-                is AppState.Error -> {
-                    mutableState.value = TracksUiState.Error(response.exception)
-                }
-                else -> Unit
+                else -> _error.postValue(true)
             }
         }
     }
@@ -37,5 +34,4 @@ class WorkViewModel(private val repository: Repository) : BaseViewModel() {
 
 sealed class TracksUiState {
     data class Success(val tracks: List<TrackUiModel>) : TracksUiState()
-    data class Error(val exception: Throwable? = null) : TracksUiState()
 }

@@ -58,10 +58,6 @@ class WorkFragment :
             viewModel.staticState.collect { uiState ->
                 when (uiState) {
                     is TracksUiState.Success -> showContent(uiState.tracks)
-                    is TracksUiState.Error -> {
-                        showError()
-                        binding.recView.isVisible = false
-                    }
                 }
             }
         }
