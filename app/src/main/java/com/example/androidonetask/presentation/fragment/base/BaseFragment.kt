@@ -22,13 +22,13 @@ abstract class BaseFragment<ViewModel : BaseViewModel, VBinding : ViewBinding>(
     protected abstract fun getFragmentView(): Int
 
     protected lateinit var viewModel: ViewModel
-    protected abstract fun getViewModel(): Class<ViewModel>
+    protected abstract fun getViewModelClass(): Class<ViewModel>
     protected abstract fun getViewModelFactory(): ViewModelProvider.Factory
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel = ViewModelProvider(this, getViewModelFactory())[getViewModel()]
+        viewModel = ViewModelProvider(this, getViewModelFactory())[getViewModelClass()]
     }
 
     override fun onCreateView(

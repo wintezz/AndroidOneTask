@@ -23,7 +23,7 @@ class WorkFragment :
     )
 
     override fun getFragmentView() = R.layout.fragment_artist
-    override fun getViewModel() = WorkViewModel::class.java
+    override fun getViewModelClass() = WorkViewModel::class.java
     override fun getViewModelFactory(): ViewModelProvider.Factory {
         return WorkViewModelFactory(repository = RepositoryImpl())
     }
