@@ -49,7 +49,7 @@ abstract class BaseFragment<ViewModel : BaseViewModel, VBinding : ViewBinding>(
         super.onViewCreated(view, savedInstanceState)
 
         observerLoading()
-        clickViewError()
+        onButtonRetryClick()
     }
 
     open fun showError() {
@@ -62,23 +62,17 @@ abstract class BaseFragment<ViewModel : BaseViewModel, VBinding : ViewBinding>(
 
     open fun observerLoading() {
         viewModel.progress.observe(viewLifecycleOwner) { isLoading ->
-            if (isLoading == true)
-                with(rootBinding) {
-                    progressBar.isVisible = true
-                    imageRepeatRequest.isVisible = false
-                    textViewError.isVisible = false
-                } else {
-                (isLoading == false)
-                with(rootBinding) {
-                    progressBar.isVisible = false
-                }
+            with(rootBinding) {
+                progressBar.isVisible = isLoading
             }
         }
     }
 
-    private fun clickViewError() {
+    private fun onButtonRetryClick() {
         rootBinding.imageRepeatRequest.setOnClickListener {
-            viewModel.reloadRequest()
+            viewModel.onButtonRetryClick()
+            rootBinding.imageRepeatRequest.isVisible = false
+            rootBinding.textViewError.isVisible = false
         }
     }
 

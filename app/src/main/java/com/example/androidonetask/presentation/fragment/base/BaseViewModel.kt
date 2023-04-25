@@ -14,18 +14,23 @@ abstract class BaseViewModel : ViewModel() {
     private val _progress: MutableLiveData<Boolean> = MutableLiveData()
     val progress: LiveData<Boolean> = _progress
 
+    var lastWork: (suspend CoroutineScope.() -> Unit)? = null
+
     private val exceptionHandler: CoroutineExceptionHandler =
         CoroutineExceptionHandler { _, throwable ->
             println("Handle $throwable in CoroutineExceptionHandler")
         }
 
-    abstract fun reloadRequest()
+    open fun onButtonRetryClick() {
+        lastWork?.let(::doWork)
+    }
 
     fun doWork(work: suspend CoroutineScope.() -> Unit) {
         viewModelScope.launch(Dispatchers.IO + exceptionHandler) {
             _progress.postValue(true)
             work()
             _progress.postValue(false)
+            lastWork = work
         }
     }
 }

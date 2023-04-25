@@ -33,10 +33,6 @@ class WorkViewModel(private val repository: Repository) : BaseViewModel() {
             }
         }
     }
-
-    override fun reloadRequest() {
-        loadTracks()
-    }
 }
 
 sealed class TracksUiState {
