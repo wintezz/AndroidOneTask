@@ -60,7 +60,7 @@ class InfoFragment : Fragment() {
     private fun showContent() {
         with(binding) {
             adapter.updateList(fillList())
-            progressBar.isVisible = false
+           /* progressBar.isVisible = false*/
         }
     }
 

@@ -18,7 +18,7 @@ abstract class BaseFragment<VM : BaseViewModel, VB : ViewBinding>(
     private var _binding: VB? = null
     val binding: VB get() = _binding!!
 
-    lateinit var model: VM
+    abstract val viewModel: VM
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,6 +34,13 @@ abstract class BaseFragment<VM : BaseViewModel, VB : ViewBinding>(
         return rootBinding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+       observerLoading()
+  /*      clickViewError()*/
+    }
+
     abstract fun getFragmentView(): Int
 
     abstract fun getViewModel(): Class<VM>
@@ -41,26 +48,31 @@ abstract class BaseFragment<VM : BaseViewModel, VB : ViewBinding>(
     open fun showError() {
         with(rootBinding) {
             progressBar.isVisible = false
-            recView.isVisible = false
             textViewError.isVisible = true
             imageRepeatRequest.isVisible = true
         }
     }
 
-    open fun showLoading() {
-        model.progress.observe(viewLifecycleOwner) { isLoading ->
-            if (isLoading)
+    open fun observerLoading() {
+        viewModel.progress.observe(viewLifecycleOwner) { isLoading ->
+            if (isLoading == true)
                 with(rootBinding) {
-                    textViewError.isVisible = false
-                    imageRepeatRequest.isVisible = false
                     progressBar.isVisible = true
+                    imageRepeatRequest.isVisible = false
+                    textViewError.isVisible = false
+                } else {
+                (isLoading == false)
+                with(rootBinding) {
+                    progressBar.isVisible = false
                 }
+            }
         }
     }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-    }
+    /*private fun clickViewError() {
+        rootBinding.imageRepeatRequest.setOnClickListener {
+            viewModel.loadTracks()
+        }
+    }*/
 }
 
 

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ProgressBar
+    <!--<ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -28,7 +28,7 @@
         android:layout_marginBottom="@dimen/image_repeat_request_margin_bottom"
         android:src="@drawable/play_repeat"
         android:visibility="invisible"
-        tools:ignore="ContentDescription" />
+        tools:ignore="ContentDescription" />-->
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recView"

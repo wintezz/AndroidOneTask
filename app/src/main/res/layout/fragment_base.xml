@@ -30,10 +30,4 @@
         android:src="@drawable/play_repeat"
         android:visibility="invisible"
         tools:ignore="ContentDescription" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:listitem="@layout/track_element_list" />
 </FrameLayout>
