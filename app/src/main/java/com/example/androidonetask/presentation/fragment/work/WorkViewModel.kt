@@ -19,7 +19,7 @@ class WorkViewModel(private val repository: Repository) : BaseViewModel() {
         loadTracks()
     }
 
-    fun loadTracks() {
+    private fun loadTracks() {
         doWork {
             when (val response = repository.getTracks()) {
                 is AppState.Success -> {
@@ -32,6 +32,10 @@ class WorkViewModel(private val repository: Repository) : BaseViewModel() {
                 else -> Unit
             }
         }
+    }
+
+    override fun reloadRequest() {
+        loadTracks()
     }
 }
 

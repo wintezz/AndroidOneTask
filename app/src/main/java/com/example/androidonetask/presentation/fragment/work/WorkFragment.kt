@@ -22,16 +22,11 @@ class WorkFragment :
         listenerAlbumImage = ::onClickView
     )
 
-    override val viewModel: WorkViewModel by lazy {
-        ViewModelProvider(
-            this,
-            WorkViewModelFactory(repository = RepositoryImpl())
-        )[WorkViewModel::class.java]
-    }
-
     override fun getFragmentView() = R.layout.fragment_artist
-
     override fun getViewModel() = WorkViewModel::class.java
+    override fun getViewModelFactory(): ViewModelProvider.Factory {
+        return WorkViewModelFactory(repository = RepositoryImpl())
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

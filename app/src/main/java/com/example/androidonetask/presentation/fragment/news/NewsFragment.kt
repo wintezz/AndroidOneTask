@@ -61,10 +61,7 @@ class NewsFragment : Fragment() {
     }
 
     private fun showContent() {
-        with(binding) {
-            adapter.updateList(fillList())
-  /*          progressBar.isVisible = false*/
-        }
+        adapter.updateList(fillList())
     }
 
     private fun initRecyclerView() {

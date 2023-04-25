@@ -19,6 +19,8 @@ abstract class BaseViewModel : ViewModel() {
             println("Handle $throwable in CoroutineExceptionHandler")
         }
 
+    abstract fun reloadRequest()
+
     fun doWork(work: suspend CoroutineScope.() -> Unit) {
         viewModelScope.launch(Dispatchers.IO + exceptionHandler) {
             _progress.postValue(true)

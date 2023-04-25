@@ -6,19 +6,30 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
 import com.example.androidonetask.databinding.FragmentBaseBinding
 
-abstract class BaseFragment<VM : BaseViewModel, VB : ViewBinding>(
-    private val bindingInflater: (inflater: LayoutInflater) -> VB
+abstract class BaseFragment<ViewModel : BaseViewModel, VBinding : ViewBinding>(
+    private val bindingInflater: (inflater: LayoutInflater) -> VBinding
 ) : Fragment() {
 
     private var _rootBinding: FragmentBaseBinding? = null
     private val rootBinding get() = _rootBinding!!
-    private var _binding: VB? = null
-    val binding: VB get() = _binding!!
+    private var _binding: VBinding? = null
+    val binding: VBinding get() = _binding!!
 
-    abstract val viewModel: VM
+    protected abstract fun getFragmentView(): Int
+
+    protected lateinit var viewModel: ViewModel
+    protected abstract fun getViewModel(): Class<ViewModel>
+    protected abstract fun getViewModelFactory(): ViewModelProvider.Factory
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        viewModel = ViewModelProvider(this, getViewModelFactory())[getViewModel()]
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,13 +48,9 @@ abstract class BaseFragment<VM : BaseViewModel, VB : ViewBinding>(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-       observerLoading()
-  /*      clickViewError()*/
+        observerLoading()
+        clickViewError()
     }
-
-    abstract fun getFragmentView(): Int
-
-    abstract fun getViewModel(): Class<VM>
 
     open fun showError() {
         with(rootBinding) {
@@ -68,12 +75,20 @@ abstract class BaseFragment<VM : BaseViewModel, VB : ViewBinding>(
             }
         }
     }
-    /*private fun clickViewError() {
+
+    private fun clickViewError() {
         rootBinding.imageRepeatRequest.setOnClickListener {
-            viewModel.loadTracks()
+            viewModel.reloadRequest()
         }
-    }*/
+    }
+
+    override fun onDestroyView() {
+        _rootBinding = null
+        _binding = null
+        super.onDestroyView()
+    }
 }
+
 
 
 
