@@ -11,8 +11,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidonetask.R
 import com.example.androidonetask.data.repository.RepositoryImpl
 import com.example.androidonetask.databinding.FragmentArtistBinding
-import com.example.androidonetask.presentation.adapter.MusicAdapter
+import com.example.androidonetask.presentation.adapter.DelegateAdapter
+import com.example.androidonetask.presentation.adapter.delegates.TrackDelegate
 import com.example.androidonetask.presentation.utils.fillList
+import com.example.androidonetask.presentation.viewmodel.artist.ArtistViewModel
+import com.example.androidonetask.presentation.viewmodel.artist.ArtistViewModelFactory
 
 class ArtistFragment : Fragment() {
 
@@ -25,10 +28,13 @@ class ArtistFragment : Fragment() {
 
     private var _binding: FragmentArtistBinding? = null
     private val binding get() = _binding!!
-    private var adapter =
-        MusicAdapter(
-            listenerAlbumImage = ::onClickView
+    private var adapter = DelegateAdapter(
+        delegates = listOf(
+            TrackDelegate(
+                onItemClickViewHolder = ::onClickView
+            )
         )
+    )
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -58,10 +64,7 @@ class ArtistFragment : Fragment() {
     }
 
     private fun showContent() {
-        with(binding) {
-            adapter.updateList(fillList())
-            /*progressBar.isVisible = false*/
-        }
+        adapter.updateItem(fillList())
     }
 
     private fun initRecyclerView() {

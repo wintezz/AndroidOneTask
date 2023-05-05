@@ -8,6 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.androidonetask.data.repository.RepositoryImpl
 import com.example.androidonetask.databinding.FragmentDetailBinding
+import com.example.androidonetask.presentation.viewmodel.detail.DetailViewModel
+import com.example.androidonetask.presentation.viewmodel.detail.DetailViewModelFactory
 
 class DetailFragment : Fragment() {
 

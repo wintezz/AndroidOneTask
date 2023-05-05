@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/card_view_padding"
+    app:cardCornerRadius="@dimen/card_view_corner">
+
+    <ImageView
+        android:id="@+id/album"
+        android:layout_width="@dimen/album_width"
+        android:layout_height="@dimen/album_height"
+        android:layout_gravity="center|start"
+        android:layout_marginStart="@dimen/main_margin"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/album2"
+        android:layout_width="@dimen/album_width"
+        android:layout_height="@dimen/album_height"
+        android:layout_gravity="center"
+        android:layout_marginStart="@dimen/main_margin"
+        android:layout_marginEnd="@dimen/main_margin"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/album3"
+        android:layout_width="@dimen/album_width"
+        android:layout_height="@dimen/album_height"
+        android:layout_gravity="center|end"
+        android:layout_marginStart="@dimen/main_margin"
+        android:layout_marginEnd="@dimen/main_margin"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/artistName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|start"
+        android:layout_marginStart="@dimen/artistName_margin_start"
+        android:layout_marginTop="@dimen/artistName_margin_top"
+        android:fontFamily="sans-serif-black"
+        android:text="@string/top_text"
+        android:textColor="@color/black" />
+
+    <TextView
+        android:id="@+id/artistName2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/artistName_margin_top"
+        android:fontFamily="sans-serif-black"
+        android:text="@string/top_text"
+        android:textColor="@color/black" />
+
+    <TextView
+        android:id="@+id/artistName3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|end"
+        android:layout_marginTop="@dimen/artistName_margin_top"
+        android:layout_marginEnd="@dimen/artistName3_margin_end"
+        android:fontFamily="sans-serif-black"
+        android:text="@string/top_text"
+        android:textColor="@color/black" />
+
+    <TextView
+        android:id="@+id/albumName"
+        android:layout_width="@dimen/albumName_width"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|start"
+        android:layout_marginStart="@dimen/albumName_margin_start"
+        android:layout_marginBottom="@dimen/albumName_margin_bottom"
+        android:fontFamily="sans-serif-black"
+        android:text="@string/down_text"
+        android:textColor="@color/black" />
+
+    <TextView
+        android:id="@+id/albumName2"
+        android:layout_width="@dimen/albumName_width"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/albumName2_margin_bottom"
+        android:fontFamily="sans-serif-black"
+        android:text="@string/down_text"
+        android:textColor="@color/black" />
+
+    <TextView
+        android:id="@+id/albumName3"
+        android:layout_width="@dimen/albumName_width"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|end"
+        android:layout_marginEnd="@dimen/albumName3_margin_end"
+        android:layout_marginBottom="@dimen/albumName3_margin_bottom"
+        android:fontFamily="sans-serif-black"
+        android:text="@string/down_text"
+        android:textColor="@color/black" />
+
+</androidx.cardview.widget.CardView>

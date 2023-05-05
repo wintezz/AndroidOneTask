@@ -1,14 +1,14 @@
-package com.example.androidonetask.presentation.fragment.post
+package com.example.androidonetask.presentation.viewmodel.artist
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.androidonetask.data.repository.Repository
 
-class PostViewModelFactory(private val repository: Repository) : ViewModelProvider.Factory {
+class ArtistViewModelFactory(private val repository: Repository) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return if (modelClass.isAssignableFrom(PostViewModel::class.java)) {
-            PostViewModel(this.repository) as T
+        return if (modelClass.isAssignableFrom(ArtistViewModel::class.java)) {
+            ArtistViewModel(this.repository) as T
         } else {
             throw IllegalArgumentException("ViewModel Not Found")
         }

@@ -8,6 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.androidonetask.data.repository.RepositoryImpl
 import com.example.androidonetask.databinding.FragmentPostBinding
+import com.example.androidonetask.presentation.viewmodel.post.PostViewModel
+import com.example.androidonetask.presentation.viewmodel.post.PostViewModelFactory
 
 class PostFragment : Fragment() {
 

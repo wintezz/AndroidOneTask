@@ -1,4 +1,4 @@
-package com.example.androidonetask.presentation.fragment.expositions
+package com.example.androidonetask.presentation.viewmodel.expositions
 
 import androidx.lifecycle.ViewModel
 import com.example.androidonetask.data.repository.Repository

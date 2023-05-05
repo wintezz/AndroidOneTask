@@ -1,4 +1,4 @@
-package com.example.androidonetask.presentation.fragment.work
+package com.example.androidonetask.presentation.viewmodel.work
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

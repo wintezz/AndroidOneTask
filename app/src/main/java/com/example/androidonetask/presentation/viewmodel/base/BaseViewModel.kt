@@ -1,4 +1,4 @@
-package com.example.androidonetask.presentation.fragment.base
+package com.example.androidonetask.presentation.viewmodel.base
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
