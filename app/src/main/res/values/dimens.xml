@@ -36,4 +36,17 @@
     <dimen name="frame_layout_width">83dp</dimen>
     <dimen name="text_view_error_margin_bottom">110dp</dimen>
     <dimen name="image_repeat_request_margin_bottom">70dp</dimen>
+    <dimen name="viewPager_height">140dp</dimen>
+    <dimen name="album_height">114dp</dimen>
+    <dimen name="album_width">123dp</dimen>
+    <dimen name="artistName_margin_start">30dp</dimen>
+    <dimen name="artistName_margin_top">35dp</dimen>
+    <dimen name="artistName_margin_end">30dp</dimen>
+    <dimen name="artistName3_margin_end">35dp</dimen>
+    <dimen name="albumName_margin_start">16dp</dimen>
+    <dimen name="albumName_margin_bottom">25dp</dimen>
+    <dimen name="albumName_width">100dp</dimen>
+    <dimen name="albumName2_margin_bottom">25dp</dimen>
+    <dimen name="albumName3_margin_end">20dp</dimen>
+    <dimen name="albumName3_margin_bottom">25dp</dimen>
 </resources>

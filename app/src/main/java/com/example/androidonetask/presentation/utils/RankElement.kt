@@ -1,12 +1,12 @@
 package com.example.androidonetask.presentation.utils
 
-import com.example.androidonetask.data.model.track.TrackUiModel
+import com.example.androidonetask.presentation.model.Item
 
-fun fillList(): List<TrackUiModel> {
-    val data = mutableListOf<TrackUiModel>()
+fun fillList(): List<Item.TrackUiModel> {
+    val data = mutableListOf<Item.TrackUiModel>()
     (0..1000).forEach { i ->
         data.add(
-            TrackUiModel(
+            Item.TrackUiModel(
                 name = "$i",
                 duration = "$i",
                 artistName = "$i",

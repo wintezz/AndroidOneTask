@@ -1,4 +1,4 @@
-package com.example.androidonetask.presentation.fragment.post
+package com.example.androidonetask.presentation.viewmodel.post
 
 import androidx.lifecycle.ViewModel
 import com.example.androidonetask.data.repository.Repository

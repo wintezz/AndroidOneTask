@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
 import com.example.androidonetask.databinding.FragmentBaseBinding
+import com.example.androidonetask.presentation.viewmodel.base.BaseViewModel
 
 abstract class BaseFragment<ViewModel : BaseViewModel, VBinding : ViewBinding>(
     private val bindingInflater: (inflater: LayoutInflater) -> VBinding

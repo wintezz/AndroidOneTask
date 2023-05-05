@@ -30,7 +30,7 @@ data class AlbumListResponse(
     val results: List<Album>?
 )
 
-data class TrackSettings(
+data class AlbumSettings(
     @SerializedName("status")
     val status: String? = null,
     @SerializedName("code")
@@ -44,4 +44,3 @@ data class TrackSettings(
     @SerializedName("next")
     val next: String? = null
 )
-

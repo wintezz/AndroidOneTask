@@ -8,18 +8,33 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidonetask.R
-import com.example.androidonetask.data.model.track.TrackUiModel
 import com.example.androidonetask.data.repository.RepositoryImpl
 import com.example.androidonetask.databinding.FragmentArtistBinding
-import com.example.androidonetask.presentation.adapter.MusicAdapter
+import com.example.androidonetask.presentation.adapter.DelegateAdapter
+import com.example.androidonetask.presentation.adapter.delegates.CardDelegate
+import com.example.androidonetask.presentation.adapter.delegates.TitleDelegate
+import com.example.androidonetask.presentation.adapter.delegates.TrackDelegate
+import com.example.androidonetask.presentation.adapter.delegates.ViewPagerDelegate
 import com.example.androidonetask.presentation.fragment.base.BaseFragment
+import com.example.androidonetask.presentation.model.Item
+import com.example.androidonetask.presentation.utils.setDivider
+import com.example.androidonetask.presentation.viewmodel.work.MusicUiState
+import com.example.androidonetask.presentation.viewmodel.work.WorkViewModel
+import com.example.androidonetask.presentation.viewmodel.work.WorkViewModelFactory
 import kotlinx.coroutines.launch
 
 class WorkFragment :
     BaseFragment<WorkViewModel, FragmentArtistBinding>(FragmentArtistBinding::inflate) {
 
-    private var adapter = MusicAdapter(
-        listenerAlbumImage = ::onClickView
+    private val adapter = DelegateAdapter(
+        delegates = listOf(
+            TrackDelegate(
+                onItemClickNameHolder = ::onClickView
+            ),
+            CardDelegate(),
+            ViewPagerDelegate(),
+            TitleDelegate()
+        )
     )
 
     override fun getFragmentView() = R.layout.fragment_artist
@@ -34,12 +49,12 @@ class WorkFragment :
         activity?.title = this.javaClass.simpleName
 
         initRecyclerView()
-        setupObservers()
+        setupObserverTrack()
     }
 
-    private fun showContent(tracks: List<TrackUiModel>) {
+    private fun showContent(music: List<Item>) {
         with(binding) {
-            adapter.updateList(tracks)
+            adapter.updateItem(music)
             recView.isVisible = true
         }
     }
@@ -47,17 +62,18 @@ class WorkFragment :
     private fun initRecyclerView() {
         binding.recView.layoutManager = LinearLayoutManager(context)
         binding.recView.adapter = adapter
+        binding.recView.setDivider(R.drawable.divider_drawable)
     }
 
     private fun onClickView() {
         findNavController().navigate(R.id.action_worksFragment_to_artActivity)
     }
 
-    private fun setupObservers() {
+    private fun setupObserverTrack() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.staticState.collect { uiState ->
-                when (uiState) {
-                    is TracksUiState.Success -> showContent(uiState.tracks)
+            viewModel.staticStateMusic.collect { trackState ->
+                when (trackState) {
+                    is MusicUiState.Success -> showContent(trackState.music)
                 }
             }
         }
