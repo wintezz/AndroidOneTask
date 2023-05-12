@@ -2,7 +2,7 @@ package com.example.androidonetask.presentation.model
 
 sealed class Item {
 
-    class TitleUiModel(
+    data class TitleUiModel(
         val id: Int,
         val title: String
     ) : Item()

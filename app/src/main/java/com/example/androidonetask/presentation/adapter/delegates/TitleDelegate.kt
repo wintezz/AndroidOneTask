@@ -20,7 +20,6 @@ class TitleDelegate :
         return viewTypeViewBinding
     }
 
-
     override fun onCreateViewHolder(parent: ViewGroup): BaseViewHolder {
         return TitleViewHolder(
             TitleElementBinding.inflate(

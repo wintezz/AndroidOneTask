@@ -1,5 +1,6 @@
 package com.example.androidonetask.presentation.fragment.work
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
@@ -17,7 +18,8 @@ import com.example.androidonetask.presentation.adapter.delegates.TrackDelegate
 import com.example.androidonetask.presentation.adapter.delegates.ViewPagerDelegate
 import com.example.androidonetask.presentation.fragment.base.BaseFragment
 import com.example.androidonetask.presentation.model.Item
-import com.example.androidonetask.presentation.utils.setDivider
+import com.example.androidonetask.presentation.utils.VerticalItemDecorator
+import com.example.androidonetask.presentation.utils.px
 import com.example.androidonetask.presentation.viewmodel.work.MusicUiState
 import com.example.androidonetask.presentation.viewmodel.work.WorkViewModel
 import com.example.androidonetask.presentation.viewmodel.work.WorkViewModelFactory
@@ -59,10 +61,14 @@ class WorkFragment :
         }
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     private fun initRecyclerView() {
         binding.recView.layoutManager = LinearLayoutManager(context)
         binding.recView.adapter = adapter
-        binding.recView.setDivider(R.drawable.divider_drawable)
+        requireContext().getDrawable(R.drawable.divider_drawable)
+            ?.let { VerticalItemDecorator(it, 32.px, listOf(R.layout.track_element_list)) }?.let {
+                binding.recView.addItemDecoration(it)
+            }
     }
 
     private fun onClickView() {
