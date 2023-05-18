@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.androidonetask.presentation.adapter.delegates.BaseDelegate
 import com.example.androidonetask.presentation.model.Item
 
+
 class DelegateAdapter(
     private val delegates: List<BaseDelegate<BaseViewHolder, Item>>
 ) :

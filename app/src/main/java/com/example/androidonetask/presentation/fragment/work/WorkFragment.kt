@@ -3,7 +3,6 @@ package com.example.androidonetask.presentation.fragment.work
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
-import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -13,11 +12,14 @@ import com.example.androidonetask.data.repository.RepositoryImpl
 import com.example.androidonetask.databinding.FragmentArtistBinding
 import com.example.androidonetask.presentation.adapter.DelegateAdapter
 import com.example.androidonetask.presentation.adapter.delegates.CardDelegate
+import com.example.androidonetask.presentation.adapter.delegates.ErrorDelegate
+import com.example.androidonetask.presentation.adapter.delegates.LoaderDelegate
 import com.example.androidonetask.presentation.adapter.delegates.TitleDelegate
 import com.example.androidonetask.presentation.adapter.delegates.TrackDelegate
 import com.example.androidonetask.presentation.adapter.delegates.ViewPagerDelegate
 import com.example.androidonetask.presentation.fragment.base.BaseFragment
 import com.example.androidonetask.presentation.model.Item
+import com.example.androidonetask.presentation.utils.PaginationScrollListener
 import com.example.androidonetask.presentation.utils.VerticalItemDecorator
 import com.example.androidonetask.presentation.utils.px
 import com.example.androidonetask.presentation.viewmodel.work.MusicUiState
@@ -35,7 +37,11 @@ class WorkFragment :
             ),
             CardDelegate(),
             ViewPagerDelegate(),
-            TitleDelegate()
+            TitleDelegate(),
+            LoaderDelegate(),
+            ErrorDelegate(
+                onItemClickViewHolder = ::onClickError
+            )
         )
     )
 
@@ -52,13 +58,11 @@ class WorkFragment :
 
         initRecyclerView()
         setupObserverTrack()
+        scrollRecyclerView()
     }
 
     private fun showContent(music: List<Item>) {
-        with(binding) {
-            adapter.updateItem(music)
-            recView.isVisible = true
-        }
+        adapter.updateItem(music)
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -69,6 +73,22 @@ class WorkFragment :
             ?.let { VerticalItemDecorator(it, 32.px, listOf(R.layout.track_element_list)) }?.let {
                 binding.recView.addItemDecoration(it)
             }
+    }
+
+    private fun scrollRecyclerView() {
+        binding.recView.addOnScrollListener(object :
+            PaginationScrollListener(binding.recView.layoutManager as LinearLayoutManager) {
+            override fun loadMoreItems() {
+                viewModel.nextLoadPage()
+            }
+
+            override fun isLastPage() = viewModel.isLastPageLoaded
+            override fun isLoading() = viewModel.isLoadingTracks
+        })
+    }
+
+    private fun onClickError() {
+        viewModel.nextLoadPage()
     }
 
     private fun onClickView() {

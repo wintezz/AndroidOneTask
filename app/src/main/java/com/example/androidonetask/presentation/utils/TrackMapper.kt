@@ -20,10 +20,12 @@ object TrackMapper {
         musicItemList.add(listPager)
         musicItemList.add(Item.TitleUiModel(3, "Music"))
         musicItemList.addAll(listTrack)
+        musicItemList.add(Item.LoaderUiModel(true))
+
         return musicItemList
     }
 
-    private fun buildFromTrack(response: TrackListResponse?): List<Item.TrackUiModel> {
+    fun buildFromTrack(response: TrackListResponse?): List<Item.TrackUiModel> {
         return response?.results?.map {
             Item.TrackUiModel(
                 name = it.name,

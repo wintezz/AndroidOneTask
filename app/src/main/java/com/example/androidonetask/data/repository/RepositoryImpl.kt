@@ -13,8 +13,8 @@ class RepositoryImpl : Repository {
     private val apiService: ApiService =
         RetrofitClient.getClient(BASE_URL).create(ApiService::class.java)
 
-    override suspend fun getTracks(): AppState<TrackListResponse> {
-        return apiService.getTrackList().handleApi()
+    override suspend fun getTracks(offset: Int, count: Int): AppState<TrackListResponse> {
+        return apiService.getTrackList(offset, count).handleApi()
     }
 
     override suspend fun getAlbums(): AppState<AlbumListResponse> {

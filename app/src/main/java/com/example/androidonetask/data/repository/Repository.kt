@@ -5,7 +5,7 @@ import com.example.androidonetask.data.model.track.TrackListResponse
 import com.example.androidonetask.data.retrofit.AppState
 
 interface Repository {
-    suspend fun getTracks(): AppState<TrackListResponse>
+    suspend fun getTracks(offset: Int, count: Int): AppState<TrackListResponse>
 
     suspend fun getAlbums(): AppState<AlbumListResponse>
 }
