@@ -20,12 +20,14 @@ data class Track(
     @SerializedName("audio")
     val audio: String? = null,
     @SerializedName("audiodownload")
-    val audioDownload: String? = null
+    val audioDownload: String? = null,
 )
 
 data class TrackListResponse(
     @SerializedName("results")
-    val results: List<Track>?
+    val results: List<Track>?,
+    @SerializedName("headers")
+    val headers: TrackSettings
 )
 
 data class TrackSettings(

@@ -23,4 +23,12 @@ sealed class Item {
         val artistName: String?,
         val albumImage: String?
     ) : Item()
+
+    data class LoaderUiModel(
+        val loader: Boolean
+    ) : Item()
+
+    data class ErrorUiModel(
+        val title: String
+    ) : Item()
 }
