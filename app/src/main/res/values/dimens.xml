@@ -27,8 +27,6 @@
     <dimen name="mask_group_width">72dp</dimen>
     <dimen name="mask_group_height">14dp</dimen>
     <dimen name="mask_group_marginStart">14dp</dimen>
-    <dimen name="artist_name_marginEnd">47dp</dimen>
-    <dimen name="name_marginEnd">45dp</dimen>
     <dimen name="name_marginBottom">20dp</dimen>
     <dimen name="card_view_height">100dp</dimen>
     <dimen name="card_view_padding">20dp</dimen>

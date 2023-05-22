@@ -58,7 +58,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginEnd="@dimen/artist_name_marginEnd"
         android:text="@string/down_text" />
 
     <TextView
@@ -66,7 +65,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginEnd="@dimen/name_marginEnd"
         android:layout_marginBottom="@dimen/name_marginBottom"
         android:text="@string/top_text"
         android:textColor="@color/black" />

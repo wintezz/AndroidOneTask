@@ -1,34 +1,25 @@
 package com.example.androidonetask.presentation.fragment.news
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.os.bundleOf
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidonetask.R
-import com.example.androidonetask.data.repository.RepositoryImpl
 import com.example.androidonetask.databinding.FragmentArtistBinding
+import com.example.androidonetask.di.ApplicationComponent
 import com.example.androidonetask.presentation.adapter.DelegateAdapter
 import com.example.androidonetask.presentation.adapter.delegates.TrackDelegate
+import com.example.androidonetask.presentation.fragment.base.BaseFragment
 import com.example.androidonetask.presentation.fragment.post.PostFragment.Companion.ADAPTER_POSITION
 import com.example.androidonetask.presentation.utils.fillList
 import com.example.androidonetask.presentation.viewmodel.news.NewsViewModel
 import com.example.androidonetask.presentation.viewmodel.news.NewsViewModelFactory
+import javax.inject.Inject
 
-class NewsFragment : Fragment() {
+class NewsFragment :
+    BaseFragment<NewsViewModel, FragmentArtistBinding>(FragmentArtistBinding::inflate) {
 
-    private val viewModel: NewsViewModel by lazy {
-        ViewModelProvider(
-            this,
-            NewsViewModelFactory(repository = RepositoryImpl())
-        )[NewsViewModel::class.java]
-    }
-    private var _binding: FragmentArtistBinding? = null
-    private val binding get() = _binding!!
     private var adapter = DelegateAdapter(
         delegates = listOf(
             TrackDelegate(
@@ -39,18 +30,16 @@ class NewsFragment : Fragment() {
         )
     )
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentArtistBinding
-            .inflate(
-                inflater, container,
-                false
-            )
-        return binding.root
+    override fun getFragmentView() = R.layout.fragment_artist
+
+    override fun inject(applicationComponent: ApplicationComponent) {
+        applicationComponent.inject(this)
     }
+
+    override fun getViewModelClass() = NewsViewModel::class.java
+
+    @Inject
+    override lateinit var getViewModelFactory: NewsViewModelFactory
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -59,11 +48,6 @@ class NewsFragment : Fragment() {
 
         showContent()
         initRecyclerView()
-    }
-
-    override fun onDestroyView() {
-        _binding = null
-        super.onDestroyView()
     }
 
     private fun showContent() {
