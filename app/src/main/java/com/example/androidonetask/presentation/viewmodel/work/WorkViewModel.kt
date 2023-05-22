@@ -7,12 +7,15 @@ import com.example.androidonetask.data.retrofit.AppState
 import com.example.androidonetask.presentation.model.Item
 import com.example.androidonetask.presentation.utils.TrackMapper
 import com.example.androidonetask.presentation.viewmodel.base.BaseViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import java.util.concurrent.atomic.AtomicBoolean
+import javax.inject.Inject
 
-class WorkViewModel(private val repository: Repository) : BaseViewModel() {
+@HiltViewModel
+class WorkViewModel @Inject constructor(private val repository: Repository) : BaseViewModel() {
 
     private val mutableStateMusic =
         MutableStateFlow<MusicUiState>(MusicUiState.Success(emptyList()))

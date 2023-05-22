@@ -3,7 +3,9 @@ package com.example.androidonetask.presentation.activity
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.androidonetask.databinding.ActivityArtBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ArtActivity : AppCompatActivity() {
 
     private var _binding: ActivityArtBinding? = null

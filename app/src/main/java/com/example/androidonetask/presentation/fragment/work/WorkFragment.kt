@@ -9,7 +9,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidonetask.R
 import com.example.androidonetask.databinding.FragmentArtistBinding
-import com.example.androidonetask.di.ApplicationComponent
 import com.example.androidonetask.presentation.adapter.DelegateAdapter
 import com.example.androidonetask.presentation.adapter.delegates.*
 import com.example.androidonetask.presentation.fragment.base.BaseFragment
@@ -19,10 +18,10 @@ import com.example.androidonetask.presentation.utils.VerticalItemDecorator
 import com.example.androidonetask.presentation.utils.px
 import com.example.androidonetask.presentation.viewmodel.work.MusicUiState
 import com.example.androidonetask.presentation.viewmodel.work.WorkViewModel
-import com.example.androidonetask.presentation.viewmodel.work.WorkViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
+@AndroidEntryPoint
 class WorkFragment :
     BaseFragment<WorkViewModel, FragmentArtistBinding>(FragmentArtistBinding::inflate) {
 
@@ -44,13 +43,6 @@ class WorkFragment :
     override fun getFragmentView() = R.layout.fragment_artist
 
     override fun getViewModelClass() = WorkViewModel::class.java
-
-    override fun inject(applicationComponent: ApplicationComponent) {
-        applicationComponent.inject(this)
-    }
-
-    @Inject
-    override lateinit var getViewModelFactory: WorkViewModelFactory
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
