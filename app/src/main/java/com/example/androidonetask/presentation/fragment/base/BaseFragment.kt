@@ -1,6 +1,5 @@
 package com.example.androidonetask.presentation.fragment.base
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,9 +8,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
-import com.example.androidonetask.MusicApplication
 import com.example.androidonetask.databinding.FragmentBaseBinding
-import com.example.androidonetask.di.ApplicationComponent
 import com.example.androidonetask.presentation.viewmodel.base.BaseViewModel
 
 abstract class BaseFragment<ViewModel : BaseViewModel, VBinding : ViewBinding>(
@@ -27,21 +24,12 @@ abstract class BaseFragment<ViewModel : BaseViewModel, VBinding : ViewBinding>(
 
     protected lateinit var viewModel: ViewModel
 
-    protected abstract fun inject(applicationComponent: ApplicationComponent)
-
     protected abstract fun getViewModelClass(): Class<ViewModel>
-
-    protected abstract val getViewModelFactory: ViewModelProvider.Factory
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        (activity?.application as? MusicApplication)?.applicationComponent?.let(::inject)
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel = ViewModelProvider(this, getViewModelFactory)[getViewModelClass()]
+        viewModel = ViewModelProvider(this)[getViewModelClass()]
     }
 
     override fun onCreateView(
