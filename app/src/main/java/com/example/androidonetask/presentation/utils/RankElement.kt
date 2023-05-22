@@ -10,7 +10,8 @@ fun fillList(): List<Item.TrackUiModel> {
                 name = "$i",
                 duration = "$i",
                 artistName = "$i",
-                albumImage = "$i"
+                albumImage = "$i",
+                audio = "$i"
             )
         )
     }

@@ -12,6 +12,7 @@ import com.example.androidonetask.databinding.FragmentArtistBinding
 import com.example.androidonetask.presentation.adapter.DelegateAdapter
 import com.example.androidonetask.presentation.adapter.delegates.*
 import com.example.androidonetask.presentation.fragment.base.BaseFragment
+import com.example.androidonetask.presentation.fragment.bottom.ModalBottomSheet
 import com.example.androidonetask.presentation.model.Item
 import com.example.androidonetask.presentation.utils.PaginationScrollListener
 import com.example.androidonetask.presentation.utils.VerticalItemDecorator
@@ -28,7 +29,8 @@ class WorkFragment :
     private val adapter = DelegateAdapter(
         delegates = listOf(
             TrackDelegate(
-                onItemClickNameHolder = ::onClickView
+                onItemClickNameHolder = ::onClickView,
+                onItemClickViewHolder = ::onClickView
             ),
             CardDelegate(),
             ViewPagerDelegate(),
@@ -52,6 +54,9 @@ class WorkFragment :
         initRecyclerView()
         setupObserverTrack()
         scrollRecyclerView()
+
+        val modalBottomSheet = ModalBottomSheet()
+        modalBottomSheet.show(parentFragmentManager, ModalBottomSheet.TAG)
     }
 
     private fun showContent(music: List<Item>) {
