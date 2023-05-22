@@ -1,39 +1,28 @@
 package com.example.androidonetask.presentation.fragment.post
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import com.example.androidonetask.data.repository.RepositoryImpl
+import com.example.androidonetask.R
 import com.example.androidonetask.databinding.FragmentPostBinding
+import com.example.androidonetask.di.ApplicationComponent
+import com.example.androidonetask.presentation.fragment.base.BaseFragment
 import com.example.androidonetask.presentation.viewmodel.post.PostViewModel
 import com.example.androidonetask.presentation.viewmodel.post.PostViewModelFactory
+import javax.inject.Inject
 
-class PostFragment : Fragment() {
+class PostFragment :
+    BaseFragment<PostViewModel, FragmentPostBinding>(FragmentPostBinding::inflate) {
 
-    private val viewModel: PostViewModel by lazy {
-        ViewModelProvider(
-            this,
-            PostViewModelFactory(repository = RepositoryImpl())
-        )[PostViewModel::class.java]
+    override fun getFragmentView() = R.layout.fragment_post
+
+    override fun inject(applicationComponent: ApplicationComponent) {
+        applicationComponent.inject(this)
     }
-    private var _binding: FragmentPostBinding? = null
-    private val binding get() = _binding!!
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentPostBinding
-            .inflate(
-                inflater, container,
-                false
-            )
-        return binding.root
-    }
+    override fun getViewModelClass() = PostViewModel::class.java
+
+    @Inject
+    override lateinit var getViewModelFactory: PostViewModelFactory
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -41,11 +30,6 @@ class PostFragment : Fragment() {
         activity?.title = this.javaClass.simpleName
 
         binding.textRankPost.text = arguments?.getInt(ADAPTER_POSITION).toString()
-    }
-
-    override fun onDestroyView() {
-        _binding = null
-        super.onDestroyView()
     }
 
     companion object {

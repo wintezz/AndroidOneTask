@@ -1,48 +1,31 @@
 package com.example.androidonetask.presentation.fragment.detail
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import com.example.androidonetask.data.repository.RepositoryImpl
+import com.example.androidonetask.R
 import com.example.androidonetask.databinding.FragmentDetailBinding
+import com.example.androidonetask.di.ApplicationComponent
+import com.example.androidonetask.presentation.fragment.base.BaseFragment
 import com.example.androidonetask.presentation.viewmodel.detail.DetailViewModel
 import com.example.androidonetask.presentation.viewmodel.detail.DetailViewModelFactory
+import javax.inject.Inject
 
-class DetailFragment : Fragment() {
+class DetailFragment :
+    BaseFragment<DetailViewModel, FragmentDetailBinding>(FragmentDetailBinding::inflate) {
+    override fun getFragmentView() = R.layout.fragment_detail
 
-    private val viewModel: DetailViewModel by lazy {
-        ViewModelProvider(
-            this,
-            DetailViewModelFactory(repository = RepositoryImpl())
-        )[DetailViewModel::class.java]
+    override fun inject(applicationComponent: ApplicationComponent) {
+        applicationComponent.inject(this)
     }
-    private var _binding: FragmentDetailBinding? = null
-    private val binding get() = _binding!!
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentDetailBinding
-            .inflate(
-                inflater, container,
-                false
-            )
-        return binding.root
-    }
+    override fun getViewModelClass() = DetailViewModel::class.java
+
+    @Inject
+    override lateinit var getViewModelFactory: DetailViewModelFactory
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         activity?.title = this.javaClass.simpleName
-    }
-
-    override fun onDestroyView() {
-        _binding = null
-        super.onDestroyView()
     }
 }
