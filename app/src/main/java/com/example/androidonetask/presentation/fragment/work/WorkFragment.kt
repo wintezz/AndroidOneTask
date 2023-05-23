@@ -3,6 +3,7 @@ package com.example.androidonetask.presentation.fragment.work
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -12,7 +13,7 @@ import com.example.androidonetask.databinding.FragmentArtistBinding
 import com.example.androidonetask.presentation.adapter.DelegateAdapter
 import com.example.androidonetask.presentation.adapter.delegates.*
 import com.example.androidonetask.presentation.fragment.base.BaseFragment
-import com.example.androidonetask.presentation.fragment.bottom.ModalBottomSheet
+import com.example.androidonetask.presentation.fragment.bottom.BottomSheet.Companion.AUDIO
 import com.example.androidonetask.presentation.model.Item
 import com.example.androidonetask.presentation.utils.PaginationScrollListener
 import com.example.androidonetask.presentation.utils.VerticalItemDecorator
@@ -30,7 +31,7 @@ class WorkFragment :
         delegates = listOf(
             TrackDelegate(
                 onItemClickNameHolder = ::onClickView,
-                onItemClickViewHolder = ::onClickView
+                onItemClickAudioUrl = ::onClickViewSheet
             ),
             CardDelegate(),
             ViewPagerDelegate(),
@@ -54,9 +55,6 @@ class WorkFragment :
         initRecyclerView()
         setupObserverTrack()
         scrollRecyclerView()
-
-        val modalBottomSheet = ModalBottomSheet()
-        modalBottomSheet.show(parentFragmentManager, ModalBottomSheet.TAG)
     }
 
     private fun showContent(music: List<Item>) {
@@ -90,6 +88,13 @@ class WorkFragment :
 
     private fun onClickView() {
         findNavController().navigate(R.id.action_worksFragment_to_artActivity)
+    }
+
+    private fun onClickViewSheet(audio: ArrayList<String>) {
+        findNavController().navigate(
+            R.id.action_worksFragment_to_modalBottomSheet,
+            bundleOf(AUDIO to audio)
+        )
     }
 
     private fun onClickError() {

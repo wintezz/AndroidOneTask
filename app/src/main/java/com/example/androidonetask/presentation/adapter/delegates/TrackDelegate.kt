@@ -11,7 +11,8 @@ import com.example.androidonetask.presentation.utils.load
 class TrackDelegate(
     private var onItemClickViewHolder: () -> Unit = {},
     private var onItemClickNameHolder: () -> Unit = {},
-    private var onItemClickPositionHolder: (Int) -> Unit = {}
+    private var onItemClickPositionHolder: (Int) -> Unit = {},
+    private var onItemClickAudioUrl: (ArrayList<String>) -> Unit = {}
 ) :
     BaseDelegate<TrackDelegate.TrackViewHolder, Item> {
 
@@ -47,16 +48,19 @@ class TrackDelegate(
         fun bind(item: Item.TrackUiModel) {
             binding.name.text = item.name
             binding.artistName.text = item.artistName
-            item.duration?.let { binding.duration.progress = it.toInt() }
+            item.duration?.let { binding.duration.max = it.toInt() }
             item.albumImage?.let { binding.albumImage.load(it) }
+
+            binding.imagePlayButton.setOnClickListener {
+                onItemClickAudioUrl.invoke(arrayListOf(item.audio.toString()))
+            }
 
             binding.albumImage.setOnClickListener {
                 onItemClickViewHolder.invoke()
             }
 
             binding.maskGroup.setOnClickListener {
-                onItemClickPositionHolder.invoke(adapterPosition)
-
+                onItemClickPositionHolder.invoke(absoluteAdapterPosition)
             }
 
             binding.artistName.setOnClickListener {
