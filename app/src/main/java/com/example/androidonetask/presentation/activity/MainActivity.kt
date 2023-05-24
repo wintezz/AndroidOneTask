@@ -33,14 +33,18 @@ class MainActivity : AppCompatActivity() {
         initService()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+
+        Intent(this, MusicService::class.java).also { intent ->
+            stopService(intent)
+        }
+    }
+
     private fun initService() {
         Intent(this, MusicService::class.java).also { intent ->
             startService(intent)
         }
-    }
-
-    override fun onDestroy() {
-        _binding = null
-        super.onDestroy()
     }
 }
