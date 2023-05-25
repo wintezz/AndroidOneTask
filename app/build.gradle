@@ -79,6 +79,9 @@ dependencies {
     implementation "androidx.media3:media3-exoplayer-dash:$playerVersion"
     implementation "androidx.media3:media3-ui:$playerVersion"
 
+    // LeakCanary
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.11'
+    
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.8.0'

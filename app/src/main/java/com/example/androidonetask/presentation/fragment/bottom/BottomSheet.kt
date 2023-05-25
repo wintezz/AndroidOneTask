@@ -1,6 +1,5 @@
 package com.example.androidonetask.presentation.fragment.bottom
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -36,7 +35,7 @@ class BottomSheet : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        context?.let { initializationPlayer(it) }
+        initializationPlayer()
     }
 
     override fun onDestroyView() {
@@ -44,8 +43,8 @@ class BottomSheet : BottomSheetDialogFragment() {
         _binding = null
     }
 
-    private fun initializationPlayer(context: Context) {
-        viewModel.exoPlayer = ExoPlayer.Builder(context)
+    private fun initializationPlayer() {
+        viewModel.exoPlayer = ExoPlayer.Builder(requireContext())
             .build()
             .also { exoPlayer ->
 

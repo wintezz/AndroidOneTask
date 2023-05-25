@@ -7,7 +7,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class BottomSheetViewModel @Inject constructor(private val repository: Repository): ViewModel() {
+class BottomSheetViewModel @Inject constructor(private val repository: Repository) : ViewModel() {
 
     var exoPlayer: ExoPlayer? = null
     var playWhenReady = true
