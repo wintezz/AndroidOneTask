@@ -44,7 +44,7 @@ class BottomSheet : BottomSheetDialogFragment() {
         _binding = null
     }
 
-    fun initializationPlayer(context: Context) {
+    private fun initializationPlayer(context: Context) {
         viewModel.exoPlayer = ExoPlayer.Builder(context)
             .build()
             .also { exoPlayer ->
