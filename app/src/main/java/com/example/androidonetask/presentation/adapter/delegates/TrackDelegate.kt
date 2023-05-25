@@ -12,7 +12,7 @@ class TrackDelegate(
     private var onItemClickViewHolder: () -> Unit = {},
     private var onItemClickNameHolder: () -> Unit = {},
     private var onItemClickPositionHolder: (Int) -> Unit = {},
-    private var onItemClickAudioUrl: (ArrayList<String>) -> Unit = {}
+    private var onItemClickAudioUrl: (String) -> Unit = {}
 ) :
     BaseDelegate<TrackDelegate.TrackViewHolder, Item> {
 
@@ -52,7 +52,7 @@ class TrackDelegate(
             item.albumImage?.let { binding.albumImage.load(it) }
 
             binding.imagePlayButton.setOnClickListener {
-                onItemClickAudioUrl.invoke(arrayListOf(item.audio.toString()))
+                onItemClickAudioUrl.invoke(item.audio.toString())
             }
 
             binding.albumImage.setOnClickListener {

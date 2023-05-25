@@ -50,15 +50,11 @@ class BottomSheet : BottomSheetDialogFragment() {
 
                 binding.playerView.player = exoPlayer
 
-                val mediaItems = arguments?.getStringArrayList(AUDIO)?.map {
-                    MediaItem.Builder()
-                        .setUri(it)
-                        .build()
-                }
+                val mediaItem = arguments?.getString(AUDIO).toString()
 
-                if (mediaItems != null) {
-                    exoPlayer.addMediaItems(mediaItems)
-                }
+                val getMedia = MediaItem.fromUri(mediaItem)
+
+                exoPlayer.addMediaItem(getMedia)
 
                 exoPlayer.playWhenReady = viewModel.playWhenReady
                 exoPlayer.seekTo(viewModel.currentItem, viewModel.playbackPosition)

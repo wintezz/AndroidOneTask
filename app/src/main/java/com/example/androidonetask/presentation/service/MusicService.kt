@@ -17,7 +17,6 @@ class MusicService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-
         bottomSheet?.initializationPlayer(applicationContext)
 
         return START_STICKY

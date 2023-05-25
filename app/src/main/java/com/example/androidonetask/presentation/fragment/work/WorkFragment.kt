@@ -90,7 +90,7 @@ class WorkFragment :
         findNavController().navigate(R.id.action_worksFragment_to_artActivity)
     }
 
-    private fun onClickViewSheet(audio: ArrayList<String>) {
+    private fun onClickViewSheet(audio: String) {
         findNavController().navigate(
             R.id.action_worksFragment_to_modalBottomSheet,
             bundleOf(AUDIO to audio)
