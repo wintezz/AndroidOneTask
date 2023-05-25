@@ -14,7 +14,8 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private var _binding: ActivityMainBinding? = null
-    private val binding get() = _binding!!
+    private val binding
+        get() = _binding ?: throw Throwable("MainActivity binding is not initialized")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,15 +37,18 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
-
-        Intent(this, MusicService::class.java).also { intent ->
-            stopService(intent)
-        }
+        stopService()
     }
 
     private fun initService() {
         Intent(this, MusicService::class.java).also { intent ->
             startService(intent)
+        }
+    }
+
+    private fun stopService() {
+        Intent(this, MusicService::class.java).also { intent ->
+            stopService(intent)
         }
     }
 }

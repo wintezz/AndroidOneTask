@@ -9,7 +9,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class ArtActivity : AppCompatActivity() {
 
     private var _binding: ActivityArtBinding? = null
-    private val binding get() = _binding!!
+    private val binding get() = _binding ?: throw Throwable("ArtActivity binding is not initialized")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

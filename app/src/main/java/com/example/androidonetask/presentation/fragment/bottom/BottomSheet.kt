@@ -19,7 +19,8 @@ class BottomSheet : BottomSheetDialogFragment() {
     private val viewModel: BottomSheetViewModel by viewModels()
 
     private var _binding: FragmentBottomSheetBinding? = null
-    private val binding get() = _binding!!
+    private val binding
+        get() = _binding ?: throw Throwable("BottomSheet binding is not initialized")
 
     override fun onCreateView(
         inflater: LayoutInflater,
