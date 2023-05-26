@@ -3,9 +3,9 @@ package com.example.androidonetask.presentation.fragment.work
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
-import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
+import androidx.media3.common.MediaItem
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidonetask.R
@@ -13,7 +13,6 @@ import com.example.androidonetask.databinding.FragmentArtistBinding
 import com.example.androidonetask.presentation.adapter.DelegateAdapter
 import com.example.androidonetask.presentation.adapter.delegates.*
 import com.example.androidonetask.presentation.fragment.base.BaseFragment
-import com.example.androidonetask.presentation.fragment.bottom.BottomSheet.Companion.AUDIO
 import com.example.androidonetask.presentation.model.Item
 import com.example.androidonetask.presentation.utils.PaginationScrollListener
 import com.example.androidonetask.presentation.utils.VerticalItemDecorator
@@ -31,7 +30,7 @@ class WorkFragment :
         delegates = listOf(
             TrackDelegate(
                 onItemClickNameHolder = ::onClickView,
-                onItemClickAudioUrl = ::onClickViewSheet
+                onItemClickAudioUrl = ::attachViewAndSetDataExoPlayer
             ),
             CardDelegate(),
             ViewPagerDelegate(),
@@ -55,6 +54,11 @@ class WorkFragment :
         initRecyclerView()
         setupObserverTrack()
         scrollRecyclerView()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        viewModel.releasePlayer()
     }
 
     private fun showContent(music: List<Item>) {
@@ -90,13 +94,6 @@ class WorkFragment :
         findNavController().navigate(R.id.action_worksFragment_to_artActivity)
     }
 
-    private fun onClickViewSheet(audio: String) {
-        findNavController().navigate(
-            R.id.action_worksFragment_to_modalBottomSheet,
-            bundleOf(AUDIO to audio)
-        )
-    }
-
     private fun onClickError() {
         viewModel.nextLoadPage()
     }
@@ -109,5 +106,11 @@ class WorkFragment :
                 }
             }
         }
+    }
+
+    private fun attachViewAndSetDataExoPlayer(audio: String) {
+        binding.bottomLayout.playerView.player = viewModel.exoPlayer
+        val getMedia = MediaItem.fromUri(audio)
+        viewModel.exoPlayer?.addMediaItem(getMedia)
     }
 }

@@ -35,9 +35,6 @@
         <action
             android:id="@+id/action_worksFragment_to_artActivity"
             app:destination="@id/artActivity" />
-        <action
-            android:id="@+id/action_worksFragment_to_modalBottomSheet"
-            app:destination="@id/modalBottomSheet" />
     </fragment>
     <fragment
         android:id="@+id/expositionsFragment"
@@ -73,8 +70,4 @@
         android:id="@+id/detailFragment"
         android:name="com.example.androidonetask.presentation.fragment.detail.DetailFragment"
         android:label="DetailFragment" />
-    <dialog
-        android:id="@+id/modalBottomSheet"
-        android:name="com.example.androidonetask.presentation.fragment.bottom.BottomSheet"
-        android:label="ModalBottomSheet" />
 </navigation>

@@ -1,5 +1,10 @@
 package com.example.androidonetask.presentation.viewmodel.work
 
+import android.content.Context
+import android.util.Log
+import androidx.lifecycle.viewModelScope
+import androidx.media3.common.Player
+import androidx.media3.exoplayer.ExoPlayer
 import com.example.androidonetask.data.repository.Repository
 import com.example.androidonetask.data.retrofit.ApiService.Companion.COUNT
 import com.example.androidonetask.data.retrofit.ApiService.Companion.OFF_SET
@@ -8,14 +13,20 @@ import com.example.androidonetask.presentation.model.Item
 import com.example.androidonetask.presentation.utils.TrackMapper
 import com.example.androidonetask.presentation.viewmodel.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject
 
 @HiltViewModel
-class WorkViewModel @Inject constructor(private val repository: Repository) : BaseViewModel() {
+class WorkViewModel @Inject constructor(
+    private val repository: Repository,
+    @ApplicationContext context: Context
+) : BaseViewModel() {
 
     private val mutableStateMusic =
         MutableStateFlow<MusicUiState>(MusicUiState.Success(emptyList()))
@@ -25,17 +36,65 @@ class WorkViewModel @Inject constructor(private val repository: Repository) : Ba
     var isLastPageLoaded: Boolean = false
     var isLoadingTracks = AtomicBoolean(false)
 
+    var exoPlayer: ExoPlayer? = null
+    private var playWhenReady = true
+    private var currentItem = 0
+    private var playbackPosition = 0L
+
     private var offSet = OFF_SET
     private var list: MutableList<Item> = mutableListOf()
 
     init {
         loadMusic()
+        initializationPlayer(context)
     }
 
     fun nextLoadPage() {
         offSet += COUNT
         paginationTracks()
         isLoadingTracks.getAndSet(true)
+    }
+
+    fun releasePlayer() {
+        exoPlayer?.let { exoPlayer ->
+            playWhenReady = exoPlayer.playWhenReady
+            currentItem = exoPlayer.currentMediaItemIndex
+            playbackPosition = exoPlayer.currentPosition
+            exoPlayer.release()
+        }
+        exoPlayer = null
+    }
+
+    private fun initializationPlayer(context: Context) {
+        exoPlayer = ExoPlayer.Builder(context)
+            .build()
+            .also { exoPlayer ->
+                exoPlayer.playWhenReady = playWhenReady
+                exoPlayer.seekTo(currentItem, playbackPosition)
+                exoPlayer.prepare()
+            }
+        exoPlayer?.addListener(object : Player.Listener {
+            override fun onIsPlayingChanged(isPlaying: Boolean) {
+                super.onIsPlayingChanged(isPlaying)
+                if (isPlaying) {
+                    getPlayerSeekElement()
+                }
+            }
+        })
+    }
+
+    private fun onExoPlayerSeekIncrement(currentTime: Long) {
+        Log.d("TEST", "SENT EVENT THROUGH FRAGMENT RESULT API$currentTime")
+    }
+
+    private fun getPlayerSeekElement() {
+        viewModelScope.launch {
+            exoPlayer?.currentPosition?.let { onExoPlayerSeekIncrement(it) }
+            delay(1_000)
+            if (exoPlayer?.isPlaying == true) {
+                getPlayerSeekElement()
+            }
+        }
     }
 
     private fun paginationTracks() {

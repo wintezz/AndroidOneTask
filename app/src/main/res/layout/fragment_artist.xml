@@ -10,4 +10,8 @@
         android:layout_height="match_parent"
         tools:listitem="@layout/track_element_list" />
 
+    <include
+        android:id="@+id/bottomLayout"
+        layout="@layout/bottom_sheet" />
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
