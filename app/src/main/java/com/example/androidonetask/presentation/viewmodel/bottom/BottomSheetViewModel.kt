@@ -12,9 +12,9 @@ class BottomSheetViewModel @Inject constructor(
 ) : ViewModel() {
 
     var exoPlayer: ExoPlayer? = null
-    var playWhenReady = true
-    var currentItem = 0
-    var playbackPosition = 0L
+    private var playWhenReady = true
+    private var currentItem = 0
+    private var playbackPosition = 0L
 
     fun initializationPlayer(context: Context) {
         exoPlayer = ExoPlayer.Builder(context)
