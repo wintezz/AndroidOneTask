@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.media3.common.MediaItem
 import com.example.androidonetask.databinding.FragmentBottomSheetBinding
-import com.example.androidonetask.presentation.viewmodel.bottom.BottomSheetViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -34,6 +33,11 @@ class BottomSheet : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        attachViewAndSetDataExoPlayer()
+    }
+
+    override fun onStart() {
+        super.onStart()
         attachViewAndSetDataExoPlayer()
     }
 

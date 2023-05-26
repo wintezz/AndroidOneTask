@@ -1,4 +1,4 @@
-package com.example.androidonetask.presentation.viewmodel.bottom
+package com.example.androidonetask.presentation.fragment.bottom
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
