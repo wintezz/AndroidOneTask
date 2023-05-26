@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.media3.common.MediaItem
-import androidx.media3.exoplayer.ExoPlayer
 import com.example.androidonetask.databinding.FragmentBottomSheetBinding
 import com.example.androidonetask.presentation.viewmodel.bottom.BottomSheetViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -35,7 +34,12 @@ class BottomSheet : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initializationPlayer()
+        attachViewAndSetDataExoPlayer()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        viewModel.releasePlayer()
     }
 
     override fun onDestroyView() {
@@ -43,23 +47,13 @@ class BottomSheet : BottomSheetDialogFragment() {
         _binding = null
     }
 
-    private fun initializationPlayer() {
-        viewModel.exoPlayer = ExoPlayer.Builder(requireContext())
-            .build()
-            .also { exoPlayer ->
+    private fun attachViewAndSetDataExoPlayer() {
+        viewModel.initializationPlayer(requireContext())
+        binding.playerView.player = viewModel.exoPlayer
 
-                binding.playerView.player = exoPlayer
-
-                val mediaItem = arguments?.getString(AUDIO).toString()
-
-                val getMedia = MediaItem.fromUri(mediaItem)
-
-                exoPlayer.addMediaItem(getMedia)
-
-                exoPlayer.playWhenReady = viewModel.playWhenReady
-                exoPlayer.seekTo(viewModel.currentItem, viewModel.playbackPosition)
-                exoPlayer.prepare()
-            }
+        val mediaItem = arguments?.getString(AUDIO).toString()
+        val getMedia = MediaItem.fromUri(mediaItem)
+        viewModel.exoPlayer?.addMediaItem(getMedia)
     }
 
     companion object {
