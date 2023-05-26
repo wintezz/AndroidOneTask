@@ -4,11 +4,12 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.media3.exoplayer.ExoPlayer
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
 @HiltViewModel
 class BottomSheetViewModel @Inject constructor(
-    context: Context
+    @ApplicationContext context: Context
 ) : ViewModel() {
 
     var exoPlayer: ExoPlayer? = null
@@ -16,7 +17,11 @@ class BottomSheetViewModel @Inject constructor(
     private var currentItem = 0
     private var playbackPosition = 0L
 
-    fun initializationPlayer(context: Context) {
+    init {
+        initializationPlayer(context)
+    }
+
+    private fun initializationPlayer(context: Context) {
         exoPlayer = ExoPlayer.Builder(context)
             .build()
             .also { exoPlayer ->

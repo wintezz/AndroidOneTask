@@ -48,12 +48,10 @@ class BottomSheet : BottomSheetDialogFragment() {
     }
 
     private fun attachViewAndSetDataExoPlayer() {
-        viewModel.initializationPlayer(requireContext())
         binding.playerView.player = viewModel.exoPlayer
-
-        val mediaItem = arguments?.getString(AUDIO).toString()
-        val getMedia = MediaItem.fromUri(mediaItem)
-        viewModel.exoPlayer?.addMediaItem(getMedia)
+            val mediaItem = arguments?.getString(AUDIO).toString()
+                val getMedia = MediaItem.fromUri(mediaItem)
+                    viewModel.exoPlayer?.addMediaItem(getMedia)
     }
 
     companion object {
