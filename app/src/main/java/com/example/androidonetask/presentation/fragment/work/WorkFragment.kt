@@ -57,6 +57,16 @@ class WorkFragment :
         scrollRecyclerView()
     }
 
+    override fun onStart() {
+        super.onStart()
+        viewModel.exoPlayer.play()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        viewModel.exoPlayer.stop()
+    }
+
     private fun showContent(music: List<Item>) {
         with(binding) {
             adapter.updateItem(music)

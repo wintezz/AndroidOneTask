@@ -72,6 +72,8 @@ class WorkViewModel @Inject constructor(
     }
 
     fun onItemClickAudioUrl(audio: String) {
+       /* list.filterIsInstance<Item.TrackUiModel>().indexOfFirst { audio == it.audio }
+            .takeIf { it > 0 }?.let { index -> }*/
         val getMedia = MediaItem.fromUri(audio)
         exoPlayer.addMediaItem(getMedia)
     }
@@ -130,6 +132,8 @@ class WorkViewModel @Inject constructor(
             val albums = responseAlbum.await()
 
             if (tracks is AppState.Success && albums is AppState.Success) {
+                /*tracks.data?.results?.mapNotNull { it.audio?.let { it1 -> MediaItem.fromUri(it1) } }
+                    ?.let(exoPlayer::addMediaItems)*/
                 list.addAll(
                     TrackMapper.toUiState(
                         trackListResponse = tracks.data,
