@@ -59,12 +59,12 @@ class WorkFragment :
 
     override fun onStart() {
         super.onStart()
-        viewModel.exoPlayer.play()
+        viewModel.onStart()
     }
 
     override fun onStop() {
         super.onStop()
-        viewModel.exoPlayer.stop()
+        viewModel.onStop()
     }
 
     private fun showContent(music: List<Item>) {

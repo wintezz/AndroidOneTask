@@ -15,11 +15,9 @@ import com.example.androidonetask.presentation.utils.TrackMapper
 import com.example.androidonetask.presentation.viewmodel.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.async
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.launch
 import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject
 
@@ -65,6 +63,14 @@ class WorkViewModel @Inject constructor(
         }
     }
 
+    fun onStart() {
+        exoPlayer.prepare()
+    }
+
+    fun onStop() {
+        exoPlayer.stop()
+    }
+
     fun nextLoadPage() {
         offSet += COUNT
         paginationTracks()
@@ -72,10 +78,11 @@ class WorkViewModel @Inject constructor(
     }
 
     fun onItemClickAudioUrl(audio: String) {
-       /* list.filterIsInstance<Item.TrackUiModel>().indexOfFirst { audio == it.audio }
-            .takeIf { it > 0 }?.let { index -> }*/
-        val getMedia = MediaItem.fromUri(audio)
-        exoPlayer.addMediaItem(getMedia)
+        list.filterIsInstance<Item.TrackUiModel>().indexOfFirst { audio == it.audio }
+            .takeIf { it > 0 }?.let { index ->
+                exoPlayer.seekToDefaultPosition(index)
+            }
+        exoPlayer.prepare()
     }
 
     private fun initListenerExoPlayer() {
@@ -132,8 +139,10 @@ class WorkViewModel @Inject constructor(
             val albums = responseAlbum.await()
 
             if (tracks is AppState.Success && albums is AppState.Success) {
-                /*tracks.data?.results?.mapNotNull { it.audio?.let { it1 -> MediaItem.fromUri(it1) } }
-                    ?.let(exoPlayer::addMediaItems)*/
+                withContext(Dispatchers.Main) {
+                    tracks.data?.results?.mapNotNull { it.audio?.let { it1 -> MediaItem.fromUri(it1) } }
+                        ?.let(exoPlayer::addMediaItems)
+                }
                 list.addAll(
                     TrackMapper.toUiState(
                         trackListResponse = tracks.data,
