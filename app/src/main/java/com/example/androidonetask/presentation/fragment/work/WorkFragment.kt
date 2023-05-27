@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
-import androidx.media3.common.MediaItem
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidonetask.R
@@ -30,7 +29,7 @@ class WorkFragment :
         delegates = listOf(
             TrackDelegate(
                 onItemClickNameHolder = ::onClickView,
-                onItemClickAudioUrl = ::attachViewAndSetDataExoPlayer
+                onItemClickAudioUrl = { audio -> viewModel.onItemClickAudioUrl(audio) }
             ),
             CardDelegate(),
             ViewPagerDelegate(),
@@ -51,14 +50,11 @@ class WorkFragment :
 
         activity?.title = this.javaClass.simpleName
 
+        binding.bottomLayout.playerView.player = viewModel.exoPlayer
+
         initRecyclerView()
         setupObserverTrack()
         scrollRecyclerView()
-    }
-
-    override fun onStop() {
-        super.onStop()
-        viewModel.releasePlayer()
     }
 
     private fun showContent(music: List<Item>) {
@@ -106,11 +102,5 @@ class WorkFragment :
                 }
             }
         }
-    }
-
-    private fun attachViewAndSetDataExoPlayer(audio: String) {
-        binding.bottomLayout.playerView.player = viewModel.exoPlayer
-        val getMedia = MediaItem.fromUri(audio)
-        viewModel.exoPlayer?.addMediaItem(getMedia)
     }
 }

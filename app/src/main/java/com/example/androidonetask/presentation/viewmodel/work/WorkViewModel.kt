@@ -3,6 +3,7 @@ package com.example.androidonetask.presentation.viewmodel.work
 import android.content.Context
 import android.util.Log
 import androidx.lifecycle.viewModelScope
+import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
 import com.example.androidonetask.data.repository.Repository
@@ -30,23 +31,38 @@ class WorkViewModel @Inject constructor(
 
     private val mutableStateMusic =
         MutableStateFlow<MusicUiState>(MusicUiState.Success(emptyList()))
-
     val staticStateMusic: StateFlow<MusicUiState> = mutableStateMusic
 
     var isLastPageLoaded: Boolean = false
     var isLoadingTracks = AtomicBoolean(false)
+    val exoPlayer: ExoPlayer = ExoPlayer.Builder(context)
+        .build()
+        .also { exoPlayer ->
+            exoPlayer.playWhenReady = playWhenReady
+            exoPlayer.seekTo(currentItem, playbackPosition)
+            exoPlayer.prepare()
+        }
 
-    var exoPlayer: ExoPlayer? = null
     private var playWhenReady = true
     private var currentItem = 0
     private var playbackPosition = 0L
-
     private var offSet = OFF_SET
+
     private var list: MutableList<Item> = mutableListOf()
 
     init {
         loadMusic()
-        initializationPlayer(context)
+        initListenerExoPlayer()
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        exoPlayer.let { exoPlayer ->
+            playWhenReady = exoPlayer.playWhenReady
+            currentItem = exoPlayer.currentMediaItemIndex
+            playbackPosition = exoPlayer.currentPosition
+            exoPlayer.release()
+        }
     }
 
     fun nextLoadPage() {
@@ -55,25 +71,13 @@ class WorkViewModel @Inject constructor(
         isLoadingTracks.getAndSet(true)
     }
 
-    fun releasePlayer() {
-        exoPlayer?.let { exoPlayer ->
-            playWhenReady = exoPlayer.playWhenReady
-            currentItem = exoPlayer.currentMediaItemIndex
-            playbackPosition = exoPlayer.currentPosition
-            exoPlayer.release()
-        }
-        exoPlayer = null
+    fun onItemClickAudioUrl(audio: String) {
+        val getMedia = MediaItem.fromUri(audio)
+        exoPlayer.addMediaItem(getMedia)
     }
 
-    private fun initializationPlayer(context: Context) {
-        exoPlayer = ExoPlayer.Builder(context)
-            .build()
-            .also { exoPlayer ->
-                exoPlayer.playWhenReady = playWhenReady
-                exoPlayer.seekTo(currentItem, playbackPosition)
-                exoPlayer.prepare()
-            }
-        exoPlayer?.addListener(object : Player.Listener {
+    private fun initListenerExoPlayer() {
+        exoPlayer.addListener(object : Player.Listener {
             override fun onIsPlayingChanged(isPlaying: Boolean) {
                 super.onIsPlayingChanged(isPlaying)
                 if (isPlaying) {
@@ -89,9 +93,9 @@ class WorkViewModel @Inject constructor(
 
     private fun getPlayerSeekElement() {
         viewModelScope.launch {
-            exoPlayer?.currentPosition?.let { onExoPlayerSeekIncrement(it) }
+            onExoPlayerSeekIncrement(exoPlayer.currentPosition)
             delay(1_000)
-            if (exoPlayer?.isPlaying == true) {
+            if (exoPlayer.isPlaying) {
                 getPlayerSeekElement()
             }
         }
