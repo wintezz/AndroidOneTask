@@ -15,9 +15,13 @@ import com.example.androidonetask.presentation.utils.TrackMapper
 import com.example.androidonetask.presentation.viewmodel.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject
 
@@ -33,6 +37,7 @@ class WorkViewModel @Inject constructor(
 
     var isLastPageLoaded: Boolean = false
     var isLoadingTracks = AtomicBoolean(false)
+
     val exoPlayer: ExoPlayer = ExoPlayer.Builder(context)
         .build()
         .also { exoPlayer ->
@@ -44,8 +49,8 @@ class WorkViewModel @Inject constructor(
     private var playWhenReady = true
     private var currentItem = 0
     private var playbackPosition = 0L
-    private var offSet = OFF_SET
 
+    private var offSet = OFF_SET
     private var list: MutableList<Item> = mutableListOf()
 
     init {
