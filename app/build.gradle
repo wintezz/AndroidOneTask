@@ -78,6 +78,9 @@ dependencies {
     implementation "androidx.media3:media3-exoplayer:$playerVersion"
     implementation "androidx.media3:media3-exoplayer-dash:$playerVersion"
     implementation "androidx.media3:media3-ui:$playerVersion"
+
+    // Notification
+    implementation "androidx.media:media:1.6.0"
     
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'

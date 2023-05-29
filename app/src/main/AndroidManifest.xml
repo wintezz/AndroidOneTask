@@ -18,7 +18,8 @@
 
         <service
             android:name=".presentation.service.MusicService"
-            android:process=":externalProcess" />
+            android:enabled="true"
+            android:process=":music_service"/>
 
         <activity
             android:name=".presentation.activity.ArtActivity"
