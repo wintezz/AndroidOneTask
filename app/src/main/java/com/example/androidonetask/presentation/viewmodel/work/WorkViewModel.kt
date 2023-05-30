@@ -28,7 +28,7 @@ import javax.inject.Inject
 @HiltViewModel
 class WorkViewModel @Inject constructor(
     private val repository: Repository,
-    @ApplicationContext context: Context
+    @ApplicationContext context: Context,
 ) : BaseViewModel() {
 
     private val mutableStateMusic =
@@ -165,4 +165,3 @@ class WorkViewModel @Inject constructor(
 sealed class MusicUiState {
     data class Success(val music: List<Item>) : MusicUiState()
 }
-

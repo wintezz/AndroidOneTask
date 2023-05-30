@@ -19,6 +19,7 @@
         <service
             android:name=".presentation.service.MusicService"
             android:enabled="true"
+            android:exported="true"
             android:process=":music_service"/>
 
         <activity

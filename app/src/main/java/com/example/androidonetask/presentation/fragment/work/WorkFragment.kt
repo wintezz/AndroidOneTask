@@ -1,9 +1,14 @@
 package com.example.androidonetask.presentation.fragment.work
 
 import android.annotation.SuppressLint
+import android.content.ComponentName
 import android.content.Intent
+import android.content.ServiceConnection
+import android.os.Build
 import android.os.Bundle
+import android.os.IBinder
 import android.view.View
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
@@ -26,7 +31,10 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class WorkFragment :
-    BaseFragment<WorkViewModel, FragmentArtistBinding>(FragmentArtistBinding::inflate) {
+    BaseFragment<WorkViewModel, FragmentArtistBinding>(FragmentArtistBinding::inflate),
+    ServiceConnection {
+
+    private var musicService: MusicService? = null
 
     private val adapter = DelegateAdapter(
         delegates = listOf(
@@ -74,6 +82,17 @@ class WorkFragment :
     override fun onDestroyView() {
         super.onDestroyView()
         onStopForegroundService()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
+        val binder = service as MusicService.MusicBinder
+        musicService = binder.currentService()
+        musicService?.showNotification()
+    }
+
+    override fun onServiceDisconnected(name: ComponentName?) {
+        musicService = null
     }
 
     private fun onStartForegroundService() {
