@@ -32,7 +32,8 @@ object TrackMapper {
                 artistName = it.artistName,
                 duration = it.duration,
                 albumImage = it.albumImage,
-                audio = it.audio
+                audio = it.audio,
+                isPlaying = false
             )
         } ?: emptyList()
     }

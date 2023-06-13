@@ -22,7 +22,8 @@ sealed class Item {
         val duration: String?,
         val artistName: String?,
         val albumImage: String?,
-        val audio: String?
+        val audio: String?,
+        var isPlaying: Boolean
     ) : Item()
 
     data class LoaderUiModel(
