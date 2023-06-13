@@ -1,32 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<<<<<<< HEAD
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/bottom_sheet"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    app:behavior_hideable="true"
-    app:behavior_peekHeight="30dp"
-    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
-
-    <androidx.media3.ui.PlayerView
-        android:id="@+id/playerView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-</LinearLayout>
-=======
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/bottom_sheet"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/gray_light"
+    android:paddingTop="50dp"
     app:behavior_hideable="false"
     app:behavior_peekHeight="50dp"
-    android:paddingTop="50dp"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
     <TextView
@@ -144,4 +125,4 @@
         app:layout_constraintGuide_percent="0.7" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
->>>>>>> main
+
