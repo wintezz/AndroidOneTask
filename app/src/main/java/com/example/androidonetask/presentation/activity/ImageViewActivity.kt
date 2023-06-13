@@ -9,7 +9,8 @@ import dagger.hilt.android.AndroidEntryPoint
 class ImageViewActivity : AppCompatActivity() {
 
     private var _binding: ActivityImageViewBinding? = null
-    private val binding get() = _binding!!
+    private val binding
+        get() = _binding ?: throw Throwable("ImageViewActivity binding is not initialized")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

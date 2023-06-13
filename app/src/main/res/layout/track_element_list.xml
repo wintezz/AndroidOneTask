@@ -14,6 +14,7 @@
         android:layout_width="@dimen/duration_width"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:visibility="invisible"
         android:layout_marginStart="@dimen/main_margin"
         android:layout_marginTop="@dimen/duration_marginTop"
         android:layout_marginBottom="@dimen/duration_marginBottom" />
@@ -37,7 +38,8 @@
             android:layout_height="@dimen/image_button_height"
             android:layout_marginStart="@dimen/image_button_marginStart"
             android:layout_marginTop="@dimen/image_button_marginTop"
-            android:src="@drawable/play_button"
+            android:background="@drawable/circle_drawable"
+            android:src="@drawable/ic_play"
             tools:ignore="ContentDescription" />
 
         <TextView

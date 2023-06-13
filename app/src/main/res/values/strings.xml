@@ -14,4 +14,9 @@
     <string name="error_text">Error…Repeat later again</string>
     <string name="reboot">Reboot</string>
     <string name="music">Music</string>
+    <string name="mp3_song_1">https://prod-1.storage.jamendo.com/?trackid=241&amp;format=mp31&amp;from=r8tTV2AEMmcbBONJeWjY7w%3D%3D%7CKCYrg9%2BGG4ac9MbkPsIPkQ%3D%3D</string>
+    <string name="mp3_song_2">https://prod-1.storage.jamendo.com/?trackid=242&amp;format=mp31&amp;from=gLiH38YTn7ly6675m0KbRw%3D%3D%7ClPrBXR5QOKTvndnae9stBw%3D%3D</string>
+    <string name="mp3_song_3">https://prod-1.storage.jamendo.com/?trackid=243&amp;format=mp31&amp;from=x6HhJSkH17HQslqkspZw2Q%3D%3D%7CRgkmbzfTvDNlbYEo2mYdmA%3D%3D</string>
+    <string name="time">00:00</string>
+    <string name="track">Track</string>
 </resources>
