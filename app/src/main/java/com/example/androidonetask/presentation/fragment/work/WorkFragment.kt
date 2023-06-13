@@ -1,9 +1,16 @@
 package com.example.androidonetask.presentation.fragment.work
 
 import android.annotation.SuppressLint
+import android.content.ComponentName
+import android.content.Intent
+import android.content.ServiceConnection
+import android.os.Build
 import android.os.Bundle
+import android.os.IBinder
 import android.view.View
 import android.widget.SeekBar
+import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -14,6 +21,7 @@ import com.example.androidonetask.presentation.adapter.DelegateAdapter
 import com.example.androidonetask.presentation.adapter.delegates.*
 import com.example.androidonetask.presentation.fragment.base.BaseFragment
 import com.example.androidonetask.presentation.model.Item
+import com.example.androidonetask.presentation.service.MusicService
 import com.example.androidonetask.presentation.utils.PaginationScrollListener
 import com.example.androidonetask.presentation.utils.VerticalItemDecorator
 import com.example.androidonetask.presentation.utils.load
@@ -28,7 +36,9 @@ import java.util.Locale
 
 @AndroidEntryPoint
 class WorkFragment :
-    BaseFragment<WorkViewModel, FragmentArtistBinding>(FragmentArtistBinding::inflate) {
+    BaseFragment<WorkViewModel, FragmentArtistBinding>(FragmentArtistBinding::inflate), ServiceConnection {
+
+    private var musicService: MusicService? = null
 
     private val adapter = DelegateAdapter(
         delegates = listOf(
@@ -69,6 +79,8 @@ class WorkFragment :
         onChangeStateSeekBar()
         onClickPrefMediaItemExoplayer()
         onClickNextMediaItemExoplayer()
+        onStartForegroundService()
+        onStopForegroundService()
     }
 
     override fun onStart() {
@@ -79,6 +91,28 @@ class WorkFragment :
     override fun onStop() {
         super.onStop()
         viewModel.onStop()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
+        val binder = service as MusicService.MusicBinder
+        musicService = binder.currentService()
+        musicService?.showNotification()
+    }
+
+    override fun onServiceDisconnected(name: ComponentName?) {
+        musicService = null
+    }
+
+    private fun onStartForegroundService() {
+        val startIntent = Intent(requireContext(), MusicService::class.java)
+        ContextCompat.startForegroundService(requireContext(), startIntent)
+    }
+
+    private fun onStopForegroundService() {
+        Intent(requireContext(), MusicService::class.java).let { intent ->
+            requireContext().stopService(intent)
+        }
     }
 
     private fun onChangeStateSeekBar() {
